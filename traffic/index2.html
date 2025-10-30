@@ -77,15 +77,18 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div>
                         <label for="classYear" class="block text-sm font-medium text-gray-700 question-required">班級 (年)</label>
-                        <input type="number" name="classYear" id="classYear" placeholder="例如: 5" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <!-- [更新] 增加 min="0" 防止負數 -->
+                        <input type="number" name="classYear" id="classYear" placeholder="例如: 5" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" min="0">
                     </div>
                     <div>
                         <label for="classNum" class="block text-sm font-medium text-gray-700 question-required">班級 (班)</label>
-                        <input type="number" name="classNum" id="classNum" placeholder="例如: 1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <!-- [更新] 增加 min="0" 防止負數 -->
+                        <input type="number" name="classNum" id="classNum" placeholder="例如: 1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" min="0">
                     </div>
                     <div>
                         <label for="seatNo" class="block text-sm font-medium text-gray-700 question-required">座號</label>
-                        <input type="number" name="seatNo" id="seatNo" placeholder="例如: 12" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <!-- [更新] 增加 min="0" 防止負數 -->
+                        <input type="number" name="seatNo" id="seatNo" placeholder="例如: 12" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" min="0">
                     </div>
                     <div class="md:col-span-2 lg:col-span-1">
                         <label class="block text-sm font-medium text-gray-700 question-required">性別</label>
@@ -182,7 +185,7 @@
 
             <!-- 輔助函數：生成 Likert 表格 -->
             <script>
-                 // Likert 問題數據
+                // Likert 問題數據
                 const likertQuestions = {
                     part2: [
                         { id: 'a1', text: '11. 我認為每次騎車前，檢查自行車（煞車、輪胎）是必要的。' },
@@ -266,6 +269,7 @@
                     const part2Container = document.getElementById('part2-questions');
                     part2Container.innerHTML = createLikertTable(likertQuestions.part2, 2);
                 </script>
+            </section> <!-- 修正：補上結尾標籤 -->
 
             <!-- 第三部分：安全意向與實踐 (B) -->
             <!-- [更新] 套用專屬色塊 - 紫色 -->
@@ -277,6 +281,7 @@
                     const part3Container = document.getElementById('part3-questions');
                     part3Container.innerHTML = createLikertTable(likertQuestions.part3, 3);
                 </script>
+            </section> <!-- 修正：補上結尾標籤 -->
 
             <!-- 第四部分：鷺江國小情境應用題 -->
             <!-- [更新] 套用專屬色塊 - 紅色 -->
@@ -405,11 +410,22 @@
                         firstInvalidInput = input;
                         break;
                     }
+                    // [更新] 檢查 min 屬性
+                    if (input.type === 'number' && input.min !== '' && parseFloat(input.value) < parseFloat(input.min)) {
+                        firstInvalidInput = input;
+                        break;
+                    }
                 }
             }
 
             if (firstInvalidInput) {
-                showMessage("尚未填寫完成", "請檢查所有標記 * 的必填問題。");
+                // [更新] 根據是否為數字欄位顯示不同錯誤訊息
+                if (firstInvalidInput.type === 'number' && firstInvalidInput.min !== '' && parseFloat(firstInvalidInput.value) < parseFloat(firstInvalidInput.min)) {
+                     showMessage("內容錯誤", `欄位 "${firstInvalidInput.previousElementSibling.textContent}" 不能是負數。`);
+                } else {
+                    showMessage("尚未填寫完成", "請檢查所有標記 * 的必填問題。");
+                }
+                
                 // 捲動到第一個未填寫的問題
                 const invalidElement = firstInvalidInput.closest('section, .mb-6, tr');
                 if (invalidElement) {
@@ -492,4 +508,3 @@
     </script>
 </body>
 </html>
-
