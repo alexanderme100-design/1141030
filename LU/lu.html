@@ -1,48 +1,129 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新北市蘆洲區鷺江國民小學</title>
-    <!-- 載入 Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 載入 Inter 字體 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* 使用 Noto Sans TC 作為主要字體 */
-        body {
-            font-family: 'Inter', 'Noto Sans TC', sans-serif;
-        }
-        /* 確保捲動流暢 */
-        html {
-            scroll-behavior: smooth;
-        }
-        /* 導覽列的毛玻璃效果 */
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(209, 213, 219, 0.5);
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
+    <script>
+        const siteData = {
+            // 頁首導覽列
+            header: {
+                logoUrl: "https://drive.google.com/uc?export=view&id=1dvg3_7qnTGxpnP_dNq8p4nWrnvSTEtuL",
+                schoolName: "新北市鷺江國民小學",
+                schoolNameShort: "鷺江國小"
+            },
+            // 首頁主圖
+            hero: {
+                title: "歡迎來到鷺江國小",
+                subtitle1: "重視效能、效率與效益",
+                subtitle2: "追求品質、品味與品牌",
+                imageUrl: "https://placehold.co/1600x800/E0F2F1/333333?text=%E9%B7%BA%E6%B1%9F%E5%9C%8B%E5%B0%8F%E7%BE%8E%E9%BA%97%E6%A0%A1%E5%9C%92%E7%A9%BA%E6%8B%8D"
+            },
+            // 關於本校
+            about: {
+                title: "關於鷺江",
+                content: "本校創建於民國70年，位於新北市蘆洲區民族路及民權路交會處，校地面積2.28公頃。比鄰區公所、捷運站及公車站，交通便利，生活機能完備，屬於都會型學校。",
+                stat1: {
+                    number: "2500+",
+                    label: "國小及幼兒園學生",
+                    details: "(國小 2459人, 幼兒園 127人)"
+                },
+                stat2: {
+                    number: "237",
+                    label: "教職員工",
+                    details: "(全心投入教育工作)"
+                },
+                imageUrl: "https://placehold.co/600x450/FFF9C4/333333?text=%E6%93%8D%E5%A0%B4%E8%88%87%E6%95%99%E5%AD%B8%E5%A4%A7%E6%A8%93"
+            },
+            // 交通安全
+            traffic: {
+                title: "交通安全資訊",
+                subtitle: "守護學童安全，平安快樂上學",
+                // 學生上學交通方式統計
+                commuteStats: [
+                    { label: "走路", value: "31%", color: "yellow" },
+                    { label: "騎機車", value: "53%", color: "orange" },
+                    { label: "開車", value: "12%", color: "red" },
+                    { label: "搭捷運/公車", value: "3%", color: "purple" },
+                    { label: "其它", value: "3%", color: "gray" }
+                ],
+                commuteNote: "* 數據顯示，本校學生上放學以家長騎機車及走路上學接送居多。",
+                // 正門 (民族路)
+                location1: {
+                    title: "正門 (民族路)",
+                    imageUrl: "https://placehold.co/600x400/FFEBEE/333333?text=%E6%B0%D1%E6%97%8F%E8%B7%AF%E6%94%BE%E5%AD%B8%E5%AF%A6%E6%B3%81",
+                    description: "位於交通要塞，公車路線多。上放學時段因家長接送車輛與人潮集中，偶會出現交通壅滯現象。",
+                    note: "* 請家長多加注意，快接快送，勿久停留。"
+                },
+                // 側門 (民權路)
+                location2: {
+                    title: "側門 (民權路)",
+                    imageUrl: "https://placehold.co/600x400/E3F2FD/333333?text=%E6%B0%91%E6%AC%8A%E8%B7%AF%E6%94%BE%E5%AD%B8%E5%AF%A6%E6%B3%81",
+                    description: "家長接送情況較為良好，接送人數與車流量適中，交通狀況相對舒緩。",
+                    note: "* 建議家長可多利用民權路側門接送。"
+                }
+            },
+            // 校園剪影
+            gallery: {
+                title: "校園剪影",
+                subtitle: "鷺江的美麗角落",
+                images: [
+                    { imageUrl: "https://placehold.co/600x400/F1F8E9/333333?text=%E5%BD%A9%E8%89%B2PU%E8%B7%91%E9%81%93", alt: "彩色PU跑道" },
+                    { imageUrl: "https://placehold.co/600x400/E8EAF6/333333?text=%E9%81%8A%E6%B3%B3%E5%8D%80%E8%88%87%E4%B8%AD%E5%BA%AD", alt: "遊戲區與中庭" },
+                    { imageUrl: "https://placehold.co/600x400/F3E5F5/333333?text=%E6%A0%A1%E5%9C%92%E7%A9%BA%E6%8B%8D%E5%85%A8%E6%99%AF", alt: "校園空拍全景" }
+                ]
+            },
+            // 親師生專區
+            info: {
+                title: "親師生專區",
+                subtitle: "重要資訊與快速連結",
+                section1: {
+                    title: "家長專區",
+                    description: "上放學接送、交通安全宣導、學校公告。",
+                    buttonText: "查看接送資訊",
+                    buttonLink: "#traffic"
+                },
+                section2: {
+                    title: "教師專區",
+                    description: "教學資源、行政公告、研習資訊。",
+                    buttonText: "登入校務系統",
+                    buttonLink: "#" // 這裡可以放校務系統的真實網址
+                },
+                section3: {
+                    title: "學生專區",
+                    description: "學習園地、線上資源、交通安全守則。",
+                    buttonText: "進入學習平台",
+                    buttonLink: "#" // 這裡可以放學習平台的真實網址
+                },
+                qrCode: {
+                    title: "學校網站連結",
+                    subtitle: "掃描 QR Code 以前往鷺江國小官方網站",
+                    imageUrl: "https://placehold.co/150x150/EEEEEE/333333?text=%E7%B6%B2%E7%AB%99%E9%80%A3%E7%B5%90QR"
+                }
+            },
+            // 頁尾
+            footer: {
+                schoolName: "新北市蘆洲區鷺江國民小學",
+                schoolNameEn: "Lu Jiang Elementary School, Luzhou District, New Taipei City.",
+                address: "247001 新北市蘆洲區民族路七號",
+                phone: "(02) 2281-9980",
+                copyright: "&copy; 2025 鷺江國民小學 版權所有 (網站草案)"
+            }
+        };
+    </script>
+    <!-- 
+      ===============================================================
+      == 「網站設定區」結束 ==
+      == 下方的 HTML 結構您不需要再手動修改 ==
+      ===============================================================
+    -->
 
     <!-- 
       Header (導覽列)
-      使用 fixed and sticky, 搭配毛玻璃效果
     -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glassmorphism">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- 學校 Logo 與名稱 -->
                 <div class="flex items-center space-x-4">
-                    <img class="h-14 w-14 rounded-full object-cover" 
-                         src="https://placehold.co/100x100/003366/FFFFFF?text=鷺江校徽" 
-                         alt="新北市鷺江國小 校徽"
-                         onerror="this.src='https://placehold.co/100x100/003366/FFFFFF?text=鷺江校徽'">
-                    <span class="text-xl font-bold text-gray-800 hidden sm:block">新北市鷺江國民小學</span>
-                    <span class="text-lg font-bold text-gray-800 sm:hidden">鷺江國小</span>
+                    <img id="header-logo" class="h-14 w-14 rounded-full object-cover" 
+                         src="" alt="新北市鷺江國小 校徽">
+                    <span id="header-school-name" class="text-xl font-bold text-gray-800 hidden sm:block"></span>
+                    <span id="header-school-name-short" class="text-lg font-bold text-gray-800 sm:hidden"></span>
                 </div>
 
                 <!-- 導覽連結 (桌機版) -->
@@ -58,11 +139,9 @@
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                         <span class="sr-only">開啟主選單</span>
-                        <!-- 漢堡圖示 -->
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                        <!-- 關閉圖示 (X) -->
                         <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -85,73 +164,49 @@
 
     <!-- 
       主要內容區
-      pt-20 是為了避免內容被 fixed 導覽列遮住
     -->
     <main class="pt-20">
 
         <!-- 
           Hero Section (首頁)
-          使用簡報中的校園空拍圖作為背景
         -->
         <section id="home" class="relative bg-blue-800 h-[60vh] min-h-[400px] flex items-center justify-center text-white overflow-hidden">
-            <!-- 背景圖片 -->
-            <img src="https://placehold.co/1600x800/E0F2F1/333333?text=鷺江國小美麗校園空拍" 
-                 alt="鷺江國小校園空拍" 
-                 class="absolute inset-0 w-full h-full object-cover opacity-50"
-                 onerror="this.src='https://drive.google.com/file/d/1dvg3_7qnTGxpnP_dNq8p4nWrnvSTEtuL/view?usp=sharing'">
-            <!-- 漸層遮罩 -->
+            <img id="hero-image" src="" alt="鷺江國小校園空拍" class="absolute inset-0 w-full h-full object-cover opacity-50">
             <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-70"></div>
-            
-            <!-- 文字內容 -->
             <div class="relative z-10 text-center p-4">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-shadow-lg">
-                    歡迎來到鷺江國小
-                </h1>
-                <p class="mt-6 text-lg sm:text-xl md:text-2xl font-medium text-shadow">
-                    重視效能、效率與效益
-                </p>
-                <p class="text-lg sm:text-xl md:text-2xl font-medium text-shadow">
-                    追求品質、品味與品牌
-                </p>
+                <h1 id="hero-title" class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-shadow-lg"></h1>
+                <p id="hero-subtitle1" class="mt-6 text-lg sm:text-xl md:text-2xl font-medium text-shadow"></p>
+                <p id="hero-subtitle2" class="text-lg sm:text-xl md:text-2xl font-medium text-shadow"></p>
             </div>
         </section>
 
         <!-- 
           About Section (學校簡介)
-          使用簡報中的學校概況資訊
         -->
         <section id="about" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
                     <div>
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                            關於鷺江
-                        </h2>
-                        <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-                            本校創建於民國70年，位於新北市蘆洲區民族路及民權路交會處，校地面積2.28公頃。比鄰區公所、捷運站及公車站，交通便利，生活機能完備，屬於都會型學校。
-                        </p>
+                        <h2 id="about-title" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"></h2>
+                        <p id="about-content" class="mt-6 text-lg text-gray-600 leading-relaxed"></p>
                         
-                        <!-- 學校數據統計 -->
                         <div class="mt-10 grid grid-cols-2 gap-8 border-t pt-8">
                             <div>
-                                <p class="text-3xl font-bold text-blue-700">2500+</p>
-                                <p class="mt-1 text-base font-medium text-gray-500">國小及幼兒園學生</p>
-                                <p class="text-sm text-gray-500">(國小 2459人, 幼兒園 127人)</p>
+                                <p id="about-stat1-number" class="text-3xl font-bold text-blue-700"></p>
+                                <p id="about-stat1-label" class="mt-1 text-base font-medium text-gray-500"></p>
+                                <p id="about-stat1-details" class="text-sm text-gray-500"></p>
                             </div>
                             <div>
-                                <p class="text-3xl font-bold text-blue-700">237</p>
-                                <p class="mt-1 text-base font-medium text-gray-500">教職員工</p>
-                                <p class="text-sm text-gray-500">(全心投入教育工作)</p>
+                                <p id="about-stat2-number" class="text-3xl font-bold text-blue-700"></p>
+                                <p id="about-stat2-label" class="mt-1 text-base font-medium text-gray-500"></p>
+                                <p id="about-stat2-details" class="text-sm text-gray-500"></p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 簡介圖片 -->
                     <div class="mt-12 lg:mt-0">
-                        <img class="rounded-xl shadow-lg w-full h-auto object-cover" 
-                             src="https://placehold.co/600x450/FFF9C4/333333?text=操場與教學大樓" 
-                             alt="鷺江國小操場與教學大樓"
-                             onerror="this.src='https://placehold.co/600x450/FFF9C4/333333?text=操場與教學大樓'">
+                        <img id="about-image" class="rounded-xl shadow-lg w-full h-auto object-cover" 
+                             src="" alt="鷺江國小操場與教學大樓">
                     </div>
                 </div>
             </div>
@@ -159,82 +214,40 @@
 
         <!-- 
           Traffic Section (交通安全)
-          使用簡報中關於交通的重點資訊
         -->
         <section id="traffic" class="py-20 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        交通安全資訊
-                    </h2>
-                    <p class="mt-4 text-xl text-gray-600">
-                        守護學童安全，平安快樂上學
-                    </p>
+                    <h2 id="traffic-title" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"></h2>
+                    <p id="traffic-subtitle" class="mt-4 text-xl text-gray-600"></p>
                 </div>
 
-                <!-- 學生通學方式 -->
                 <div class="mt-16 bg-white p-8 rounded-xl shadow-lg">
                     <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">學生上學交通方式</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
-                        <div class="flex flex-col items-center p-4 bg-yellow-100 rounded-lg">
-                            <span class="text-4xl font-bold text-yellow-800">31%</span>
-                            <span class="mt-2 font-medium text-yellow-900">走路</span>
-                        </div>
-                        <div class="flex flex-col items-center p-4 bg-orange-100 rounded-lg">
-                            <span class="text-4xl font-bold text-orange-800">53%</span>
-                            <span class="mt-2 font-medium text-orange-900">騎機車</span>
-                        </div>
-                        <div class="flex flex-col items-center p-4 bg-red-100 rounded-lg">
-                            <span class="text-4xl font-bold text-red-800">12%</span>
-                            <span class="mt-2 font-medium text-red-900">開車</span>
-                        </div>
-                        <div class="flex flex-col items-center p-4 bg-purple-100 rounded-lg">
-                            <span class="text-4xl font-bold text-purple-800">3%</span>
-                            <span class="mt-2 font-medium text-purple-900">搭捷運/公車</span>
-                        </div>
-                        <div class="flex flex-col items-center p-4 bg-gray-200 rounded-lg col-span-2 md:col-span-1">
-                            <span class="text-4xl font-bold text-gray-800">3%</span>
-                            <span class="mt-2 font-medium text-gray-900">其它</span>
-                        </div>
+                    <div id="traffic-commute-stats" class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                        <!-- 統計數據將由 JS 動態填入 -->
                     </div>
-                    <p class="mt-6 text-center text-gray-600">
-                        * 數據顯示，本校學生上放學以家長騎機車及走路上學接送居多。
-                    </p>
+                    <p id="traffic-commute-note" class="mt-6 text-center text-gray-600"></p>
                 </div>
 
-                <!-- 周邊交通狀況 -->
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12">
                     <!-- 民族路 (正門) -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img class="w-full h-64 object-cover" 
-                             src="https://placehold.co/600x400/FFEBEE/333333?text=民族路放學實況" 
-                             alt="民族路放學實況"
-                             onerror="this.src='https://placehold.co/600x400/FFEBEE/333333?text=民族路放學實況'">
+                        <img id="traffic-location1-image" class="w-full h-64 object-cover" src="" alt="民族路放學實況">
                         <div class="p-6">
-                            <h4 class="text-xl font-semibold text-gray-800">正門 (民族路)</h4>
-                            <p class="mt-3 text-base text-gray-600">
-                                位於交通要塞，公車路線多。上放學時段因家長接送車輛與人潮集中，偶會出現交通壅滯現象。
-                            </p>
-                            <p class="mt-3 text-base text-red-600 font-medium">
-                                * 請家長多加注意，快接快送，勿久停留。
-                            </p>
+                            <h4 id="traffic-location1-title" class="text-xl font-semibold text-gray-800"></h4>
+                            <p id="traffic-location1-description" class="mt-3 text-base text-gray-600"></p>
+                            <p id="traffic-location1-note" class="mt-3 text-base text-red-600 font-medium"></p>
                         </div>
                     </div>
                     
                     <!-- 民權路 (側門) -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                        <img class="w-full h-64 object-cover" 
-                             src="https://placehold.co/600x400/E3F2FD/333333?text=民權路放學實況" 
-                             alt="民權路放學實況"
-                             onerror="this.src='https://placehold.co/600x400/E3F2FD/333333?text=民權路放學實況'">
+                        <img id="traffic-location2-image" class="w-full h-64 object-cover" src="" alt="民權路放學實況">
                         <div class="p-6">
-                            <h4 class="text-xl font-semibold text-gray-800">側門 (民權路)</h4>
-                            <p class="mt-3 text-base text-gray-600">
-                                家長接送情況較為良好，接送人數與車流量適中，交通狀況相對舒緩。
-                            </p>
-                             <p class="mt-3 text-base text-green-600 font-medium">
-                                * 建議家長可多利用民權路側門接送。
-                            </p>
+                            <h4 id="traffic-location2-title" class="text-xl font-semibold text-gray-800"></h4>
+                            <p id="traffic-location2-description" class="mt-3 text-base text-gray-600"></p>
+                             <p id="traffic-location2-note" class="mt-3 text-base text-green-600 font-medium"></p>
                         </div>
                     </div>
                 </div>
@@ -243,39 +256,27 @@
 
         <!-- 
           Gallery Section (校園剪影)
-          使用簡報中的校園照片
         -->
         <section id="gallery" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        校園剪影
-                    </h2>
-                    <p class="mt-4 text-xl text-gray-600">
-                        鷺江的美麗角落
-                    </p>
+                    <h2 id="gallery-title" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"></h2>
+                    <p id="gallery-subtitle" class="mt-4 text-xl text-gray-600"></p>
                 </div>
-                <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <img src="https://placehold.co/600x400/F1F8E9/333333?text=彩色PU跑道" alt="彩色PU跑道" class="rounded-xl shadow-lg object-cover w-full h-64 hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/F1F8E9/333333?text=彩色PU跑道'">
-                    <img src="https://placehold.co/600x400/E8EAF6/333333?text=遊戲區與中庭" alt="遊戲區與中庭" class="rounded-xl shadow-lg object-cover w-full h-64 hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/E8EAF6/333333?text=遊戲區與中庭'">
-                    <img src="https://placehold.co/600x400/F3E5F5/333333?text=校園空拍全景" alt="校園空拍全景" class="rounded-xl shadow-lg object-cover w-full h-64 hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/F3E5F5/333333?text=校園空拍全景'">
+                <div id="gallery-images-container" class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 圖片將由 JS 動態填入 -->
                 </div>
             </div>
         </section>
 
         <!-- 
           Info Section (親師生專區)
-          示意性的快速連結
         -->
         <section id="info" class="py-20 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        親師生專區
-                    </h2>
-                    <p class="mt-4 text-xl text-gray-600">
-                        重要資訊與快速連結
-                    </p>
+                    <h2 id="info-title" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"></h2>
+                    <p id="info-subtitle" class="mt-4 text-xl text-gray-600"></p>
                 </div>
 
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -284,9 +285,9 @@
                         <div class="bg-blue-100 text-blue-700 rounded-full p-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-2.204M17 20H7m10 0v-2c0-1.657-1.343-3-3-3H7m10 2H7m10 0H7M7 20v-2C7 16.343 5.657 15 4 15v-2c1.657 0 3-1.343 3-3v-2c0-1.657-1.343-3-3-3V3h1.343C7.657 3 9 4.343 9 6v2c0 1.657 1.343 3 3 3h2c1.657 0 3-1.343 3-3V6c0-1.657 1.343-3 3-3h1v2c-1.657 0-3 1.343-3 3v2c0 1.657 1.343 3 3 3v2c-1.657 0-3 1.343-3 3v2z" /></svg>
                         </div>
-                        <h4 class="mt-5 text-xl font-semibold text-gray-800">家長專區</h4>
-                        <p class="mt-2 text-gray-600">上放學接送、交通安全宣導、學校公告。</p>
-                        <a href="#traffic" class="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-150">查看接送資訊</a>
+                        <h4 id="info-section1-title" class="mt-5 text-xl font-semibold text-gray-800"></h4>
+                        <p id="info-section1-description" class="mt-2 text-gray-600"></p>
+                        <a id="info-section1-button" href="#" class="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-150"></a>
                     </div>
 
                     <!-- 教師專區 -->
@@ -294,9 +295,9 @@
                         <div class="bg-green-100 text-green-700 rounded-full p-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m0-11.494c.011.004.022.007.033.011.012.004.023.008.034.012.112.04.223.084.33.13C13.81 7.02 15.358 7.5 17 7.5c2.65 0 4.8 1.567 4.8 3.5s-2.15 3.5-4.8 3.5c-1.642 0-3.19-.48-4.4-1.256-.107-.046-.218-.09-.33-.13a.5.5 0 00-.067-.023M12 6.253v11.494m0-11.494c-.011.004-.022.007-.033.011-.012.004-.023.008-.034.012C10.81 7.02 9.262 7.5 7.5 7.5c-2.65 0-4.8 1.567-4.8 3.5s2.15 3.5 4.8 3.5c1.762 0 3.309-.48 4.5-1.256.107-.046.218-.09.33-.13a.5.5 0 01.067-.023M12 6.253v11.494" /></svg>
                         </div>
-                        <h4 class="mt-5 text-xl font-semibold text-gray-800">教師專區</h4>
-                        <p class="mt-2 text-gray-600">教學資源、行政公告、研習資訊。</p>
-                        <a href="#" class="mt-6 inline-block bg-green-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-700 transition duration-150">登入校務系統</a>
+                        <h4 id="info-section2-title" class="mt-5 text-xl font-semibold text-gray-800"></h4>
+                        <p id="info-section2-description" class="mt-2 text-gray-600"></p>
+                        <a id="info-section2-button" href="#" class="mt-6 inline-block bg-green-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-700 transition duration-150"></a>
                     </div>
 
                     <!-- 學生專區 -->
@@ -304,20 +305,17 @@
                         <div class="bg-yellow-100 text-yellow-700 rounded-full p-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a.986.986 0 00.44-.063l2.828-1.099A.986.986 0 0022 8.5V17a.986.986 0 01-.572.894l-8.428 4.214A.986.986 0 0112 22a.986.986 0 01-.572-.106l-8.428-4.214A.986.986 0 012 17V8.5a.986.986 0 00.572-.894l2.828-1.099a.986.986 0 00.44.063L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v5.5" /></svg>
                         </div>
-                        <h4 class="mt-5 text-xl font-semibold text-gray-800">學生專區</h4>
-                        <p class="mt-2 text-gray-600">學習園地、線上資源、交通安全守則。</p>
-                        <a href="#" class="mt-6 inline-block bg-yellow-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-600 transition duration-150">進入學習平台</a>
+                        <h4 id="info-section3-title" class="mt-5 text-xl font-semibold text-gray-800"></h4>
+                        <p id="info-section3-description" class="mt-2 text-gray-600"></p>
+                        <a id="info-section3-button" href="#" class="mt-6 inline-block bg-yellow-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-600 transition duration-150"></a>
                     </div>
                 </div>
 
                 <!-- 官方網站連結 QR Code -->
                 <div class="mt-20 text-center">
-                     <h4 class="text-xl font-semibold text-gray-800">學校網站連結</h4>
-                     <p class="mt-2 text-gray-600">掃描 QR Code 以前往鷺江國小官方網站</p>
-                    <img src="https://placehold.co/150x150/EEEEEE/333333?text=網站連結QR" 
-                         alt="學校網站連結 QR Code" 
-                         class="mt-4 mx-auto rounded-lg shadow-md"
-                         onerror="this.src='https://placehold.co/150x150/EEEEEE/333333?text=網站連結QR'">
+                     <h4 id="info-qr-title" class="text-xl font-semibold text-gray-800"></h4>
+                     <p id="info-qr-subtitle" class="mt-2 text-gray-600"></p>
+                    <img id="info-qr-image" src="" alt="學校網站連結 QR Code" class="mt-4 mx-auto rounded-lg shadow-md">
                 </div>
             </div>
         </section>
@@ -326,41 +324,146 @@
 
     <!-- 
       Footer (頁尾)
-      包含基本聯絡資訊
     -->
     <footer class="bg-gray-800 text-gray-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="md:flex md:justify-between md:items-center">
                 <div class="mb-8 md:mb-0">
-                    <h5 class="text-lg font-semibold text-white">新北市蘆洲區鷺江國民小學</h5>
-                    <p class="mt-2 text-gray-400">Lu Jiang Elementary School, Luzhou District, New Taipei City.</p>
+                    <h5 id="footer-school-name" class="text-lg font-semibold text-white"></h5>
+                    <p id="footer-school-name-en" class="mt-2 text-gray-400"></p>
                 </div>
                 <div class="text-left">
-                    <p><span class="font-medium text-white">地址:</span> 247001 新北市蘆洲區民族路七號</p>
-                    <p><span class="font-medium text-white">電話:</span> (02) 2281-9980</p>
+                    <p><span class="font-medium text-white">地址:</span> <span id="footer-address"></span></p>
+                    <p><span class="font-medium text-white">電話:</span> <span id="footer-phone"></span></p>
                 </div>
             </div>
             <div class="mt-8 border-t border-gray-700 pt-8 text-center">
-                <p class="text-base text-gray-400">
-                    &copy; 2025 鷺江國民小學 版權所有 (網站草案)
-                </p>
+                <p id="footer-copyright" class="text-base text-gray-400"></p>
             </div>
         </div>
     </footer>
     
     <!-- 
-      JavaScript
-      用於處理手機版選單的開合
+      ===============================================================
+      == 網站內容自動填入腳本 ==
+      == 這個腳本會讀取最上方的 "siteData" 設定，並自動填入網站中 ==
+      == 您不需要修改這個腳本 ==
+      ===============================================================
     -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 自動填入所有設定的內容
+            
+            // --- 頁首 ---
+            document.getElementById('header-logo').src = siteData.header.logoUrl;
+            document.getElementById('header-school-name').textContent = siteData.header.schoolName;
+            document.getElementById('header-school-name-short').textContent = siteData.header.schoolNameShort;
+
+            // --- 首頁主圖 ---
+            document.getElementById('hero-image').src = siteData.hero.imageUrl;
+            document.getElementById('hero-title').textContent = siteData.hero.title;
+            document.getElementById('hero-subtitle1').textContent = siteData.hero.subtitle1;
+            document.getElementById('hero-subtitle2').textContent = siteData.hero.subtitle2;
+            
+            // --- 關於本校 ---
+            document.getElementById('about-title').textContent = siteData.about.title;
+            document.getElementById('about-content').textContent = siteData.about.content;
+            document.getElementById('about-stat1-number').textContent = siteData.about.stat1.number;
+            document.getElementById('about-stat1-label').textContent = siteData.about.stat1.label;
+            document.getElementById('about-stat1-details').textContent = siteData.about.stat1.details;
+            document.getElementById('about-stat2-number').textContent = siteData.about.stat2.number;
+            document.getElementById('about-stat2-label').textContent = siteData.about.stat2.label;
+            document.getElementById('about-stat2-details').textContent = siteData.about.stat2.details;
+            document.getElementById('about-image').src = siteData.about.imageUrl;
+            
+            // --- 交通安全 ---
+            document.getElementById('traffic-title').textContent = siteData.traffic.title;
+            document.getElementById('traffic-subtitle').textContent = siteData.traffic.subtitle;
+            
+            // 交通統計
+            const statsContainer = document.getElementById('traffic-commute-stats');
+            const colorMap = {
+                yellow: "bg-yellow-100 text-yellow-800 text-yellow-900",
+                orange: "bg-orange-100 text-orange-800 text-orange-900",
+                red: "bg-red-100 text-red-800 text-red-900",
+                purple: "bg-purple-100 text-purple-800 text-purple-900",
+                gray: "bg-gray-200 text-gray-800 text-gray-900"
+            };
+            siteData.traffic.commuteStats.forEach((stat, index) => {
+                const colors = colorMap[stat.color] || colorMap.gray;
+                const [bgColor, valueColor, labelColor] = colors.split(" ");
+                let colSpan = (index === siteData.traffic.commuteStats.length - 1 && siteData.traffic.commuteStats.length % 2 !== 0) ? "col-span-2 md:col-span-1" : "";
+                
+                statsContainer.innerHTML += `
+                    <div class="flex flex-col items-center p-4 ${bgColor} rounded-lg ${colSpan}">
+                        <span class="text-4xl font-bold ${valueColor}">${stat.value}</span>
+                        <span class="mt-2 font-medium ${labelColor}">${stat.label}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('traffic-commute-note').textContent = siteData.traffic.commuteNote;
+            
+            // 交通地點
+            document.getElementById('traffic-location1-image').src = siteData.traffic.location1.imageUrl;
+            document.getElementById('traffic-location1-title').textContent = siteData.traffic.location1.title;
+            document.getElementById('traffic-location1-description').textContent = siteData.traffic.location1.description;
+            document.getElementById('traffic-location1-note').textContent = siteData.traffic.location1.note;
+            
+            document.getElementById('traffic-location2-image').src = siteData.traffic.location2.imageUrl;
+            document.getElementById('traffic-location2-title').textContent = siteData.traffic.location2.title;
+            document.getElementById('traffic-location2-description').textContent = siteData.traffic.location2.description;
+            document.getElementById('traffic-location2-note').textContent = siteData.traffic.location2.note;
+
+            // --- 校園剪影 ---
+            document.getElementById('gallery-title').textContent = siteData.gallery.title;
+            document.getElementById('gallery-subtitle').textContent = siteData.gallery.subtitle;
+            const galleryContainer = document.getElementById('gallery-images-container');
+            siteData.gallery.images.forEach(image => {
+                galleryContainer.innerHTML += `
+                    <img src="${image.imageUrl}" alt="${image.alt}" 
+                         class="rounded-xl shadow-lg object-cover w-full h-64 hover:scale-105 transition-transform duration-300" 
+                         onerror="this.src='${image.imageUrl.replace(/text=.*$/, 'text=%E5%9C%96%E7%89%87%E8%BC%89%E5%85%A5%E5%A4%B1%E6%95%97')}'">
+                `;
+            });
+
+            // --- 親師生專區 ---
+            document.getElementById('info-title').textContent = siteData.info.title;
+            document.getElementById('info-subtitle').textContent = siteData.info.subtitle;
+            
+            document.getElementById('info-section1-title').textContent = siteData.info.section1.title;
+            document.getElementById('info-section1-description').textContent = siteData.info.section1.description;
+            document.getElementById('info-section1-button').textContent = siteData.info.section1.buttonText;
+            document.getElementById('info-section1-button').href = siteData.info.section1.buttonLink;
+
+            document.getElementById('info-section2-title').textContent = siteData.info.section2.title;
+            document.getElementById('info-section2-description').textContent = siteData.info.section2.description;
+            document.getElementById('info-section2-button').textContent = siteData.info.section2.buttonText;
+            document.getElementById('info-section2-button').href = siteData.info.section2.buttonLink;
+
+            document.getElementById('info-section3-title').textContent = siteData.info.section3.title;
+            document.getElementById('info-section3-description').textContent = siteData.info.section3.description;
+            document.getElementById('info-section3-button').textContent = siteData.info.section3.buttonText;
+            document.getElementById('info-section3-button').href = siteData.info.section3.buttonLink;
+
+            document.getElementById('info-qr-title').textContent = siteData.info.qrCode.title;
+            document.getElementById('info-qr-subtitle').textContent = siteData.info.qrCode.subtitle;
+            document.getElementById('info-qr-image').src = siteData.info.qrCode.imageUrl;
+
+            // --- 頁尾 ---
+            document.getElementById('footer-school-name').textContent = siteData.footer.schoolName;
+            document.getElementById('footer-school-name-en').textContent = siteData.footer.schoolNameEn;
+            document.getElementById('footer-address').textContent = siteData.footer.address;
+            document.getElementById('footer-phone').textContent = siteData.footer.phone;
+            document.getElementById('footer-copyright').innerHTML = siteData.footer.copyright;
+
+
+            // --- 手機選單功能 (照舊) ---
             const menuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuLinks = mobileMenu.querySelectorAll('a');
             const burgerIcon = menuButton.querySelector('svg:first-child');
             const closeIcon = menuButton.querySelector('svg:last-child');
 
-            // 點擊漢堡按鈕時開合選單
             menuButton.addEventListener('click', () => {
                 const isHidden = mobileMenu.classList.contains('hidden');
                 mobileMenu.classList.toggle('hidden');
@@ -370,7 +473,6 @@
                 closeIcon.classList.toggle('block', !isHidden);
             });
 
-            // 點擊選單連結時自動關閉選單
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
@@ -385,3 +487,5 @@
 
 </body>
 </html>
+
+
