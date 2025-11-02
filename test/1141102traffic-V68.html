@@ -1,0 +1,2354 @@
+<!doctype html>
+<html lang="zh-TW">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鷺江國小交通安全教學網站</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        
+        .text-sm {
+            font-size: 15px !important;
+        }
+        
+        .text-xs {
+            font-size: 13px !important;
+        }
+        
+        p, span, div {
+            font-size: 16px;
+        }
+        
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .chart-bar {
+            transition: all 0.3s ease;
+        }
+        
+        .chart-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-full">
+  <div class="container mx-auto px-4 py-8"><!-- 網站標題 -->
+   <header class="text-center mb-12">
+    <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-4">🏫 鷺江國小交通安全教學網站</h1>
+    <p class="text-xl text-gray-600 mb-6">守護每一個孩子的上學路 🛡️</p>
+    <div class="bg-white p-6 rounded-2xl shadow-lg inline-block">
+     <p class="text-lg font-semibold text-blue-700">📍 新北市蘆洲區鷺江國小</p>
+     <p class="text-gray-600">讓安全成為習慣，讓學習充滿樂趣</p>
+    </div>
+   </header><!-- 學校概況專區 -->
+   <section class="bg-gradient-to-br from-cyan-50 to-blue-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-cyan-800">🏫 鷺江國小概況專區</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 基本資料 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">📋 學校基本資料</h3>
+      <div class="space-y-3">
+       <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg"><span class="font-medium">🏛️ 創校年份</span> <span class="text-blue-600 font-bold">民國70年</span>
+       </div>
+       <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg"><span class="font-medium">👨‍🏫 教職員總數</span> <span class="text-green-600 font-bold">237人</span>
+       </div>
+       <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg"><span class="font-medium">🎓 國小部</span> <span class="text-purple-600 font-bold">99班 / 2,459名學生</span>
+       </div>
+       <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg"><span class="font-medium">🧸 幼兒園</span> <span class="text-orange-600 font-bold">8班 / 127名學生</span>
+       </div>
+      </div>
+     </div><!-- 學生背景統計 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-green-700">👥 學生背景分析</h3>
+      <div class="space-y-4">
+       <div class="bg-gradient-to-r from-pink-50 to-rose-100 p-4 rounded-lg">
+        <h4 class="font-semibold text-pink-700 mb-2">🌏 多元文化背景</h4>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+         <div>
+          新住民子女：<span class="font-bold text-pink-600">15%</span>
+         </div>
+         <div>
+          原住民學生：<span class="font-bold text-pink-600">2%</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-yellow-50 to-amber-100 p-4 rounded-lg">
+        <h4 class="font-semibold text-yellow-700 mb-2">💛 弱勢學生關懷</h4>
+        <div class="space-y-1 text-sm">
+         <div>
+          單親隔代教養：<span class="font-bold text-yellow-600">8%</span>
+         </div>
+         <div>
+          中低收入戶：<span class="font-bold text-yellow-600">12%</span>
+         </div>
+         <div>
+          身心障礙學生：<span class="font-bold text-yellow-600">3%</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- 通學方式分析 -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+     <h3 class="text-xl font-bold mb-4 text-indigo-700">🚗 通學方式統計分析</h3>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div>
+       <h4 class="font-semibold mb-3 text-gray-700">📊 主要通學方式</h4>
+       <div class="space-y-3">
+        <div class="flex items-center justify-between"><span class="text-sm">🛵 家長機車接送</span>
+         <div class="flex items-center gap-2">
+          <div class="w-32 bg-gray-200 rounded-full h-4">
+           <div class="bg-red-500 h-4 rounded-full" style="width: 53%"></div>
+          </div><span class="text-sm font-bold">53%</span>
+         </div>
+        </div>
+        <div class="flex items-center justify-between"><span class="text-sm">🚶‍♂️ 步行上學</span>
+         <div class="flex items-center gap-2">
+          <div class="w-32 bg-gray-200 rounded-full h-4">
+           <div class="bg-green-500 h-4 rounded-full" style="width: 31%"></div>
+          </div><span class="text-sm font-bold">31%</span>
+         </div>
+        </div>
+        <div class="flex items-center justify-between"><span class="text-sm">🚗 汽車接送</span>
+         <div class="flex items-center gap-2">
+          <div class="w-32 bg-gray-200 rounded-full h-4">
+           <div class="bg-blue-500 h-4 rounded-full" style="width: 12%"></div>
+          </div><span class="text-sm font-bold">12%</span>
+         </div>
+        </div>
+        <div class="flex items-center justify-between"><span class="text-sm">🚌 其他方式</span>
+         <div class="flex items-center gap-2">
+          <div class="w-32 bg-gray-200 rounded-full h-4">
+           <div class="bg-purple-500 h-4 rounded-full" style="width: 4%"></div>
+          </div><span class="text-sm font-bold">4%</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-amber-50 p-4 rounded-lg">
+       <h4 class="font-semibold text-amber-700 mb-3">⚠️ 交通安全重點</h4>
+       <ul class="text-sm space-y-2 text-amber-600">
+        <li>• 機車接送比例高，需加強機車安全教育</li>
+        <li>• 步行學生眾多，人行道安全是關鍵</li>
+        <li>• 上下學時段車流集中，需要導護管制</li>
+        <li>• 多元通學方式需要完善的交通規劃</li>
+       </ul>
+      </div>
+     </div>
+    </div><!-- 周邊交通狀況 -->
+    <div class="bg-white p-6 rounded-xl shadow-md">
+     <h3 class="text-xl font-bold mb-4 text-teal-700">🗺️ 周邊交通環境</h3>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div>
+       <h4 class="font-semibold mb-3">🚪 校門位置</h4>
+       <div class="space-y-2 text-sm">
+        <div class="flex justify-between p-2 bg-teal-50 rounded"><span>🏛️ 正門</span> <span class="font-semibold">民族路</span>
+        </div>
+        <div class="flex justify-between p-2 bg-blue-50 rounded"><span>🚪 側門</span> <span class="font-semibold">民權路</span>
+        </div>
+       </div>
+      </div>
+      <div>
+       <h4 class="font-semibold mb-3">🚧 交通議題</h4>
+       <div class="bg-yellow-50 p-3 rounded-lg">
+        <p class="text-sm text-yellow-700"><span class="font-semibold">人行道施工：</span> 民族路人行道因施工影響，學童通行需要特別注意安全，導護志工加強引導。</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 組織計畫與宣導專區 -->
+   <section class="bg-gradient-to-br from-emerald-50 to-teal-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-emerald-800">📋 組織計畫與宣導專區</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 推動委員會 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-emerald-700">🏛️ 交通安全教育推動委員會</h3>
+      <div class="space-y-4">
+       <div class="bg-emerald-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-emerald-600 mb-3">👥 組織架構</h4><!-- 組織架構圖 -->
+        <div class="bg-white p-4 rounded-lg mb-3">
+         <div class="flex flex-col items-center space-y-4"><!-- 召集人層級 -->
+          <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg shadow-md text-center">
+           <div class="font-bold">
+            召集人
+           </div>
+           <div class="text-sm">
+            校長
+           </div>
+          </div><!-- 連接線 -->
+          <div class="w-0.5 h-6 bg-gray-400"></div><!-- 執行秘書層級 -->
+          <div class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-lg shadow-md text-center">
+           <div class="font-bold">
+            執行秘書
+           </div>
+           <div class="text-sm">
+            學務主任
+           </div>
+          </div><!-- 連接線 -->
+          <div class="w-0.5 h-6 bg-gray-400"></div><!-- 委員層級 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
+           <div class="bg-gradient-to-r from-purple-400 to-purple-500 text-white px-4 py-2 rounded-lg shadow text-center">
+            <div class="font-semibold text-sm">
+             各處室主任
+            </div>
+           </div>
+           <div class="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-lg shadow text-center">
+            <div class="font-semibold text-sm">
+             導師代表
+            </div>
+           </div>
+           <div class="bg-gradient-to-r from-pink-400 to-pink-500 text-white px-4 py-2 rounded-lg shadow text-center">
+            <div class="font-semibold text-sm">
+             家長代表
+            </div>
+           </div>
+          </div>
+         </div>
+        </div><!-- 文字說明 -->
+        <div class="text-sm space-y-1 text-emerald-700">
+         <div>
+          📋 <strong>召集人：</strong>校長 - 統籌指導委員會運作
+         </div>
+         <div>
+          📝 <strong>執行秘書：</strong>學務主任 - 負責會議召集與執行
+         </div>
+         <div>
+          👥 <strong>委員：</strong>各處室主任、導師代表、家長代表 - 協助推動各項工作
+         </div>
+        </div>
+       </div>
+       <div class="bg-blue-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-blue-600 mb-2">📅 運作機制</h4>
+        <div class="text-sm space-y-1">
+         <div>
+          • 每學期召開2次會議
+         </div>
+         <div>
+          • 檢討交通安全教育實施成效
+         </div>
+         <div>
+          • 規劃年度交通安全活動
+         </div>
+         <div>
+          • 協調校園周邊交通改善事宜
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- SWOT分析 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">🎯 SWOT分析與PDCA策略</h3>
+      <div class="grid grid-cols-2 gap-3 mb-4">
+       <div class="bg-green-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-green-600 text-sm mb-1">💪 優勢 (S)</h4>
+        <p class="text-xs">導護志工充足、教師配合度高</p>
+       </div>
+       <div class="bg-red-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-red-600 text-sm mb-1">⚠️ 劣勢 (W)</h4>
+        <p class="text-xs">周邊道路狹窄、車流量大</p>
+       </div>
+       <div class="bg-blue-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-blue-600 text-sm mb-1">🌟 機會 (O)</h4>
+        <p class="text-xs">科技融入教學、社區支持</p>
+       </div>
+       <div class="bg-yellow-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-yellow-600 text-sm mb-1">⚡ 威脅 (T)</h4>
+        <p class="text-xs">交通流量增加、違規停車</p>
+       </div>
+      </div>
+      <div class="bg-purple-50 p-3 rounded-lg">
+       <h4 class="font-semibold text-purple-600 mb-2">🔄 PDCA循環改善</h4>
+       <div class="text-xs space-y-1">
+        <div>
+         Plan：年度計畫擬定
+        </div>
+        <div>
+         Do：教學活動執行
+        </div>
+        <div>
+         Check：成效評估檢核
+        </div>
+        <div>
+         Act：持續改善行動
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8"><!-- 教師知能提升 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-purple-700">👨‍🏫 教師知能提升措施</h3>
+      <div class="space-y-4">
+       <div class="bg-purple-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-purple-600 mb-2">📚 專業研習</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 交通安全教育研習每學期2小時</li>
+         <li>• 邀請專家學者專題演講</li>
+         <li>• 教學觀摩與經驗分享</li>
+         <li>• 教材教法創新工作坊</li>
+        </ul>
+       </div>
+       <div class="bg-green-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-green-600 mb-2">🎯 實務訓練</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 導護工作技能訓練</li>
+         <li>• 緊急事故處理演練</li>
+         <li>• 交通指揮手勢練習</li>
+         <li>• 學生輔導技巧提升</li>
+        </ul>
+       </div>
+      </div>
+     </div><!-- 家長社區宣導 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-orange-700">👨‍👩‍👧‍👦 家長社區宣導</h3>
+      <div class="space-y-4">
+       <div class="bg-orange-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-orange-600 mb-2">📢 宣導活動</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 親職教育講座融入交通安全</li>
+         <li>• 班親會宣導正確接送觀念</li>
+         <li>• 發放交通安全宣導單張</li>
+         <li>• 社群媒體安全提醒</li>
+        </ul>
+       </div>
+       <div class="bg-pink-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-pink-600 mb-2">🤝 社區合作</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 與里長合作改善交通環境</li>
+         <li>• 商家配合宣導交通安全</li>
+         <li>• 社區巡守隊協助維護</li>
+         <li>• 警察局定期交通宣導</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 教學與活動專區 -->
+   <section class="bg-gradient-to-br from-rose-50 to-pink-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-rose-800">📚 教學與活動專區</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 課程架構 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-rose-700">📖 分年級課程架構</h3>
+      <div class="space-y-4">
+       <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+        <h4 class="font-semibold text-yellow-700 mb-2">🟡 低年級課程重點</h4>
+        <ul class="text-sm space-y-1 text-yellow-600">
+         <li>• 基本交通標誌認識</li>
+         <li>• 紅綠燈號誌理解</li>
+         <li>• 安全過馬路步驟</li>
+         <li>• 乘車安全須知</li>
+        </ul>
+       </div>
+       <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
+        <h4 class="font-semibold text-orange-700 mb-2">🟠 中年級課程重點</h4>
+        <ul class="text-sm space-y-1 text-orange-600">
+         <li>• 交通標誌分類學習</li>
+         <li>• 路權概念建立</li>
+         <li>• 行人安全守則</li>
+         <li>• 公共運輸禮儀</li>
+        </ul>
+       </div>
+       <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-400">
+        <h4 class="font-semibold text-red-700 mb-2">🔴 高年級課程重點</h4>
+        <ul class="text-sm space-y-1 text-red-600">
+         <li>• 腳踏車安全騎乘</li>
+         <li>• 交通法規認識</li>
+         <li>• 責任意識培養</li>
+         <li>• 緊急應變處理</li>
+        </ul>
+       </div>
+      </div>
+     </div><!-- 融入教學 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-indigo-700">🎯 各科融入教學</h3>
+      <div class="space-y-4">
+       <div class="bg-indigo-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-indigo-600 mb-2">🗣️ 本土語融入</h4>
+        <p class="text-sm text-indigo-600">結合閩南語、客語教學，學習交通安全相關詞彙， 透過母語傳承安全觀念，增進文化認同。</p>
+       </div>
+       <div class="bg-green-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-green-600 mb-2">💻 資訊課程整合</h4>
+        <p class="text-sm text-green-600">運用數位工具製作交通安全簡報、動畫， 培養學生資訊素養與安全意識並重。</p>
+       </div>
+       <div class="bg-purple-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-purple-600 mb-2">🎨 藝術創作表達</h4>
+        <p class="text-sm text-purple-600">透過繪畫、勞作、戲劇等藝術形式， 創作交通安全作品，深化學習印象。</p>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8"><!-- 校內外活動 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-teal-700">🎪 校內外活動規劃</h3>
+      <div class="space-y-4">
+       <div class="bg-teal-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-teal-600 mb-2">🏫 校內活動</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 交通安全週主題活動</li>
+         <li>• 安全小天使選拔</li>
+         <li>• 交通標誌設計比賽</li>
+         <li>• 情境劇表演競賽</li>
+         <li>• 導護志工感謝活動</li>
+        </ul>
+       </div>
+       <div class="bg-blue-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-blue-600 mb-2">🌍 校外參訪</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 交通安全教育館參觀</li>
+         <li>• 警察局交通隊體驗</li>
+         <li>• 捷運公司安全宣導</li>
+         <li>• 社區交通環境踏查</li>
+        </ul>
+       </div>
+      </div>
+     </div><!-- 學生交通崗 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-amber-700">👮‍♂️ 學生交通崗服務</h3>
+      <div class="space-y-4">
+       <div class="bg-amber-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-amber-600 mb-2">🎯 服務內容</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 協助低年級學童過馬路</li>
+         <li>• 維護校門口秩序</li>
+         <li>• 宣導交通安全觀念</li>
+         <li>• 記錄違規行為並勸導</li>
+        </ul>
+       </div>
+       <div class="bg-green-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-green-600 mb-2">🏆 培訓與獎勵</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 定期舉辦訓練課程</li>
+         <li>• 頒發服務證書</li>
+         <li>• 優秀服務員表揚</li>
+         <li>• 培養領導責任感</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 交通安全輔導措施專區 -->
+   <section class="bg-gradient-to-br from-violet-50 to-purple-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-violet-800">🚦 交通安全輔導措施專區</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 安親班接送專區 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-violet-700">🏢 安親班接送專區規劃</h3>
+      <div class="space-y-4">
+       <div class="bg-violet-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-violet-600 mb-2">📍 專區設置</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 校門口右側設置安親班接送區</li>
+         <li>• 明確標示接送時間與規範</li>
+         <li>• 安親班車輛統一管理</li>
+         <li>• 專人引導學童上下車</li>
+        </ul>
+       </div>
+       <div class="bg-blue-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-blue-600 mb-2">⏰ 時間管制</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 放學時段：15:50-16:10</li>
+         <li>• 分批接送避免擁擠</li>
+         <li>• 逾時車輛需至其他區域等候</li>
+         <li>• 配合學校作息時間調整</li>
+        </ul>
+       </div>
+      </div>
+     </div><!-- 路隊與停車管理 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-emerald-700">🚗 路隊與停車管理</h3>
+      <div class="space-y-4">
+       <div class="bg-emerald-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-emerald-600 mb-2">👥 路隊編組</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 依居住方向編組路隊</li>
+         <li>• 高年級學生擔任小隊長</li>
+         <li>• 教師護送至安全地點</li>
+         <li>• 定期檢討路隊動線</li>
+        </ul>
+       </div>
+       <div class="bg-orange-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-orange-600 mb-2">🅿️ 停車規劃</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 汽車接送區：民族路側</li>
+         <li>• 機車接送區：民權路側</li>
+         <li>• 禁止併排停車</li>
+         <li>• 導護志工協助指揮</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8"><!-- 四位一體導護制度 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-pink-700">🛡️ 四位一體導護制度</h3>
+      <div class="grid grid-cols-2 gap-3">
+       <div class="bg-pink-50 p-3 rounded-lg text-center">
+        <div class="text-2xl mb-2">
+         👥
+        </div>
+        <h4 class="font-semibold text-pink-600 text-sm">導護志工</h4>
+        <p class="text-xs text-pink-500">88位志工輪值</p>
+       </div>
+       <div class="bg-blue-50 p-3 rounded-lg text-center">
+        <div class="text-2xl mb-2">
+         👨‍🏫
+        </div>
+        <h4 class="font-semibold text-blue-600 text-sm">值週教師</h4>
+        <p class="text-xs text-blue-500">專業指導協助</p>
+       </div>
+       <div class="bg-green-50 p-3 rounded-lg text-center">
+        <div class="text-2xl mb-2">
+         👨‍💼
+        </div>
+        <h4 class="font-semibold text-green-600 text-sm">校長督導</h4>
+        <p class="text-xs text-green-500">親自關心巡視</p>
+       </div>
+       <div class="bg-yellow-50 p-3 rounded-lg text-center">
+        <div class="text-2xl mb-2">
+         👮‍♂️
+        </div>
+        <h4 class="font-semibold text-yellow-600 text-sm">學生交通崗</h4>
+        <p class="text-xs text-yellow-500">同儕互助服務</p>
+       </div>
+      </div>
+      <div class="mt-4 bg-gradient-to-r from-pink-100 to-purple-100 p-3 rounded-lg">
+       <p class="text-sm text-center text-gray-700"><span class="font-semibold">完整防護網：</span> 多層次安全把關，確保每位學童平安上下學</p>
+      </div>
+     </div><!-- 家長接送區分流 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-cyan-700">🚦 家長接送區汽機車分流</h3>
+      <div class="space-y-4">
+       <div class="bg-cyan-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-cyan-600 mb-2">🚗 汽車接送動線</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 進入：民族路→校門口前</li>
+         <li>• 停車：臨時停車格</li>
+         <li>• 離開：民族路→民權路</li>
+         <li>• 禁止：迴轉、併排停車</li>
+        </ul>
+       </div>
+       <div class="bg-teal-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-teal-600 mb-2">🛵 機車接送動線</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 進入：民權路→側門</li>
+         <li>• 停車：機車停車格</li>
+         <li>• 離開：民權路→各方向</li>
+         <li>• 注意：戴安全帽、慢速行駛</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 創新成效展示專區 -->
+   <section class="bg-gradient-to-br from-indigo-50 to-blue-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">✨ 創新成效展示專區</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 優良志工表揚 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-yellow-700">🏅 優良志工表揚</h3>
+      <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-lg text-center">
+       <div class="text-4xl mb-3">
+        🏆
+       </div>
+       <h4 class="text-lg font-bold text-yellow-700 mb-2">黃秀美女士</h4>
+       <p class="text-sm text-yellow-600 mb-3">榮獲「新北市113學年度優良導護志工」</p>
+       <div class="bg-white p-3 rounded-lg">
+        <p class="text-xs text-gray-600">長年守護校園安全，展現最溫暖的教育力量！<br>
+          感謝所有導護志工的無私奉獻與堅持。</p>
+       </div>
+      </div>
+     </div><!-- 雙語融入教學 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">🌐 雙語融入教學</h3>
+      <div class="space-y-4">
+       <div class="bg-blue-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-blue-600 mb-2">📚 教學特色</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 交通標誌中英對照學習</li>
+         <li>• 安全用語雙語表達</li>
+         <li>• 國際交通規則比較</li>
+         <li>• 英語情境對話練習</li>
+        </ul>
+       </div>
+       <div class="bg-green-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-green-600 mb-2">🎯 學習成效</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 提升英語學習興趣</li>
+         <li>• 增進國際視野</li>
+         <li>• 強化安全意識</li>
+         <li>• 培養雙語能力</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8"><!-- 資訊科技應用 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-purple-700">💻 資訊科技應用</h3>
+      <div class="space-y-4">
+       <div class="bg-purple-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-purple-600 mb-2">🎮 數位學習工具</h4>
+        <ul class="text-sm space-y-1">
+         <li>• VR虛擬實境交通體驗</li>
+         <li>• 互動式交通安全APP</li>
+         <li>• 線上交通標誌測驗</li>
+         <li>• 數位故事創作平台</li>
+        </ul>
+       </div>
+       <div class="bg-pink-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-pink-600 mb-2">📱 智慧管理系統</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 導護志工排班系統</li>
+         <li>• 學童接送通知系統</li>
+         <li>• 交通狀況即時回報</li>
+         <li>• 安全教育成效追蹤</li>
+        </ul>
+       </div>
+      </div>
+     </div><!-- 健康促進結合 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-green-700">🏃‍♂️ 健康促進結合</h3>
+      <div class="space-y-4">
+       <div class="bg-green-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-green-600 mb-2">🚶‍♂️ 步行上學推廣</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 健走路線規劃</li>
+         <li>• 步行里程累積獎勵</li>
+         <li>• 親子健走活動</li>
+         <li>• 環保減碳教育</li>
+        </ul>
+       </div>
+       <div class="bg-teal-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-teal-600 mb-2">🎯 整合效益</h4>
+        <ul class="text-sm space-y-1">
+         <li>• 促進身體健康</li>
+         <li>• 減少交通擁擠</li>
+         <li>• 培養環保意識</li>
+         <li>• 增進親子關係</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 雙語安全學習系統 -->
+   <section class="bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">🌐 雙語安全學習系統</h2>
+    <div class="grid md:grid-cols-3 gap-6"><!-- 詞彙學習 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">📝 詞彙學習</h3>
+      <div id="vocabularySection" class="space-y-3 mb-4"><!-- 詞彙將在這裡動態生成 -->
+      </div><button onclick="generateNewVocabulary()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"> 🔄 重新出題 </button>
+     </div><!-- 句子練習 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-green-700">💬 句子練習</h3>
+      <div id="sentenceSection" class="space-y-3 mb-4"><!-- 句子將在這裡動態生成 -->
+      </div><button onclick="generateNewSentences()" class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"> 🔄 重新出題 </button>
+     </div><!-- 互動測驗 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-purple-700">🎯 互動測驗</h3>
+      <div id="quizSection"><!-- 測驗將在這裡動態生成 -->
+      </div><button onclick="startNewQuiz()" class="w-full bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition-colors mt-4"> 🔄 重新出題 </button>
+     </div>
+    </div>
+   </section><!-- AI智能學習助手 -->
+   <section class="bg-gradient-to-br from-purple-50 to-pink-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-purple-800">🤖 AI智能學習助手</h2>
+    <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- AI語音助教 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-purple-700">🎙️ AI語音助教</h3>
+      <div class="space-y-4">
+       <div class="bg-purple-50 p-4 rounded-lg">
+        <p class="text-sm text-purple-600 mb-2">💬 問我任何交通安全問題：</p>
+        <div class="flex gap-2"><input type="text" id="aiQuestion" placeholder="例：過馬路要注意什麼？" class="flex-1 p-2 border rounded-lg text-sm" onkeypress="if(event.key==='Enter') askAI()"> <button onclick="askAI()" class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors"> 🤖 問AI </button>
+        </div>
+       </div>
+       <div id="aiResponse" class="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-lg min-h-[100px] hidden">
+        <div class="flex items-center gap-2 mb-2"><span class="text-purple-600">🤖 AI助教回答：</span>
+        </div>
+        <div id="aiAnswer" class="text-gray-700"></div><button onclick="speakAIResponse()" class="mt-2 bg-pink-500 text-white px-3 py-1 rounded text-sm hover:bg-pink-600"> 🔊 朗讀回答 </button>
+       </div>
+      </div>
+     </div><!-- AI個人化學習 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-pink-700">📊 AI個人化學習</h3>
+      <div class="space-y-4">
+       <div class="bg-pink-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-pink-600 mb-2">🎯 學習能力分析</h4>
+        <div class="space-y-2">
+         <div class="flex justify-between items-center"><span class="text-sm">詞彙掌握度</span>
+          <div class="w-24 bg-gray-200 rounded-full h-2">
+           <div id="vocabProgress" class="bg-pink-500 h-2 rounded-full transition-all duration-500" style="width: 75%"></div>
+          </div><span class="text-sm font-semibold">75%</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-sm">句型理解度</span>
+          <div class="w-24 bg-gray-200 rounded-full h-2">
+           <div id="sentenceProgress" class="bg-purple-500 h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
+          </div><span class="text-sm font-semibold">60%</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-sm">安全知識</span>
+          <div class="w-24 bg-gray-200 rounded-full h-2">
+           <div id="safetyProgress" class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: 85%"></div>
+          </div><span class="text-sm font-semibold">85%</span>
+         </div>
+        </div>
+       </div><button onclick="generatePersonalPlan()" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-2 rounded-lg hover:from-pink-600 hover:to-purple-600 transition-all"> 🎯 生成個人化學習計畫 </button>
+       <div id="personalPlan" class="bg-yellow-50 p-3 rounded-lg hidden">
+        <h5 class="font-semibold text-yellow-700 mb-2">📋 您的專屬學習建議：</h5>
+        <div id="planContent" class="text-sm text-yellow-600"></div>
+       </div>
+      </div>
+     </div>
+    </div><!-- AI情境模擬 -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+     <h3 class="text-xl font-bold mb-4 text-indigo-700">🎮 AI情境模擬訓練</h3>
+     <div class="grid md:grid-cols-3 gap-4">
+      <div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-lg text-center hover:shadow-lg transition-shadow">
+       <div class="text-3xl mb-2">
+        🚦
+       </div>
+       <h4 class="font-semibold mb-2">紅綠燈情境</h4><button onclick="startScenario('traffic-light')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"> 開始模擬 </button>
+      </div>
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-lg text-center hover:shadow-lg transition-shadow">
+       <div class="text-3xl mb-2">
+        🚌
+       </div>
+       <h4 class="font-semibold mb-2">搭乘公車</h4><button onclick="startScenario('bus')" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"> 開始模擬 </button>
+      </div>
+      <div class="bg-gradient-to-br from-orange-50 to-red-50 p-4 rounded-lg text-center hover:shadow-lg transition-shadow">
+       <div class="text-3xl mb-2">
+        ⚠️
+       </div>
+       <h4 class="font-semibold mb-2">緊急狀況</h4><button onclick="startScenario('emergency')" class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"> 開始模擬 </button>
+      </div>
+     </div>
+     <div id="scenarioArea" class="mt-6 bg-gray-50 p-6 rounded-lg hidden">
+      <div id="scenarioContent"></div>
+      <div class="mt-4 flex gap-2 flex-wrap" id="scenarioActions"></div>
+     </div>
+    </div>
+   </section><!-- 導護志工統計專區 -->
+   <section class="bg-gradient-to-br from-orange-50 to-yellow-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-orange-800">🦸‍♂️ 鷺江國小導護志工統計專區</h2><!-- 感謝標語 -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-8 text-center">
+     <h3 class="text-2xl font-bold text-orange-700 mb-4">🏆 感謝所有導護志工的無私奉獻</h3>
+     <p class="text-lg text-gray-700 mb-2">鷺江國小導護志工團隊，是維護學童交通安全的重要力量</p>
+     <p class="text-lg font-semibold text-orange-600">88位志工每日風雨無阻，守護每一位學生上下學的平安</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 志工人力統計圖表 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">📊 志工人力概況</h3>
+      <div class="space-y-4">
+       <div class="flex items-center justify-between"><span class="text-sm font-medium">114學年度</span>
+        <div class="flex items-center gap-2">
+         <div class="w-32 bg-gray-200 rounded-full h-6 chart-bar">
+          <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style="width: 88%">
+           88位
+          </div>
+         </div><span class="text-sm text-gray-600">(7組)</span>
+        </div>
+       </div>
+       <div class="flex items-center justify-between"><span class="text-sm font-medium">113學年度</span>
+        <div class="flex items-center gap-2">
+         <div class="w-32 bg-gray-200 rounded-full h-6 chart-bar">
+          <div class="bg-gradient-to-r from-green-500 to-green-600 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style="width: 92%">
+           92位
+          </div>
+         </div><span class="text-sm text-gray-600">(7組)</span>
+        </div>
+       </div>
+       <div class="bg-blue-50 p-3 rounded-lg mt-4">
+        <p class="text-sm text-blue-700 font-medium">📈 人力穩定、責任分工明確</p>
+        <p class="text-xs text-gray-600 mt-1">完善的導護制度：志工、教師、校長、學生四位一體</p>
+       </div>
+      </div>
+     </div><!-- 年齡分布圓餅圖 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-purple-700">👵 年齡分布統計</h3>
+      <div class="relative"><!-- 圓餅圖視覺化 -->
+       <div class="w-48 h-48 mx-auto mb-4 relative">
+        <svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100"><!-- 61-65歲 35% --> <circle cx="50" cy="50" r="40" fill="none" stroke="#ef4444" stroke-width="20" stroke-dasharray="87.96 251.33" stroke-dashoffset="0" opacity="0.8" /> <!-- 66-70歲 25% --> <circle cx="50" cy="50" r="40" fill="none" stroke="#f97316" stroke-width="20" stroke-dasharray="62.83 251.33" stroke-dashoffset="-87.96" opacity="0.8" /> <!-- 56-60歲 20% --> <circle cx="50" cy="50" r="40" fill="none" stroke="#eab308" stroke-width="20" stroke-dasharray="50.27 251.33" stroke-dashoffset="-150.79" opacity="0.8" /> <!-- 71歲以上 20% --> <circle cx="50" cy="50" r="40" fill="none" stroke="#22c55e" stroke-width="20" stroke-dasharray="50.27 251.33" stroke-dashoffset="-201.06" opacity="0.8" />
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+         <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">
+           65歲
+          </div>
+          <div class="text-sm text-gray-600">
+           平均年齡
+          </div>
+         </div>
+        </div>
+       </div><!-- 圖例 -->
+       <div class="space-y-2">
+        <div class="flex items-center gap-2">
+         <div class="w-4 h-4 bg-red-500 rounded opacity-80"></div><span class="text-sm">61-65歲 (35%) - 最多年齡層</span>
+        </div>
+        <div class="flex items-center gap-2">
+         <div class="w-4 h-4 bg-orange-500 rounded opacity-80"></div><span class="text-sm">66-70歲 (25%)</span>
+        </div>
+        <div class="flex items-center gap-2">
+         <div class="w-4 h-4 bg-yellow-500 rounded opacity-80"></div><span class="text-sm">56-60歲 (20%)</span>
+        </div>
+        <div class="flex items-center gap-2">
+         <div class="w-4 h-4 bg-green-500 rounded opacity-80"></div><span class="text-sm">71歲以上 (20%) - 資深志工</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- 服務統計與表揚 -->
+    <div class="grid md:grid-cols-2 gap-8"><!-- 服務時間統計 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-green-700">⏰ 服務時間統計</h3>
+      <div class="space-y-4">
+       <div class="bg-green-50 p-4 rounded-lg">
+        <div class="flex justify-between items-center mb-2"><span class="font-semibold">🌅 上學時段</span> <span class="text-green-600 font-bold">7:20</span>
+        </div>
+        <div class="flex justify-between items-center mb-2"><span class="font-semibold">🌆 放學時段</span> <span class="text-green-600 font-bold">16:00</span>
+        </div>
+        <div class="flex justify-between items-center mb-2"><span class="font-semibold">📅 全年服務</span> <span class="text-green-600 font-bold">365天</span>
+        </div>
+        <div class="flex justify-between items-center"><span class="font-semibold">👥 專業編組</span> <span class="text-green-600 font-bold">7組</span>
+        </div>
+       </div>
+       <div class="bg-blue-50 p-3 rounded-lg">
+        <p class="text-sm text-blue-700 font-medium">🌧️ 風雨無阻，守護學童安全</p>
+       </div>
+      </div>
+     </div><!-- 優良志工表揚 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-yellow-700">🏅 優良志工表揚</h3>
+      <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-lg text-center">
+       <div class="text-4xl mb-3">
+        🏆
+       </div>
+       <h4 class="text-lg font-bold text-yellow-700 mb-2">黃秀美女士</h4>
+       <p class="text-sm text-yellow-600 mb-3">榮獲「新北市113學年度優良導護志工」</p>
+       <div class="bg-white p-3 rounded-lg">
+        <p class="text-xs text-gray-600">感謝長年守護校園安全<br>
+         展現最溫暖的教育力量！</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- 致敬區塊 -->
+    <div class="bg-gradient-to-r from-orange-100 to-yellow-100 p-6 rounded-xl shadow-md mt-8 text-center">
+     <h3 class="text-2xl font-bold text-orange-700 mb-4">💛 致敬每一位導護英雄</h3>
+     <div class="space-y-2 text-lg text-gray-700">
+      <p>他們不是路口的路人甲，</p>
+      <p>他們是孩子每天能平安回家的守護者。</p>
+      <p class="text-xl font-bold text-orange-600 mt-4">謝謝您，一直都在！</p>
+     </div>
+    </div>
+   </section><!-- 114學年度校訂課程總體架構 -->
+   <section class="bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">📘 鷺江國小 114 學年度校訂課程總體架構</h2>
+    <div class="grid lg:grid-cols-2 gap-8"><!-- 左欄 -->
+     <div class="space-y-8"><!-- 一、學校與課程願景 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+       <h3 class="text-xl font-bold mb-4 text-blue-700">✅ 一、學校與課程願景</h3><!-- 學校願景 -->
+       <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-4 rounded-lg mb-4">
+        <h4 class="text-lg font-bold text-blue-800 mb-3">🏫 學校願景</h4>
+        <div class="text-center mb-3">
+         <div class="text-xl font-bold text-blue-700 mb-2">
+          城市樂學園 卓越心鷺江
+         </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+         <div class="bg-white p-2 rounded text-center">
+          <div class="text-sm font-semibold text-green-600">
+           快樂成長
+          </div>
+         </div>
+         <div class="bg-white p-2 rounded text-center">
+          <div class="text-sm font-semibold text-purple-600">
+           尊重生命
+          </div>
+         </div>
+         <div class="bg-white p-2 rounded text-center">
+          <div class="text-sm font-semibold text-orange-600">
+           開啟智慧
+          </div>
+         </div>
+         <div class="bg-white p-2 rounded text-center">
+          <div class="text-sm font-semibold text-red-600">
+           追求卓越
+          </div>
+         </div>
+        </div>
+       </div><!-- 課程願景 -->
+       <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-4 rounded-lg mb-4">
+        <h4 class="text-lg font-bold text-green-800 mb-3">🎯 課程願景</h4>
+        <div class="bg-white p-3 rounded-lg mb-3">
+         <p class="text-gray-700 text-center text-sm leading-relaxed">在生活中學習與探索，涵養自省的智慧，<br>
+           成為具創意與責任感的未來公民。</p>
+        </div>
+        <div class="text-center"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold"> ➡ 願景、目標與課程設計呈現高度一致性 </span>
+        </div>
+       </div><!-- 課程發展四大目標 -->
+       <div class="bg-gradient-to-br from-yellow-50 to-orange-100 p-4 rounded-lg">
+        <h4 class="text-lg font-bold text-orange-800 mb-3">🎯 課程發展四大目標</h4>
+        <div class="space-y-2">
+         <div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+          <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+           1
+          </div><span class="text-sm font-semibold">養成獨立自主的生活力</span>
+         </div>
+         <div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+          <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+           2
+          </div><span class="text-sm font-semibold">涵養關懷合作的自省力</span>
+         </div>
+         <div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+          <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+           3
+          </div><span class="text-sm font-semibold">成就得意自信的學習力</span>
+         </div>
+         <div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+          <div class="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+           4
+          </div><span class="text-sm font-semibold">培具公民責任的競爭力</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- 三、十二年一貫課程地圖 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+       <h3 class="text-xl font-bold mb-4 text-purple-700">✅ 三、十二年一貫課程地圖（摘述）</h3>
+       <div class="bg-purple-50 p-3 rounded-lg mb-4">
+        <p class="text-purple-700 font-semibold text-center text-sm">課程模組依年級遞進，內容活潑、命名具象</p>
+       </div>
+       <div class="space-y-3">
+        <div class="bg-gradient-to-r from-green-100 to-emerald-100 p-3 rounded-lg">
+         <h4 class="font-bold text-green-700 mb-1 text-sm">🐸 小蛙閱讀系列</h4>
+         <p class="text-xs text-gray-600">（全學段）</p>
+        </div>
+        <div class="bg-gradient-to-r from-blue-100 to-cyan-100 p-3 rounded-lg">
+         <h4 class="font-bold text-blue-700 mb-1 text-sm">🗺️ 在地探索</h4>
+         <ul class="text-xs text-gray-600 space-y-1">
+          <li>• 鷺官庄</li>
+          <li>• 白鷺鷥的家</li>
+          <li>• 蘆洲閃耀星</li>
+         </ul>
+        </div>
+        <div class="bg-gradient-to-r from-purple-100 to-violet-100 p-3 rounded-lg">
+         <h4 class="font-bold text-purple-700 mb-1 text-sm">💻 數位素養</h4>
+         <ul class="text-xs text-gray-600 space-y-1">
+          <li>• 影像魔法師</li>
+          <li>• 遊戲設計</li>
+          <li>• 數位策展</li>
+         </ul>
+        </div>
+        <div class="bg-gradient-to-r from-green-100 to-teal-100 p-3 rounded-lg">
+         <h4 class="font-bold text-teal-700 mb-1 text-sm">🌱 生活科技與永續</h4>
+         <ul class="text-xs text-gray-600 space-y-1">
+          <li>• 綠能新希望</li>
+          <li>• 節能課程</li>
+         </ul>
+        </div>
+       </div>
+       <div class="mt-4 bg-indigo-50 p-3 rounded-lg text-center">
+        <p class="text-indigo-700 font-semibold text-xs">➡ 課程貼近生活、在地文化與國際視野兼具</p>
+       </div>
+      </div><!-- 五、在地文化與校園品牌識別 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+       <h3 class="text-xl font-bold mb-4 text-teal-700">✅ 五、在地文化與校園品牌識別</h3>
+       <div class="space-y-3">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-4 rounded-lg text-center">
+         <div class="text-2xl mb-2">
+          🐸
+         </div>
+         <h4 class="font-bold text-green-700 mb-1 text-sm">小蛙吉祥物</h4>
+         <p class="text-xs text-gray-600">深化閱讀、環境教育品牌</p>
+        </div>
+        <div class="bg-gradient-to-br from-blue-50 to-cyan-100 p-4 rounded-lg text-center">
+         <div class="text-2xl mb-2">
+          🏛️
+         </div>
+         <h4 class="font-bold text-blue-700 mb-1 text-sm">鷺江地名、鷺官庄人文</h4>
+         <p class="text-xs text-gray-600">課程場域化</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-4 rounded-lg text-center">
+         <div class="text-2xl mb-2">
+          🏘️
+         </div>
+         <h4 class="font-bold text-purple-700 mb-1 text-sm">蘆洲社區資源</h4>
+         <p class="text-xs text-gray-600">家鄉探索與服務學習</p>
+        </div>
+       </div>
+       <div class="mt-4 bg-teal-50 p-3 rounded-lg text-center">
+        <p class="text-teal-700 font-semibold text-xs">➡ 彰顯學校自身教育特色，逐年累績成果</p>
+       </div>
+      </div>
+     </div><!-- 右欄 -->
+     <div class="space-y-8"><!-- 二、校訂課程六大主軸 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+       <h3 class="text-xl font-bold mb-4 text-green-700">✅ 二、校訂課程六大主軸</h3>
+       <div class="bg-gradient-to-r from-green-50 to-teal-100 p-3 rounded-lg mb-4 text-center">
+        <h4 class="text-sm font-bold text-green-800 mb-1">鷺江以「樂學．創意．在地」為精神</h4>
+        <p class="text-green-700 text-xs">發展 6 大特色主軸</p>
+       </div>
+       <div class="grid grid-cols-1 gap-3">
+        <div class="bg-gradient-to-br from-blue-50 to-cyan-100 p-4 rounded-lg">
+         <h4 class="text-sm font-bold text-blue-700 mb-2">📚 英閱繪</h4>
+         <p class="text-xs text-gray-600 mb-1"><strong>核心重點：</strong>英語＋閱讀素養</p>
+         <p class="text-xs text-blue-600"><strong>強化能力：</strong>國際競爭力</p>
+        </div>
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-4 rounded-lg">
+         <h4 class="text-sm font-bold text-green-700 mb-2">👁️ 閱覽視界</h4>
+         <p class="text-xs text-gray-600 mb-1"><strong>核心重點：</strong>閱讀素養深化</p>
+         <p class="text-xs text-green-600"><strong>強化能力：</strong>思考＋表達</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-4 rounded-lg">
+         <h4 class="text-sm font-bold text-purple-700 mb-2">🔬 生活科技大觀園</h4>
+         <p class="text-xs text-gray-600 mb-1"><strong>核心重點：</strong>科技應用與創新</p>
+         <p class="text-xs text-purple-600"><strong>強化能力：</strong>問題解決</p>
+        </div>
+        <div class="bg-gradient-to-br from-orange-50 to-red-100 p-4 rounded-lg">
+         <h4 class="text-sm font-bold text-orange-700 mb-2">🎲 舞數魔坊</h4>
+         <p class="text-xs text-gray-600 mb-1"><strong>核心重點：</strong>遊戲化與邏輯思維</p>
+         <p class="text-xs text-orange-600"><strong>強化能力：</strong>計算與推理</p>
+        </div>
+        <div class="bg-gradient-to-br from-pink-50 to-rose-100 p-4 rounded-lg">
+         <h4 class="text-sm font-bold text-pink-700 mb-2">✍️ 舞聞弄墨</h4>
+         <p class="text-xs text-gray-600 mb-1"><strong>核心重點：</strong>語文與藝文融合</p>
+         <p class="text-xs text-pink-600"><strong>強化能力：</strong>人文美感</p>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-50 to-amber-100 p-4 rounded-lg">
+         <h4 class="text-sm font-bold text-yellow-700 mb-2">💃 舞動生命</h4>
+         <p class="text-xs text-gray-600 mb-1"><strong>核心重點：</strong>生命教育與成長</p>
+         <p class="text-xs text-yellow-600"><strong>強化能力：</strong>自省與健康</p>
+        </div>
+       </div>
+       <div class="mt-4 bg-blue-50 p-3 rounded-lg text-center">
+        <p class="text-blue-700 font-semibold text-xs">📌 從低、中、高年級逐層累積跨領域素養，避免課程斷裂</p>
+       </div>
+      </div><!-- 四、交通安全校本特色融入 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+       <h3 class="text-xl font-bold mb-4 text-red-700">✅ 四、交通安全校本特色融入</h3>
+       <div class="bg-red-50 p-3 rounded-lg mb-4 text-center">
+        <p class="text-red-700 font-semibold text-sm">依學習成熟度逐步深化</p>
+       </div>
+       <div class="space-y-4"><!-- 低年級 -->
+        <div class="bg-gradient-to-r from-yellow-50 to-orange-100 p-4 rounded-lg border-l-4 border-yellow-400">
+         <div class="flex justify-between items-start mb-2">
+          <h4 class="text-sm font-bold text-yellow-700">🟡 低年級</h4><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">生活化易理解</span>
+         </div>
+         <p class="text-gray-700 text-xs"><strong>主要融入內容：</strong>行人安全、校園周邊踏查、乘車安全</p>
+        </div><!-- 中年級 -->
+        <div class="bg-gradient-to-r from-orange-50 to-red-100 p-4 rounded-lg border-l-4 border-orange-400">
+         <div class="flex justify-between items-start mb-2">
+          <h4 class="text-sm font-bold text-orange-700">🟠 中年級</h4><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-semibold">數位學習結合安全教育</span>
+         </div>
+         <p class="text-gray-700 text-xs"><strong>主要融入內容：</strong>內輪差、死角、影像創作</p>
+        </div><!-- 高年級 -->
+        <div class="bg-gradient-to-r from-red-50 to-pink-100 p-4 rounded-lg border-l-4 border-red-400">
+         <div class="flex justify-between items-start mb-2">
+          <h4 class="text-sm font-bold text-red-700">🔴 高年級</h4><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs font-semibold">公民責任與永續交通結合</span>
+         </div>
+         <p class="text-gray-700 text-xs"><strong>主要融入內容：</strong>自行車防禦駕駛、路線規劃、急救</p>
+        </div>
+       </div>
+       <div class="mt-4 space-y-2">
+        <div class="bg-blue-50 p-3 rounded-lg">
+         <p class="text-blue-700 font-semibold text-xs">📌 反映鷺江校園周邊「民族路 × 民權路 L 型道路」真實場域</p>
+        </div>
+        <div class="bg-green-50 p-3 rounded-lg">
+         <p class="text-green-700 font-semibold text-xs">📌 與「導護志工團隊」協作，使教學更落地、更安全</p>
+        </div>
+       </div>
+      </div><!-- 六、課程優勢與精進方向 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+       <h3 class="text-xl font-bold mb-4 text-indigo-700">✅ 六、課程優勢與精進方向</h3><!-- 課程表現指標 -->
+       <div class="bg-gradient-to-br from-indigo-50 to-blue-100 p-4 rounded-lg mb-4">
+        <h4 class="text-sm font-bold text-indigo-700 mb-3">📊 課程表現指標</h4>
+        <div class="space-y-2">
+         <div class="flex justify-between items-center"><span class="font-medium text-xs">課程架構完整</span> <span class="text-yellow-500 text-xs">★★★★★</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="font-medium text-xs">與願景連動性高</span> <span class="text-yellow-500 text-xs">★★★★★</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="font-medium text-xs">校本特色與融合度</span> <span class="text-yellow-500 text-xs">★★★★★</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="font-medium text-xs">評量可視化資料</span>
+          <div class="flex items-center gap-1"><span class="text-yellow-500 text-xs">★★★★</span><span class="text-gray-300 text-xs">☆</span> <span class="text-xs text-gray-600">（可補強）</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- 未來精進建議 -->
+       <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-4 rounded-lg">
+        <h4 class="text-sm font-bold text-green-700 mb-3">🚀 未來精進建議</h4>
+        <div class="space-y-2">
+         <div class="flex items-start gap-2">
+          <div class="w-1.5 h-1.5 bg-green-500 rounded-full mt-1.5"></div><span class="text-xs">各主軸補充 SLO（學習成果）明確指標</span>
+         </div>
+         <div class="flex items-start gap-2">
+          <div class="w-1.5 h-1.5 bg-green-500 rounded-full mt-1.5"></div><span class="text-xs">增加評量例示：Rubric、任務、學習歷程佐證</span>
+         </div>
+         <div class="flex items-start gap-2">
+          <div class="w-1.5 h-1.5 bg-green-500 rounded-full mt-1.5"></div><span class="text-xs">建立三年滾動成果資料庫（影音＋作品 QR Code）</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- 七、總結 -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-100 p-6 rounded-xl shadow-md mt-8">
+     <h3 class="text-2xl font-bold mb-6 text-orange-700">✅ 七、總結</h3>
+     <div class="bg-white p-6 rounded-lg">
+      <div class="text-center space-y-4">
+       <p class="text-lg text-gray-700 leading-relaxed">鷺江國小校訂課程扎根生活、結合地方、勇於創新，<br>
+         培育樂學、負責且具創意的未來公民。</p>
+       <p class="text-lg text-gray-700 leading-relaxed">其交通安全特色課程與社區緊密連結，<br>
+         更展現「守護孩子，每一步都安心」的教育使命。</p>
+       <div class="mt-6 bg-gradient-to-r from-orange-100 to-red-100 p-4 rounded-lg">
+        <p class="text-xl font-bold text-orange-700">🌟 培育未來公民，從鷺江開始！</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 即時交通資訊 -->
+   <section class="bg-gradient-to-br from-green-50 to-teal-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-green-800">🗺️ 即時交通資訊</h2>
+    <div class="grid md:grid-cols-2 gap-8"><!-- 學校周邊交通狀況 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">📍 學校周邊交通狀況</h3>
+      <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-lg mb-4"><!-- 手繪風格地圖 -->
+       <div class="relative bg-white p-4 rounded-lg shadow-inner">
+        <svg viewbox="0 0 300 200" class="w-full h-32"><!-- 道路 --> <rect x="0" y="90" width="300" height="20" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" /> <rect x="140" y="0" width="20" height="200" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" /> <!-- 學校建築 (移到民族路邊) --> <rect x="60" y="60" width="60" height="40" fill="#3b82f6" stroke="#1e40af" stroke-width="2" /> <polygon points="60,60 90,40 120,60" fill="#ef4444" /> <text x="90" y="85" text-anchor="middle" class="text-xs fill-white font-bold">
+          鷺江國小
+         </text> <!-- 紅綠燈 --> <circle cx="150" cy="100" r="8" fill="#22c55e" /> <text x="150" y="125" text-anchor="middle" class="text-xs">
+          🚦
+         </text> <!-- 斑馬線 --> <g stroke="#374151" stroke-width="2">
+          <line x1="130" y1="90" x2="130" y2="110" />
+          <line x1="135" y1="90" x2="135" y2="110" />
+          <line x1="165" y1="90" x2="165" y2="110" />
+          <line x1="170" y1="90" x2="170" y2="110" />
+         </g> <!-- 公車站 --> <rect x="200" y="115" width="30" height="15" fill="#f59e0b" rx="3" /> <text x="215" y="125" text-anchor="middle" class="text-xs fill-white">
+          🚌站
+         </text> <!-- 導護位置 (調整到學校門口) --> <circle cx="90" cy="110" r="6" fill="#ef4444" /> <text x="90" y="130" text-anchor="middle" class="text-xs">
+          👮‍♀️
+         </text> <!-- 校門口標示 --> <rect x="85" y="100" width="10" height="10" fill="#fbbf24" stroke="#f59e0b" stroke-width="1" /> <text x="90" y="145" text-anchor="middle" class="text-xs">
+          校門
+         </text> <!-- 道路標示 --> <text x="30" y="105" class="text-xs fill-gray-600">
+          民族路
+         </text> <text x="155" y="30" class="text-xs fill-gray-600">
+          民權路
+         </text>
+        </svg>
+       </div>
+      </div><!-- 即時路況資訊 -->
+      <div class="grid md:grid-cols-3 gap-4 mb-6"><!-- 民族路 -->
+       <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-400">
+        <div class="flex items-center justify-between mb-2">
+         <h4 class="font-bold text-green-700">🛣️ 民族路</h4><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">順暢</span>
+        </div>
+        <div class="space-y-1 text-sm">
+         <div class="flex justify-between"><span>壅塞程度:</span> <span class="font-semibold text-green-600">23%</span>
+         </div>
+         <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-green-500 h-2 rounded-full" style="width: 23%"></div>
+         </div>
+         <div class="flex justify-between"><span>預估通過時間:</span> <span class="font-semibold">2分鐘</span>
+         </div>
+         <div class="text-green-600 text-xs">
+          ✅ 無特殊狀況
+         </div>
+        </div>
+       </div><!-- 民權路 -->
+       <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-400">
+        <div class="flex items-center justify-between mb-2">
+         <h4 class="font-bold text-green-700">🛤️ 民權路</h4><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">順暢</span>
+        </div>
+        <div class="space-y-1 text-sm">
+         <div class="flex justify-between"><span>壅塞程度:</span> <span class="font-semibold text-green-600">13%</span>
+         </div>
+         <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-green-500 h-2 rounded-full" style="width: 13%"></div>
+         </div>
+         <div class="flex justify-between"><span>預估通過時間:</span> <span class="font-semibold">1分鐘</span>
+         </div>
+         <div class="text-green-600 text-xs">
+          ✅ 無特殊狀況
+         </div>
+        </div>
+       </div><!-- 路口交會處 -->
+       <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+        <div class="flex items-center justify-between mb-2">
+         <h4 class="font-bold text-yellow-700">🚦 路口交會處</h4><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-semibold">順暢</span>
+        </div>
+        <div class="space-y-1 text-sm">
+         <div class="flex justify-between"><span>壅塞程度:</span> <span class="font-semibold text-yellow-600">27%</span>
+         </div>
+         <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-yellow-500 h-2 rounded-full" style="width: 27%"></div>
+         </div>
+         <div class="flex justify-between"><span>預估等待時間:</span> <span class="font-semibold">62秒</span>
+         </div>
+         <div class="text-orange-600 text-xs">
+          🚸 學童通過請特別小心
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+       <div class="space-y-2 text-sm">
+        <p><span class="font-semibold">📍 重點路段：</span>民族路、民權路交會處</p>
+        <p><span class="font-semibold">🚦 號誌狀況：</span><span id="trafficStatus" class="text-green-600">正常運作</span></p>
+        <p><span class="font-semibold">👮‍♀️ 導護位置：</span>校門口前</p>
+       </div>
+       <div class="space-y-2 text-sm">
+        <p><span class="font-semibold">🚌 公車站：</span>距離50公尺</p>
+        <p><span class="font-semibold">⚠️ 注意事項：</span>上下學時段車流量大</p>
+        <p><span class="font-semibold">🔄 更新時間：</span><span id="updateTime"></span></p>
+       </div>
+      </div>
+     </div><!-- 公車即時資訊 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-orange-700">🚌 公車即時資訊</h3>
+      <div class="space-y-4"><!-- 225路線 -->
+       <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
+        <div class="flex justify-between items-center mb-3">
+         <div class="flex items-center gap-2"><span class="font-bold text-orange-700 text-lg">225</span> <span class="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold">進站中</span>
+         </div>
+         <div class="text-right">
+          <div class="text-sm text-gray-600">
+           往板橋方向
+          </div>
+          <div class="font-bold text-green-600">
+           預計2分鐘
+          </div>
+         </div>
+        </div>
+        <div class="bg-white p-3 rounded-lg">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xs bg-green-500 text-white px-2 py-1 rounded">目前位置</span> <span class="font-semibold text-green-700">民權路口</span>
+         </div>
+         <div class="flex items-center text-xs text-gray-600"><span>路線：</span>
+          <div class="flex items-center gap-1 ml-1"><span class="text-gray-400">蘆洲總站</span> <span>→</span> <span class="text-gray-400">民族路</span> <span>→</span> <span class="bg-green-100 text-green-700 px-1 rounded">民權路口</span> <span>→</span> <span class="font-semibold text-orange-600">鷺江國小</span> <span>→</span> <span class="text-gray-400">板橋</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- 306路線 -->
+       <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+        <div class="flex justify-between items-center mb-3">
+         <div class="flex items-center gap-2"><span class="font-bold text-blue-700 text-lg">306</span> <span class="text-sm bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-semibold">5分鐘</span>
+         </div>
+         <div class="text-right">
+          <div class="text-sm text-gray-600">
+           往蘆洲方向
+          </div>
+          <div class="font-bold text-yellow-600">
+           預計5分鐘
+          </div>
+         </div>
+        </div>
+        <div class="bg-white p-3 rounded-lg">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xs bg-blue-500 text-white px-2 py-1 rounded">目前位置</span> <span class="font-semibold text-blue-700">三重商工</span>
+         </div>
+         <div class="flex items-center text-xs text-gray-600"><span>路線：</span>
+          <div class="flex items-center gap-1 ml-1"><span class="text-gray-400">板橋</span> <span>→</span> <span class="text-gray-400">三重</span> <span>→</span> <span class="bg-blue-100 text-blue-700 px-1 rounded">三重商工</span> <span>→</span> <span class="font-semibold text-orange-600">鷺江國小</span> <span>→</span> <span class="text-gray-400">蘆洲</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- 508路線 -->
+       <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400">
+        <div class="flex justify-between items-center mb-3">
+         <div class="flex items-center gap-2"><span class="font-bold text-purple-700 text-lg">508</span> <span class="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-semibold">8分鐘</span>
+         </div>
+         <div class="text-right">
+          <div class="text-sm text-gray-600">
+           往台北車站
+          </div>
+          <div class="font-bold text-gray-600">
+           預計8分鐘
+          </div>
+         </div>
+        </div>
+        <div class="bg-white p-3 rounded-lg">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xs bg-purple-500 text-white px-2 py-1 rounded">目前位置</span> <span class="font-semibold text-purple-700">重新橋</span>
+         </div>
+         <div class="flex items-center text-xs text-gray-600"><span>路線：</span>
+          <div class="flex items-center gap-1 ml-1"><span class="text-gray-400">蘆洲</span> <span>→</span> <span class="bg-purple-100 text-purple-700 px-1 rounded">重新橋</span> <span>→</span> <span class="text-gray-400">三重</span> <span>→</span> <span class="font-semibold text-orange-600">鷺江國小</span> <span>→</span> <span class="text-gray-400">台北車站</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- 資料說明 -->
+       <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+        <div class="flex items-center gap-2 mb-2"><span class="text-sm font-semibold text-gray-700">📍 資料說明</span>
+        </div>
+        <div class="text-xs text-gray-600 space-y-1">
+         <div>
+          • 資料來源：新北市公車動態資訊系統（示範資料）
+         </div>
+         <div>
+          • 更新頻率：每30秒自動更新
+         </div>
+         <div>
+          • 🟢 綠色：即將到站 🟡 黃色：5分鐘內 ⚪ 灰色：較長等候
+         </div>
+         <div>
+          • 實際到站時間可能因交通狀況而有所變動
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- 教學內容與成效 -->
+   <section class="bg-gradient-to-br from-yellow-50 to-orange-100 p-8 rounded-2xl shadow-lg mb-8">
+    <h2 class="text-3xl font-bold text-center mb-8 text-yellow-800">📚 教學內容與成效統計</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- 三位一體防護網 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-red-700">🛡️ 三位一體安全防護網</h3>
+      <div class="space-y-4">
+       <div class="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
+        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">
+         1
+        </div>
+        <div>
+         <h4 class="font-semibold">教育宣導</h4>
+         <p class="text-sm text-gray-600">課程融入、實地演練</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+         2
+        </div>
+        <div>
+         <h4 class="font-semibold">輔導關懷</h4>
+         <p class="text-sm text-gray-600">個別指導、行為矯正</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+         3
+        </div>
+        <div>
+         <h4 class="font-semibold">環境改善</h4>
+         <p class="text-sm text-gray-600">硬體設施、標誌完善</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- 分年級課程設計 -->
+     <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-blue-700">📖 分年級課程設計</h3>
+      <div class="space-y-3">
+       <div class="bg-yellow-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-yellow-700">🟡 低年級 (1-2年級)</h4>
+        <p class="text-sm text-gray-600">基礎安全概念、紅綠燈認識</p>
+       </div>
+       <div class="bg-orange-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-orange-700">🟠 中年級 (3-4年級)</h4>
+        <p class="text-sm text-gray-600">交通標誌學習、路權概念</p>
+       </div>
+       <div class="bg-red-50 p-3 rounded-lg">
+        <h4 class="font-semibold text-red-700">🔴 高年級 (5-6年級)</h4>
+        <p class="text-sm text-gray-600">腳踏車安全、責任意識</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- 創新實踐與成效 -->
+    <div class="grid md:grid-cols-3 gap-6">
+     <div class="bg-white p-6 rounded-xl shadow-md text-center">
+      <div class="text-3xl mb-3">
+       💡
+      </div>
+      <h4 class="font-bold text-purple-700 mb-2">科技融入教學</h4>
+      <p class="text-sm text-gray-600">VR體驗、APP互動學習</p>
+     </div>
+     <div class="bg-white p-6 rounded-xl shadow-md text-center">
+      <div class="text-3xl mb-3">
+       🤝
+      </div>
+      <h4 class="font-bold text-green-700 mb-2">跨領域整合</h4>
+      <p class="text-sm text-gray-600">結合英語、數學、藝術</p>
+     </div>
+     <div class="bg-white p-6 rounded-xl shadow-md text-center">
+      <div class="text-3xl mb-3">
+       📊
+      </div>
+      <h4 class="font-bold text-blue-700 mb-2">成效追蹤</h4>
+      <p class="text-sm text-gray-600">事故率降低85%</p>
+     </div>
+    </div>
+   </section><!-- 頁尾 -->
+   <footer class="text-center py-8 bg-white rounded-2xl shadow-lg">
+    <p class="text-gray-600 mb-2">© 2024 鷺江國小交通安全教學網站</p>
+    <p class="text-sm text-gray-500">讓每一個孩子都能安全快樂地學習成長 🌟</p>
+   </footer>
+  </div>
+  <script>
+        // 詞彙庫 (50個)
+        const vocabularyBank = [
+            { english: "Traffic Light", chinese: "紅綠燈", pronunciation: "ˈtræfɪk laɪt" },
+            { english: "Crosswalk", chinese: "斑馬線", pronunciation: "ˈkrɔːswɔːk" },
+            { english: "Stop Sign", chinese: "停止標誌", pronunciation: "stɑːp saɪn" },
+            { english: "School Bus", chinese: "校車", pronunciation: "skuːl bʌs" },
+            { english: "Helmet", chinese: "安全帽", pronunciation: "ˈhelmɪt" },
+            { english: "Bicycle", chinese: "腳踏車", pronunciation: "ˈbaɪsɪkl" },
+            { english: "Sidewalk", chinese: "人行道", pronunciation: "ˈsaɪdwɔːk" },
+            { english: "Intersection", chinese: "十字路口", pronunciation: "ˌɪntərˈsekʃn" },
+            { english: "Pedestrian", chinese: "行人", pronunciation: "pəˈdestriən" },
+            { english: "Safety", chinese: "安全", pronunciation: "ˈseɪfti" },
+            { english: "Warning", chinese: "警告", pronunciation: "ˈwɔːrnɪŋ" },
+            { english: "Speed Limit", chinese: "速限", pronunciation: "spiːd ˈlɪmɪt" },
+            { english: "Road", chinese: "道路", pronunciation: "roʊd" },
+            { english: "Driver", chinese: "駕駛", pronunciation: "ˈdraɪvər" },
+            { english: "Passenger", chinese: "乘客", pronunciation: "ˈpæsɪndʒər" },
+            { english: "Emergency", chinese: "緊急狀況", pronunciation: "ɪˈmɜːrdʒənsi" },
+            { english: "Police", chinese: "警察", pronunciation: "pəˈliːs" },
+            { english: "Ambulance", chinese: "救護車", pronunciation: "ˈæmbjələns" },
+            { english: "Fire Truck", chinese: "消防車", pronunciation: "ˈfaɪər trʌk" },
+            { english: "Seatbelt", chinese: "安全帶", pronunciation: "ˈsiːtbelt" },
+            { english: "Mirror", chinese: "後照鏡", pronunciation: "ˈmɪrər" },
+            { english: "Horn", chinese: "喇叭", pronunciation: "hɔːrn" },
+            { english: "Brake", chinese: "煞車", pronunciation: "breɪk" },
+            { english: "Signal", chinese: "信號", pronunciation: "ˈsɪɡnəl" },
+            { english: "Lane", chinese: "車道", pronunciation: "leɪn" },
+            { english: "Bridge", chinese: "橋樑", pronunciation: "brɪdʒ" },
+            { english: "Tunnel", chinese: "隧道", pronunciation: "ˈtʌnl" },
+            { english: "Parking", chinese: "停車", pronunciation: "ˈpɑːrkɪŋ" },
+            { english: "License", chinese: "執照", pronunciation: "ˈlaɪsns" },
+            { english: "Violation", chinese: "違規", pronunciation: "ˌvaɪəˈleɪʃn" },
+            { english: "Fine", chinese: "罰款", pronunciation: "faɪn" },
+            { english: "Accident", chinese: "事故", pronunciation: "ˈæksɪdənt" },
+            { english: "Injury", chinese: "受傷", pronunciation: "ˈɪndʒəri" },
+            { english: "Hospital", chinese: "醫院", pronunciation: "ˈhɑːspɪtl" },
+            { english: "First Aid", chinese: "急救", pronunciation: "fɜːrst eɪd" },
+            { english: "Caution", chinese: "小心", pronunciation: "ˈkɔːʃn" },
+            { english: "Danger", chinese: "危險", pronunciation: "ˈdeɪndʒər" },
+            { english: "Safe", chinese: "安全的", pronunciation: "seɪf" },
+            { english: "Careful", chinese: "小心的", pronunciation: "ˈkerfəl" },
+            { english: "Slow", chinese: "慢的", pronunciation: "sloʊ" },
+            { english: "Fast", chinese: "快的", pronunciation: "fæst" },
+            { english: "Left", chinese: "左邊", pronunciation: "left" },
+            { english: "Right", chinese: "右邊", pronunciation: "raɪt" },
+            { english: "Straight", chinese: "直行", pronunciation: "streɪt" },
+            { english: "Turn", chinese: "轉彎", pronunciation: "tɜːrn" },
+            { english: "Wait", chinese: "等待", pronunciation: "weɪt" },
+            { english: "Go", chinese: "前進", pronunciation: "ɡoʊ" },
+            { english: "Stop", chinese: "停止", pronunciation: "stɑːp" },
+            { english: "Look", chinese: "看", pronunciation: "lʊk" },
+            { english: "Listen", chinese: "聽", pronunciation: "ˈlɪsn" }
+        ];
+
+        // 句子庫 (50個)
+        const sentenceBank = [
+            { english: "Stop, look, and listen before crossing.", chinese: "過馬路前要停、看、聽。" },
+            { english: "Always wear your helmet when riding a bike.", chinese: "騎腳踏車時一定要戴安全帽。" },
+            { english: "Wait for the green light to cross the street.", chinese: "等綠燈亮了再過馬路。" },
+            { english: "Walk on the sidewalk, not on the road.", chinese: "走在人行道上，不要走在馬路上。" },
+            { english: "Look both ways before crossing the street.", chinese: "過馬路前要左右看。" },
+            { english: "Never run across the street.", chinese: "絕對不要跑著過馬路。" },
+            { english: "Use the crosswalk when available.", chinese: "有斑馬線時要使用斑馬線。" },
+            { english: "Stay alert and avoid distractions.", chinese: "保持警覺，避免分心。" },
+            { english: "Follow traffic signals and signs.", chinese: "遵守交通信號和標誌。" },
+            { english: "Make eye contact with drivers.", chinese: "與駕駛進行眼神接觸。" },
+            { english: "Walk facing traffic when there's no sidewalk.", chinese: "沒有人行道時要面向來車行走。" },
+            { english: "Be extra careful in parking lots.", chinese: "在停車場要格外小心。" },
+            { english: "Don't play near busy roads.", chinese: "不要在繁忙的道路附近玩耍。" },
+            { english: "Wear bright colors to be more visible.", chinese: "穿鮮豔的顏色讓自己更顯眼。" },
+            { english: "Hold an adult's hand when crossing.", chinese: "過馬路時要牽著大人的手。" },
+            { english: "Never assume drivers can see you.", chinese: "絕不要假設駕駛能看到你。" },
+            { english: "Stay on the right side of the sidewalk.", chinese: "走在人行道的右側。" },
+            { english: "Be patient and wait your turn.", chinese: "要有耐心，等待輪到你。" },
+            { english: "Report dangerous situations to adults.", chinese: "向大人報告危險情況。" },
+            { english: "Keep your phone away while walking.", chinese: "走路時收起你的手機。" },
+            { english: "Use pedestrian bridges when available.", chinese: "有天橋時要使用天橋。" },
+            { english: "Stay together when walking in groups.", chinese: "團體行走時要待在一起。" },
+            { english: "Be extra careful during bad weather.", chinese: "天氣不好時要格外小心。" },
+            { english: "Learn and remember traffic rules.", chinese: "學習並記住交通規則。" },
+            { english: "Always buckle your seatbelt in cars.", chinese: "在車內一定要繫安全帶。" },
+            { english: "Exit the bus safely and carefully.", chinese: "安全小心地下公車。" },
+            { english: "Stand clear of moving vehicles.", chinese: "遠離行駛中的車輛。" },
+            { english: "Use reflective gear in low light.", chinese: "光線不足時使用反光裝備。" },
+            { english: "Know your route and stay on it.", chinese: "了解你的路線並按路線走。" },
+            { english: "Ask for help when you're lost.", chinese: "迷路時要尋求幫助。" },
+            { english: "Practice safe walking habits daily.", chinese: "每天練習安全的行走習慣。" },
+            { english: "Respect other pedestrians' space.", chinese: "尊重其他行人的空間。" },
+            { english: "Be aware of construction zones.", chinese: "注意施工區域。" },
+            { english: "Don't jaywalk or take shortcuts.", chinese: "不要亂穿馬路或抄近路。" },
+            { english: "Stay calm in emergency situations.", chinese: "在緊急情況下保持冷靜。" },
+            { english: "Learn basic first aid skills.", chinese: "學習基本的急救技能。" },
+            { english: "Carry emergency contact information.", chinese: "攜帶緊急聯絡資訊。" },
+            { english: "Be a good example for younger children.", chinese: "為年幼的孩子做好榜樣。" },
+            { english: "Understand the meaning of traffic signs.", chinese: "了解交通標誌的意思。" },
+            { english: "Stay hydrated during long walks.", chinese: "長途步行時要保持水分。" },
+            { english: "Plan your route before leaving home.", chinese: "離家前先規劃路線。" },
+            { english: "Avoid walking alone at night.", chinese: "避免夜間獨自行走。" },
+            { english: "Keep emergency numbers handy.", chinese: "隨身攜帶緊急電話號碼。" },
+            { english: "Be courteous to other road users.", chinese: "對其他道路使用者要有禮貌。" },
+            { english: "Stay focused and avoid multitasking.", chinese: "保持專注，避免一心多用。" },
+            { english: "Check both directions twice before crossing.", chinese: "過馬路前兩個方向都要看兩次。" },
+            { english: "Use designated crossing points only.", chinese: "只使用指定的過路點。" },
+            { english: "Be patient with slower pedestrians.", chinese: "對行走較慢的行人要有耐心。" },
+            { english: "Stay visible and predictable to drivers.", chinese: "讓駕駛能看見你且行為可預測。" },
+            { english: "Remember: safety first, always.", chinese: "記住：安全永遠是第一位。" }
+        ];
+
+        // 測驗題庫 (50題)
+        const quizBank = [
+            {
+                question: "看到紅燈時應該怎麼做？",
+                options: ["立刻停下來", "加速通過", "慢慢通過", "看沒車就過"],
+                correct: 0,
+                explanation: "紅燈表示禁止通行，必須完全停止。"
+            },
+            {
+                question: "過馬路時應該走哪裡？",
+                options: ["任何地方", "斑馬線", "車道中間", "路邊"],
+                correct: 1,
+                explanation: "斑馬線是專為行人設計的安全通道。"
+            },
+            {
+                question: "騎腳踏車時最重要的安全裝備是什麼？",
+                options: ["手套", "安全帽", "護膝", "太陽眼鏡"],
+                correct: 1,
+                explanation: "安全帽能保護頭部，是最重要的安全裝備。"
+            },
+            {
+                question: "在沒有人行道的路上應該怎麼走？",
+                options: ["走路中間", "靠右邊走", "面向來車走", "隨便走"],
+                correct: 2,
+                explanation: "面向來車可以看到車輛接近，更加安全。"
+            },
+            {
+                question: "看到黃燈時應該怎麼做？",
+                options: ["加速通過", "準備停止", "繼續走", "往回走"],
+                correct: 1,
+                explanation: "黃燈表示即將變紅燈，應該準備停止。"
+            },
+            {
+                question: "上下公車時應該注意什麼？",
+                options: ["推擠上車", "車停穩再上下", "從後門上車", "邊走邊上車"],
+                correct: 1,
+                explanation: "等車完全停穩才能安全上下車。"
+            },
+            {
+                question: "遇到緊急車輛(救護車、消防車)時應該怎麼做？",
+                options: ["繼續走", "讓路", "跟在後面", "擋住去路"],
+                correct: 1,
+                explanation: "緊急車輛執行任務時，所有人都應該讓路。"
+            },
+            {
+                question: "在學校附近應該特別注意什麼？",
+                options: ["車速較快", "學童較多", "沒有規則", "可以亂跑"],
+                correct: 1,
+                explanation: "學校附近學童較多，需要格外小心。"
+            },
+            {
+                question: "雨天行走時應該注意什麼？",
+                options: ["走得更快", "視線較差", "沒有影響", "可以亂跑"],
+                correct: 1,
+                explanation: "雨天視線較差，路面濕滑，需要更加小心。"
+            },
+            {
+                question: "看到「停」的標誌時應該怎麼做？",
+                options: ["慢慢通過", "完全停止", "加速通過", "忽略它"],
+                correct: 1,
+                explanation: "停止標誌要求完全停止，確認安全後才能通行。"
+            },
+            {
+                question: "夜間行走時應該穿什麼顏色的衣服？",
+                options: ["黑色", "深色", "亮色或反光", "任何顏色"],
+                correct: 2,
+                explanation: "亮色或反光衣服能讓駕駛更容易看到你。"
+            },
+            {
+                question: "在停車場行走時應該注意什麼？",
+                options: ["車輛隨時可能移動", "沒有危險", "可以奔跑", "不用看路"],
+                correct: 0,
+                explanation: "停車場內車輛隨時可能啟動或移動，要特別小心。"
+            },
+            {
+                question: "過馬路時應該怎麼看？",
+                options: ["只看左邊", "只看右邊", "左右都要看", "不用看"],
+                correct: 2,
+                explanation: "過馬路前左右都要看，確認沒有來車。"
+            },
+            {
+                question: "什麼時候可以在馬路上玩耍？",
+                options: ["沒車的時候", "晚上", "永遠不可以", "有大人陪同時"],
+                correct: 2,
+                explanation: "馬路是車輛通行的地方，任何時候都不應該在馬路上玩耍。"
+            },
+            {
+                question: "搭乘機車時應該怎麼做？",
+                options: ["不用戴安全帽", "戴安全帽並抓緊", "站著乘坐", "可以做危險動作"],
+                correct: 1,
+                explanation: "搭乘機車必須戴安全帽並抓緊駕駛或扶手。"
+            },
+            {
+                question: "看到施工標誌時應該怎麼做？",
+                options: ["加速通過", "小心慢行", "繞道而行", "忽略標誌"],
+                correct: 1,
+                explanation: "施工區域可能有危險，應該小心慢行。"
+            },
+            {
+                question: "在十字路口應該特別注意什麼？",
+                options: ["只注意前方", "四面八方都要看", "只看紅綠燈", "不用特別注意"],
+                correct: 1,
+                explanation: "十字路口車輛來自四面八方，都要仔細觀察。"
+            },
+            {
+                question: "走路時可以邊玩手機嗎？",
+                options: ["可以", "不可以", "有時候可以", "看情況"],
+                correct: 1,
+                explanation: "走路時玩手機會分散注意力，非常危險。"
+            },
+            {
+                question: "看到行人專用號誌的小綠人時表示什麼？",
+                options: ["禁止通行", "可以通行", "準備停止", "快速通過"],
+                correct: 1,
+                explanation: "小綠人表示行人可以安全通行。"
+            },
+            {
+                question: "在巷子裡行走時應該注意什麼？",
+                options: ["車輛可能突然出現", "沒有危險", "可以奔跑", "不用注意"],
+                correct: 0,
+                explanation: "巷子裡視線受限，車輛可能突然出現。"
+            },
+            {
+                question: "什麼是「防禦性行走」？",
+                options: ["攻擊他人", "保護自己安全", "快速移動", "大聲喧嘩"],
+                correct: 1,
+                explanation: "防禦性行走是指時刻保持警覺，保護自己的安全。"
+            },
+            {
+                question: "遇到視線不良的情況應該怎麼做？",
+                options: ["加快速度", "更加小心", "正常行走", "閉上眼睛"],
+                correct: 1,
+                explanation: "視線不良時更容易發生意外，應該更加小心。"
+            },
+            {
+                question: "在學校門口應該怎麼做？",
+                options: ["快速通過", "遵守導護指揮", "自由行動", "推擠前進"],
+                correct: 1,
+                explanation: "學校門口有導護志工指揮交通，應該遵守指示。"
+            },
+            {
+                question: "什麼時候應該使用地下道？",
+                options: ["從來不用", "有地下道時", "只有下雨時", "只有晚上"],
+                correct: 1,
+                explanation: "有地下道時應該使用，這是最安全的過路方式。"
+            },
+            {
+                question: "看到「小心兒童」的標誌表示什麼？",
+                options: ["可以快速通過", "附近有學校或兒童", "沒有特別意義", "禁止兒童通行"],
+                correct: 1,
+                explanation: "這個標誌提醒駕駛附近有學校或兒童經常出沒。"
+            },
+            {
+                question: "團體過馬路時應該怎麼做？",
+                options: ["分散行動", "排成一列", "推擠前進", "各自為政"],
+                correct: 1,
+                explanation: "團體過馬路應該排成一列，整齊有序地通過。"
+            },
+            {
+                question: "在公車站等車時應該站在哪裡？",
+                options: ["馬路中間", "公車站牌後方", "車道上", "隨便站"],
+                correct: 1,
+                explanation: "應該在公車站牌後方排隊等候，避免阻礙交通。"
+            },
+            {
+                question: "什麼情況下可以闖紅燈？",
+                options: ["趕時間時", "沒有車時", "跟著大人時", "任何時候都不可以"],
+                correct: 3,
+                explanation: "任何情況下都不應該闖紅燈，這是基本的交通規則。"
+            },
+            {
+                question: "看到救護車或消防車時應該怎麼做？",
+                options: ["繼續前進", "立即讓路", "跟在後面", "擋住去路"],
+                correct: 1,
+                explanation: "緊急車輛執行救援任務，所有人都應該立即讓路。"
+            },
+            {
+                question: "在沒有紅綠燈的路口應該怎麼做？",
+                options: ["直接通過", "更加小心觀察", "快速通過", "不用注意"],
+                correct: 1,
+                explanation: "沒有紅綠燈的路口更需要小心觀察各方向來車。"
+            },
+            {
+                question: "什麼是正確的過馬路步驟？",
+                options: ["看、停、聽", "停、看、聽", "聽、看、停", "直接過去"],
+                correct: 1,
+                explanation: "正確步驟是停、看、聽，確認安全後再通行。"
+            },
+            {
+                question: "在雨天騎腳踏車應該注意什麼？",
+                options: ["騎得更快", "路面濕滑", "沒有影響", "可以不戴安全帽"],
+                correct: 1,
+                explanation: "雨天路面濕滑，煞車距離增加，需要更加小心。"
+            },
+            {
+                question: "看到「讓」的標誌時應該怎麼做？",
+                options: ["加速通過", "讓其他車輛先行", "忽略標誌", "停在原地"],
+                correct: 1,
+                explanation: "讓路標誌要求讓其他方向的車輛優先通行。"
+            },
+            {
+                question: "在人行道上應該怎麼走？",
+                options: ["靠左走", "靠右走", "走中間", "隨便走"],
+                correct: 1,
+                explanation: "在人行道上應該靠右走，與車輛行駛方向一致。"
+            },
+            {
+                question: "什麼時候應該特別注意大型車輛？",
+                options: ["從來不用", "轉彎時", "只有白天", "只有晚上"],
+                correct: 1,
+                explanation: "大型車輛轉彎時有視覺死角，特別危險。"
+            },
+            {
+                question: "在學校附近的速限通常是多少？",
+                options: ["沒有限制", "比一般道路低", "比一般道路高", "看心情"],
+                correct: 1,
+                explanation: "學校附近為了保護學童安全，速限通常比一般道路低。"
+            },
+            {
+                question: "看到閃爍的黃燈時應該怎麼做？",
+                options: ["加速通過", "小心慢行", "立即停止", "忽略它"],
+                correct: 1,
+                explanation: "閃爍黃燈表示警告，應該小心慢行。"
+            },
+            {
+                question: "什麼是「視覺死角」？",
+                options: ["看不到的地方", "很亮的地方", "很暗的地方", "沒有意義"],
+                correct: 0,
+                explanation: "視覺死角是駕駛看不到的區域，行人應該避免停留。"
+            },
+            {
+                question: "在停車場應該怎麼行走？",
+                options: ["快速奔跑", "小心慢走", "隨意走動", "不用注意"],
+                correct: 1,
+                explanation: "停車場內車輛進出頻繁，應該小心慢走。"
+            },
+            {
+                question: "什麼時候應該使用反光背心？",
+                options: ["只有工作時", "光線不足時", "從來不用", "只有下雨時"],
+                correct: 1,
+                explanation: "光線不足時穿反光背心能提高能見度，增加安全性。"
+            },
+            {
+                question: "看到「行人專用」標誌表示什麼？",
+                options: ["禁止行人", "只有行人可以使用", "車輛優先", "沒有意義"],
+                correct: 1,
+                explanation: "行人專用區域只允許行人使用，車輛不得進入。"
+            },
+            {
+                question: "在天橋上應該怎麼做？",
+                options: ["快速通過", "小心慢行", "可以奔跑", "可以停留玩耍"],
+                correct: 1,
+                explanation: "天橋是安全的過路設施，但仍應小心慢行。"
+            },
+            {
+                question: "什麼是最重要的交通安全原則？",
+                options: ["速度最重要", "安全第一", "時間最重要", "方便最重要"],
+                correct: 1,
+                explanation: "無論何時何地，安全都應該是第一考量。"
+            },
+            {
+                question: "看到導護志工的指揮時應該怎麼做？",
+                options: ["忽略指揮", "遵守指揮", "自己決定", "快速通過"],
+                correct: 1,
+                explanation: "導護志工是為了保護學童安全，應該遵守他們的指揮。"
+            },
+            {
+                question: "在什麼情況下可以不遵守交通規則？",
+                options: ["趕時間時", "沒人看見時", "跟著別人時", "任何時候都要遵守"],
+                correct: 3,
+                explanation: "交通規則是為了保護所有人的安全，任何時候都應該遵守。"
+            },
+            {
+                question: "學會交通安全知識最重要的目的是什麼？",
+                options: ["通過考試", "保護自己和他人", "讓父母高興", "完成作業"],
+                correct: 1,
+                explanation: "學習交通安全知識的最終目的是保護自己和他人的生命安全。"
+            }
+        ];
+
+        // AI智能功能
+        let learningData = {
+            vocabScore: 75,
+            sentenceScore: 60,
+            safetyScore: 85,
+            totalQuestions: 0,
+            correctAnswers: 0
+        };
+
+        // AI知識庫 - 擴充更多問題和答案
+        const aiKnowledgeBase = {
+            // 基本交通安全
+            "過馬路": "過馬路時要記住「停、看、聽」三步驟：1️⃣停在路邊 2️⃣左右看車 3️⃣聽聲音確認安全。一定要走斑馬線，不要闖紅燈！",
+            "紅綠燈": "🚦紅燈停、綠燈行、黃燈要小心！紅燈時絕對不能過馬路，綠燈時也要先確認左右無車再通行。",
+            "安全帽": "🪖騎腳踏車或機車一定要戴安全帽！選擇合適尺寸，正確扣好帽帶，保護頭部安全。",
+            "公車": "🚌等公車要在站牌排隊，上下車不推擠。車子停穩才能上下車，坐好扶穩最重要！",
+            "走路": "🚶‍♂️走路要走人行道，沒有人行道時靠路邊走。不要邊走邊玩手機，注意周圍環境。",
+            "腳踏車": "🚲騎腳踏車要戴安全帽，遵守交通規則。不要在馬路上並排騎車或做危險動作。",
+            "斑馬線": "🦓斑馬線是行人的安全通道，過馬路一定要走斑馬線。即使在斑馬線上也要左右看確認安全。",
+            "導護志工": "👮‍♀️導護志工是保護學童安全的英雄，看到他們的指揮一定要遵守。他們每天風雨無阻守護大家的安全。",
+            
+            // 交通工具安全
+            "機車": "🛵搭乘機車要戴安全帽，雙手抱緊駕駛或抓好扶手。不要側坐，腳要放在踏板上。",
+            "汽車": "🚗搭乘汽車要繫安全帶，坐在後座比較安全。不要把頭手伸出窗外，不要在車內玩耍。",
+            "校車": "🚌搭校車要排隊上下車，在車上要坐好不要站起來。等車完全停穩才能上下車。",
+            
+            // 交通標誌
+            "停止標誌": "🛑看到紅色八角形的停止標誌，一定要完全停下來，左右看確認安全才能通行。",
+            "讓路標誌": "⚠️倒三角形的讓路標誌表示要讓其他方向的車輛先通行，要減速慢行。",
+            "禁止標誌": "🚫圓形紅色邊框的標誌表示禁止，看到後要遵守不能違反。",
+            
+            // 特殊情況
+            "下雨天": "🌧️下雨天路面濕滑，要穿雨衣、撐雨傘，走路要更小心。司機視線也不好，要特別注意。",
+            "晚上": "🌙晚上光線不好，要穿亮色衣服或反光背心。走路要更加小心，最好有大人陪同。",
+            "施工": "🚧看到施工標誌要小心慢行，聽從工作人員指揮。施工區域可能有危險，不要靠近。",
+            
+            // 緊急情況
+            "受傷": "🩹如果受傷了要立刻告訴大人，嚴重的話要打119叫救護車。不要自己亂動傷口。",
+            "迷路": "🗺️如果迷路了不要慌張，找警察或商店店員求助。記住家裡電話和地址很重要。",
+            "危險": "⚠️遇到危險要立刻離開，大聲呼救。可以打110報警或119求救。",
+            
+            // 學校相關
+            "上學": "🎒上學路上要注意安全，不要邊走邊玩。遵守導護志工的指揮，走指定路線。",
+            "放學": "🏠放學後不要在路上逗留玩耍，要直接回家。如果要去其他地方要告訴家長。",
+            "同學": "👫和同學一起走路要排成一列，不要並排走在馬路上。互相提醒注意安全。",
+            
+            // 家長接送
+            "接送": "👨‍👩‍👧‍👦家長接送時要在指定區域等候，不要併排停車。上下車要注意後方來車。",
+            "等待": "⏰等家長來接時要在安全的地方等候，不要到處亂跑。如果家長遲到要告訴老師。",
+            
+            // 一般問候和鼓勵
+            "你好": "你好！我是鷺江國小的AI交通安全助教，很高興為你服務！有什麼交通安全問題都可以問我喔！😊",
+            "謝謝": "不客氣！保護大家的交通安全是我的使命。記得要遵守交通規則，平安最重要！🙏",
+            "再見": "再見！記得每天都要注意交通安全，做個守規矩的好學生！👋",
+            
+            // 預設回答關鍵字
+            "什麼": "關於交通安全",
+            "怎麼": "正確的做法是",
+            "為什麼": "這是因為安全考量",
+            "可以": "建議你要",
+            "不能": "為了安全起見，不建議"
+        };
+
+        // AI語音助教功能
+        function askAI() {
+            const question = document.getElementById('aiQuestion').value.trim();
+            if (!question) {
+                showToast('請輸入您的問題！', 'warning');
+                return;
+            }
+
+            // 顯示回答區域
+            const responseArea = document.getElementById('aiResponse');
+            const answerDiv = document.getElementById('aiAnswer');
+            
+            responseArea.classList.remove('hidden');
+            answerDiv.innerHTML = '<div class="flex items-center gap-2"><div class="animate-spin w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full"></div><span>AI正在思考中...</span></div>';
+
+            // 模擬AI思考時間
+            setTimeout(() => {
+                let answer = findBestAnswer(question);
+                answerDiv.innerHTML = answer;
+                
+                // 清空輸入框
+                document.getElementById('aiQuestion').value = '';
+            }, 1200);
+        }
+
+        // 智能問答匹配函數
+        function findBestAnswer(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            // 完全匹配檢查
+            for (let keyword in aiKnowledgeBase) {
+                if (lowerQuestion.includes(keyword)) {
+                    return aiKnowledgeBase[keyword];
+                }
+            }
+            
+            // 模糊匹配 - 檢查相關詞彙
+            const relatedWords = {
+                "交通燈": "紅綠燈",
+                "紅燈": "紅綠燈", 
+                "綠燈": "紅綠燈",
+                "黃燈": "紅綠燈",
+                "馬路": "過馬路",
+                "道路": "走路",
+                "人行道": "走路",
+                "單車": "腳踏車",
+                "自行車": "腳踏車",
+                "摩托車": "機車",
+                "客運": "公車",
+                "巴士": "公車",
+                "帽子": "安全帽",
+                "頭盔": "安全帽",
+                "志工": "導護志工",
+                "導護": "導護志工",
+                "下雨": "下雨天",
+                "雨天": "下雨天",
+                "夜晚": "晚上",
+                "工程": "施工",
+                "工地": "施工"
+            };
+            
+            for (let word in relatedWords) {
+                if (lowerQuestion.includes(word)) {
+                    const targetKeyword = relatedWords[word];
+                    if (aiKnowledgeBase[targetKeyword]) {
+                        return aiKnowledgeBase[targetKeyword];
+                    }
+                }
+            }
+            
+            // 問題類型分析
+            if (lowerQuestion.includes("怎麼") || lowerQuestion.includes("如何")) {
+                if (lowerQuestion.includes("過") && (lowerQuestion.includes("路") || lowerQuestion.includes("馬路"))) {
+                    return aiKnowledgeBase["過馬路"];
+                }
+                if (lowerQuestion.includes("騎") && lowerQuestion.includes("車")) {
+                    return aiKnowledgeBase["腳踏車"];
+                }
+                if (lowerQuestion.includes("搭") || lowerQuestion.includes("坐")) {
+                    return aiKnowledgeBase["公車"];
+                }
+            }
+            
+            if (lowerQuestion.includes("什麼時候") || lowerQuestion.includes("何時")) {
+                if (lowerQuestion.includes("戴") && lowerQuestion.includes("帽")) {
+                    return aiKnowledgeBase["安全帽"];
+                }
+            }
+            
+            if (lowerQuestion.includes("為什麼") || lowerQuestion.includes("為何")) {
+                return "🤔 交通規則的設計都是為了保護大家的安全！遵守規則可以避免意外發生，讓每個人都能平安回家。安全比什麼都重要！";
+            }
+            
+            if (lowerQuestion.includes("可以") || lowerQuestion.includes("能不能")) {
+                if (lowerQuestion.includes("跑") || lowerQuestion.includes("奔跑")) {
+                    return "🏃‍♂️ 在馬路上或人行道上都不建議奔跑！跑步容易跌倒，也可能來不及注意周圍的車輛。走路要穩穩的，安全最重要！";
+                }
+                if (lowerQuestion.includes("玩") || lowerQuestion.includes("遊戲")) {
+                    return "🎮 在馬路上或靠近車輛的地方絕對不可以玩耍！要玩遊戲請到公園、操場等安全的地方。馬路是車輛通行的地方，很危險！";
+                }
+            }
+            
+            // 情境相關問題
+            if (lowerQuestion.includes("上學") || lowerQuestion.includes("放學")) {
+                return aiKnowledgeBase["上學"];
+            }
+            
+            if (lowerQuestion.includes("家長") || lowerQuestion.includes("爸媽") || lowerQuestion.includes("父母")) {
+                return aiKnowledgeBase["接送"];
+            }
+            
+            // 緊急情況
+            if (lowerQuestion.includes("受傷") || lowerQuestion.includes("痛") || lowerQuestion.includes("流血")) {
+                return aiKnowledgeBase["受傷"];
+            }
+            
+            if (lowerQuestion.includes("迷路") || lowerQuestion.includes("找不到")) {
+                return aiKnowledgeBase["迷路"];
+            }
+            
+            // 問候語回應
+            if (lowerQuestion.includes("你好") || lowerQuestion.includes("哈囉") || lowerQuestion.includes("嗨")) {
+                return aiKnowledgeBase["你好"];
+            }
+            
+            if (lowerQuestion.includes("謝謝") || lowerQuestion.includes("感謝")) {
+                return aiKnowledgeBase["謝謝"];
+            }
+            
+            if (lowerQuestion.includes("再見") || lowerQuestion.includes("掰掰")) {
+                return aiKnowledgeBase["再見"];
+            }
+            
+            // 預設回答 - 提供實用建議
+            const defaultAnswers = [
+                "🤖 我是鷺江國小的AI交通安全助教！雖然我還在學習您的具體問題，但我可以分享一些重要的交通安全提醒：<br><br>🚦 <strong>過馬路三步驟</strong>：停、看、聽<br>👀 <strong>時刻保持警覺</strong>：注意周圍車輛<br>🚶‍♂️ <strong>走安全路線</strong>：使用人行道和斑馬線<br>📱 <strong>專心走路</strong>：不要邊走邊玩手機",
+                
+                "💡 讓我為您介紹一些基本的交通安全知識：<br><br>🛑 <strong>看到紅燈</strong>：一定要停下來等候<br>🦓 <strong>使用斑馬線</strong>：這是最安全的過路方式<br>🪖 <strong>騎車戴安全帽</strong>：保護頭部很重要<br>👥 <strong>聽從導護指揮</strong>：他們是安全守護者",
+                
+                "🎯 交通安全小提醒：<br><br>🌧️ <strong>雨天特別小心</strong>：路面濕滑，視線不佳<br>🌙 <strong>夜間穿亮色衣服</strong>：讓司機容易看到你<br>🚌 <strong>搭車要排隊</strong>：不推擠，等車停穩<br>⚠️ <strong>遠離大型車輛</strong>：特別是轉彎時"
+            ];
+            
+            // 隨機選擇一個預設回答
+            const randomIndex = Math.floor(Math.random() * defaultAnswers.length);
+            return defaultAnswers[randomIndex];
+        }
+
+        // AI回答朗讀功能
+        function speakAIResponse() {
+            const answerText = document.getElementById('aiAnswer').textContent;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(answerText);
+                utterance.lang = 'zh-TW';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // 生成個人化學習計畫
+        function generatePersonalPlan() {
+            const planDiv = document.getElementById('personalPlan');
+            const contentDiv = document.getElementById('planContent');
+            
+            planDiv.classList.remove('hidden');
+            contentDiv.innerHTML = '<div class="animate-pulse">正在分析您的學習狀況...</div>';
+            
+            setTimeout(() => {
+                let plan = '';
+                
+                if (learningData.vocabScore < 70) {
+                    plan += '📚 建議加強詞彙練習，每天練習10個新單字<br>';
+                }
+                if (learningData.sentenceScore < 70) {
+                    plan += '💬 建議多做句型練習，重點練習日常對話<br>';
+                }
+                if (learningData.safetyScore < 80) {
+                    plan += '⚠️ 建議複習交通安全知識，多做情境模擬<br>';
+                }
+                
+                if (plan === '') {
+                    plan = '🎉 您的學習表現很棒！建議繼續保持，可以挑戰更高難度的內容。';
+                } else {
+                    plan += '<br>🎯 預計2週內可以看到明顯進步！';
+                }
+                
+                contentDiv.innerHTML = plan;
+            }, 2000);
+        }
+
+        // AI情境模擬
+        const scenarios = {
+            'traffic-light': {
+                title: '🚦 紅綠燈路口情境',
+                description: '你來到一個紅綠燈路口，現在是紅燈，你應該怎麼做？',
+                options: [
+                    { text: '等綠燈再過馬路', correct: true, feedback: '✅ 正確！紅燈停是基本交通規則。' },
+                    { text: '看沒車就快速通過', correct: false, feedback: '❌ 錯誤！即使沒車也不能闖紅燈。' },
+                    { text: '跟著大人一起過', correct: false, feedback: '❌ 錯誤！不能因為有大人就闖紅燈。' }
+                ]
+            },
+            'bus': {
+                title: '🚌 搭乘公車情境',
+                description: '公車來了，車上很擠，你應該怎麼做？',
+                options: [
+                    { text: '推擠上車搶位子', correct: false, feedback: '❌ 錯誤！推擠很危險。' },
+                    { text: '排隊等候，讓乘客先下車', correct: true, feedback: '✅ 正確！有禮貌又安全。' },
+                    { text: '從後門上車', correct: false, feedback: '❌ 錯誤！應該從前門上車。' }
+                ]
+            },
+            'emergency': {
+                title: '⚠️ 緊急狀況處理',
+                description: '你看到有人在路上受傷了，你應該怎麼做？',
+                options: [
+                    { text: '立刻撥打119求救', correct: true, feedback: '✅ 正確！緊急時刻要立即求救。' },
+                    { text: '自己去幫忙移動傷患', correct: false, feedback: '❌ 錯誤！不要隨意移動傷患。' },
+                    { text: '圍觀看熱鬧', correct: false, feedback: '❌ 錯誤！應該幫忙而不是圍觀。' }
+                ]
+            }
+        };
+
+        function startScenario(type) {
+            const scenario = scenarios[type];
+            const scenarioArea = document.getElementById('scenarioArea');
+            const contentDiv = document.getElementById('scenarioContent');
+            const actionsDiv = document.getElementById('scenarioActions');
+            
+            scenarioArea.classList.remove('hidden');
+            
+            contentDiv.innerHTML = `
+                <h4 class="text-lg font-bold mb-3">${scenario.title}</h4>
+                <p class="text-gray-700 mb-4">${scenario.description}</p>
+            `;
+            
+            actionsDiv.innerHTML = '';
+            scenario.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mr-2 mb-2';
+                button.textContent = option.text;
+                button.onclick = () => showScenarioResult(option);
+                actionsDiv.appendChild(button);
+            });
+        }
+
+        function showScenarioResult(option) {
+            const actionsDiv = document.getElementById('scenarioActions');
+            actionsDiv.innerHTML = `
+                <div class="w-full p-4 rounded-lg ${option.correct ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                    ${option.feedback}
+                </div>
+                <button onclick="document.getElementById('scenarioArea').classList.add('hidden')" 
+                        class="mt-3 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                    結束模擬
+                </button>
+            `;
+            
+            // 更新學習進度
+            if (option.correct) {
+                learningData.safetyScore = Math.min(100, learningData.safetyScore + 2);
+                updateProgressBars();
+            }
+        }
+
+        function updateProgressBars() {
+            document.getElementById('vocabProgress').style.width = learningData.vocabScore + '%';
+            document.getElementById('sentenceProgress').style.width = learningData.sentenceScore + '%';
+            document.getElementById('safetyProgress').style.width = learningData.safetyScore + '%';
+        }
+
+        // 雙語學習系統
+        let currentVocabulary = [];
+        let currentSentences = [];
+        let currentQuiz = [];
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        // 隨機選擇詞彙
+        function getRandomVocabulary(count) {
+            const shuffled = [...vocabularyBank].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // 隨機選擇句子
+        function getRandomSentences(count) {
+            const shuffled = [...sentenceBank].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // 隨機選擇測驗題目
+        function getRandomQuiz(count) {
+            const shuffled = [...quizBank].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // 生成詞彙學習內容
+        function generateNewVocabulary() {
+            currentVocabulary = getRandomVocabulary(6);
+            const section = document.getElementById('vocabularySection');
+            section.innerHTML = '';
+            
+            currentVocabulary.forEach((vocab, index) => {
+                const vocabDiv = document.createElement('div');
+                vocabDiv.className = 'bg-blue-50 p-3 rounded-lg fade-in-up';
+                vocabDiv.style.animationDelay = `${index * 0.1}s`;
+                vocabDiv.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-blue-700">${vocab.english}</div>
+                            <div class="text-sm text-gray-600">${vocab.chinese}</div>
+                            <div class="text-xs text-blue-500">${vocab.pronunciation}</div>
+                        </div>
+                        <button onclick="speakWord('${vocab.english}')" class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-colors">
+                            🔊
+                        </button>
+                    </div>
+                `;
+                section.appendChild(vocabDiv);
+            });
+        }
+
+        // 生成句子練習內容
+        function generateNewSentences() {
+            currentSentences = getRandomSentences(4);
+            const section = document.getElementById('sentenceSection');
+            section.innerHTML = '';
+            
+            currentSentences.forEach((sentence, index) => {
+                const sentenceDiv = document.createElement('div');
+                sentenceDiv.className = 'bg-green-50 p-3 rounded-lg fade-in-up';
+                sentenceDiv.style.animationDelay = `${index * 0.1}s`;
+                sentenceDiv.innerHTML = `
+                    <div class="mb-2">
+                        <div class="font-semibold text-green-700">${sentence.english}</div>
+                        <div class="text-sm text-gray-600">${sentence.chinese}</div>
+                    </div>
+                    <button onclick="speakSentence('${sentence.english.replace(/'/g, "\\'")}')" class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition-colors">
+                        🔊 朗讀
+                    </button>
+                `;
+                section.appendChild(sentenceDiv);
+            });
+        }
+
+        // 開始新測驗
+        function startNewQuiz() {
+            currentQuiz = getRandomQuiz(5);
+            currentQuizIndex = 0;
+            quizScore = 0;
+            showQuizQuestion();
+        }
+
+        // 顯示測驗題目
+        function showQuizQuestion() {
+            if (currentQuizIndex >= currentQuiz.length) {
+                showQuizResult();
+                return;
+            }
+
+            const question = currentQuiz[currentQuizIndex];
+            const section = document.getElementById('quizSection');
+            
+            section.innerHTML = `
+                <div class="mb-4">
+                    <div class="text-sm text-purple-600 mb-2">題目 ${currentQuizIndex + 1}/${currentQuiz.length}</div>
+                    <div class="font-semibold mb-4">${question.question}</div>
+                    <div class="space-y-2">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectAnswer(${index})" class="w-full text-left p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+                                ${String.fromCharCode(65 + index)}. ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 選擇答案
+        function selectAnswer(selectedIndex) {
+            const question = currentQuiz[currentQuizIndex];
+            const isCorrect = selectedIndex === question.correct;
+            
+            if (isCorrect) {
+                quizScore++;
+                learningData.safetyScore = Math.min(100, learningData.safetyScore + 1);
+            }
+            
+            const section = document.getElementById('quizSection');
+            section.innerHTML = `
+                <div class="mb-4">
+                    <div class="text-sm text-purple-600 mb-2">題目 ${currentQuizIndex + 1}/${currentQuiz.length}</div>
+                    <div class="font-semibold mb-4">${question.question}</div>
+                    <div class="p-4 rounded-lg ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                        ${isCorrect ? '✅ 正確！' : '❌ 錯誤！'}
+                        <br><small>${question.explanation}</small>
+                    </div>
+                    <button onclick="nextQuestion()" class="mt-3 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600">
+                        ${currentQuizIndex < currentQuiz.length - 1 ? '下一題' : '查看結果'}
+                    </button>
+                </div>
+            `;
+            
+            updateProgressBars();
+        }
+
+        // 下一題
+        function nextQuestion() {
+            currentQuizIndex++;
+            showQuizQuestion();
+        }
+
+        // 顯示測驗結果
+        function showQuizResult() {
+            const percentage = Math.round((quizScore / currentQuiz.length) * 100);
+            let message = '';
+            let bgColor = '';
+            
+            if (percentage >= 80) {
+                message = '🎉 太棒了！您對交通安全知識掌握得很好！';
+                bgColor = 'bg-green-100 text-green-700';
+            } else if (percentage >= 60) {
+                message = '👍 不錯！繼續加油，多練習會更好！';
+                bgColor = 'bg-yellow-100 text-yellow-700';
+            } else {
+                message = '💪 需要多加練習！建議複習交通安全知識。';
+                bgColor = 'bg-red-100 text-red-700';
+            }
+            
+            const section = document.getElementById('quizSection');
+            section.innerHTML = `
+                <div class="text-center">
+                    <div class="text-2xl font-bold mb-4">測驗完成！</div>
+                    <div class="text-3xl font-bold text-purple-600 mb-4">${quizScore}/${currentQuiz.length}</div>
+                    <div class="text-xl mb-4">${percentage}分</div>
+                    <div class="p-4 rounded-lg ${bgColor} mb-4">
+                        ${message}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 語音功能
+        function speakWord(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakSentence(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.7;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Toast 通知功能
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'warning' ? 'bg-yellow-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                'bg-blue-500 text-white'
+            }`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // 更新時間顯示
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-TW');
+            const timeElement = document.getElementById('updateTime');
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+
+        // 頁面載入完成後初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化雙語學習內容
+            generateNewVocabulary();
+            generateNewSentences();
+            startNewQuiz();
+            
+            // 更新時間顯示
+            updateTime();
+            setInterval(updateTime, 1000);
+            
+            // 初始化進度條
+            updateProgressBars();
+        });
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9984290bf254843a',t:'MTc2MjA5MjA0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
