@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新北市鷺江國小114學年度交通安全訪視</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-top: 1rem;
+        }
+
+        .header .date {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .motto {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: scale(1.05);
+        }
+
+        .info-card h3 {
+            color: #2a5298;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f5576c;
+            margin: 0.5rem 0;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .feature-list li {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            background: #e9ecef;
+            transform: translateX(10px);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+
+        .highlight-box h3 {
+            color: #d63031;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .traffic-issues {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .traffic-issues h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .strategy-card {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .strategy-card:hover {
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .strategy-card h4 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .achievement-banner {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-bar {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 2rem;
+        }
+
+        .nav-item {
+            padding: 0.7rem 1.2rem;
+            background: #f8f9fa;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 2px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+            font-size: 1.5rem;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .info-grid, .stats-container, .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+                gap: 0.3rem;
+            }
+
+            .nav-item {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>新北市鷺江國小</h1>
+        <h2>114學年度交通安全訪視</h2>
+        <p class="date">114年10月23日(四)</p>
+    </div>
+
+    <div class="motto">
+        重視效能、效率與效益 | 追求品質、品味與品牌
+    </div>
+
+    <!-- 導覽列 -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="#school-info" class="nav-item">🏫 學校資料</a>
+            <a href="#traffic-status" class="nav-item">🚦 交通現況</a>
+            <a href="#organization" class="nav-item">👥 組織架構</a>
+            <a href="#education" class="nav-item">📚 教育宣導</a>
+            <a href="#management" class="nav-item">🛡️ 安全管理</a>
+            <a href="#innovation" class="nav-item">⭐ 創新特色</a>
+            <a href="#strategy" class="nav-item">🎯 三E策略</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 學校基本資料 -->
+        <div class="section" id="school-info">
+            <h2>📍 學校基本資料</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                本校創建於民國70年,位於新北市蘆洲區民族路及民權路交會處,鄰近區公所、捷運站及公車站,交通便利,生活機能完備,屬於都會型學校。
+            </p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>校地面積</h3>
+                    <div class="number">2.28</div>
+                    <p>公頃</p>
+                </div>
+                <div class="info-card">
+                    <h3>教職員數</h3>
+                    <div class="number">237</div>
+                    <p>人</p>
+                </div>
+                <div class="info-card">
+                    <h3>國小班級數</h3>
+                    <div class="number">99</div>
+                    <p>班</p>
+                </div>
+                <div class="info-card">
+                    <h3>學生總數</h3>
+                    <div class="number">2,586</div>
+                    <p>國小2459人 + 幼兒園127人</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: #2a5298; font-size: 1.3rem;">學生背景組成</h3>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="label">一般生</div>
+                    <div class="value">91%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">新住民</div>
+                    <div class="value">6%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">原住民</div>
+                    <div class="value">1%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">弱勢學生</div>
+                    <div class="value">25.3%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 交通現況分析 -->
+        <div class="section" id="traffic-status">
+            <h2>🚦 學校周邊交通現況</h2>
+            
+            <div class="traffic-issues">
+                <h3>⚠️ 民族路正門交通挑戰</h3>
+                <p>本校正門(民族路七號)位處交通要塞,是多路公車必經處。於上放學時段,因家長接送車輛與人潮集中,偶會出現交通壅滯現象,汽機車與公車爭道,對通行順暢度有所影響。</p>
+            </div>
+
+            <div class="highlight-box">
+                <h3>✅ 民權路側門交通狀況</h3>
+                <p>本校側門(民權路)之家長接送情況較為良好,接送人數與車流量適中,交通狀況相對舒緩。</p>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: #2a5298; font-size: 1.3rem;">學生通學方式分析</h3>
+            <p style="margin: 1rem 0;">本校學生上放學以<strong>家長機車接送及走路上學</strong>居多</p>
+        </div>
+
+        <!-- 組織架構與計畫 -->
+        <div class="section" id="organization">
+            <h2>👥 交通安全推動組織</h2>
+            
+            <div class="highlight-box">
+                <h3>交通安全教育推動委員會</h3>
+                <p>本校由各學年老師推選一位代表組成交通安全教育推動委員會,委員會固定於每學期初及期末,共同研議交通安全推動事宜,並檢討與改善校內外導護措施。</p>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: #2a5298; font-size: 1.3rem;">114學年度 PDCA 策略</h3>
+            <ul class="feature-list">
+                <li><strong>Plan(計畫):</strong> 期初召開交通安全會議,制定年度計畫與SWOTS分析</li>
+                <li><strong>Do(執行):</strong> 落實交通安全教育課程、導護制度、宣導活動</li>
+                <li><strong>Check(檢核):</strong> 定期檢視執行成效,分析交通事故熱點</li>
+                <li><strong>Action(改善):</strong> 期末檢討並提出改善措施</li>
+            </ul>
+        </div>
+
+        <!-- 教育宣導 -->
+        <div class="section" id="education">
+            <h2>📚 多元宣導與教育課程</h2>
+            
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <h4>🎯 全校性宣導</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>✓ 校門口電視牆影片宣導</li>
+                        <li>✓ 家長日警員交通安全講座</li>
+                        <li>✓ 樂齡學員交通安全宣導</li>
+                        <li>✓ 下雨天車輛回堵宣導</li>
+                    </ul>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>👨‍🏫 教師專業成長</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>✓ 教師交通安全教育研習</li>
+                        <li>✓ 導護志工交通安全講座</li>
+                        <li>✓ 數位資源融入教學</li>
+                    </ul>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>🎓 學生課程教學</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>✓ 低年級:安全過馬路教育</li>
+                        <li>✓ 中年級:交通安全知識</li>
+                        <li>✓ 高年級:Canva創意海報</li>
+                        <li>✓ 雙語融入交通安全議題</li>
+                    </ul>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>🗺️ 創新教學方式</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>✓ 製作交通安全地圖</li>
+                        <li>✓ 查詢肇事熱點實景圖</li>
+                        <li>✓ 簡報製作宣導教育</li>
+                        <li>✓ 本土語融入教材繪本</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="achievement-banner">
+                每學期提供2小時交通安全課程,融入各科教學
+            </div>
+        </div>
+
+        <!-- 安全管理措施 -->
+        <div class="section" id="management">
+            <h2>🛡️ 交通安全管理措施</h2>
+            
+            <h3 style="color: #2a5298; font-size: 1.3rem; margin-bottom: 1rem;">導護志工制度</h3>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="label">113學年度</div>
+                    <div class="value">92人</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">114學年度</div>
+                    <div class="value">88人</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">編制組別</div>
+                    <div class="value">7組</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">平均年齡</div>
+                    <div class="value">66.7歲</div>
+                </div>
+            </div>
+
+            <h3 style="color: #2a5298; font-size: 1.3rem; margin: 2rem 0 1rem;">交通安全措施特色</h3>
+            <ul class="feature-list">
+                <li>🚗 完善規劃汽機車接送區分流 (民族路與民權路)</li>
+                <li>🚌 規劃安親班接送專區,善用校內空間讓安親班進入校園接送</li>
+                <li>👮 每日校長在門口執勤導護,歡迎學生上學</li>
+                <li>👨‍🎓 招募交通崗學生協助放學時段安全宣導</li>
+                <li>📋 每個導護崗位配置專屬工作守則資料夾</li>
+                <li>🏫 建立完善的停車場管理規範</li>
+                <li>🚶 老師帶領學生打掃人行道,維護行人安全</li>
+                <li>🎯 導護老師值勤地點依上放學時段安排不同位置</li>
+            </ul>
+
+            <div class="achievement-banner" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                🏆 新北市113學年度優良導護志工 - 黃秀美女士
+            </div>
+        </div>
+
+        <!-- 創新特色 -->
+        <div class="section" id="innovation">
+            <h2>⭐ 創新特色與亮點</h2>
+            
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <h4>🎬 自製雙語交通安全影片</h4>
+                    <p>結合雙語教學,英語領域自編教材融入交通安全議題,提升學童國際視野。</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>🚶‍♂️ 推動學童走路上學</h4>
+                    <p>結合健康促進計畫,鼓勵學生步行通學,減少依賴交通工具。</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>👨‍👩‍👧 家長密切溝通</h4>
+                    <p>透過家長會群組、家長日宣導,與家長保持良好溝通管道。</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>❤️ 愛心商店合作</h4>
+                    <p>與鄰近民權路上之愛心商店合作,建立學童安全防護網。</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>📱 成立安親班LINE群組</h4>
+                    <p>與周邊安親班建立官方LINE,全面性溝通學校制度。</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>🏃‍♂️ 走廊不奔跑運動</h4>
+                    <p>「用走代替跑」提高學童校園安全意識,成立學生交通服務隊。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 三E策略 -->
+        <div class="section" id="strategy">
+            <h2>🎯 三E整合策略</h2>
+            
+            <div class="highlight-box" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                <h3>教育 × 輔導 × 環境改善</h3>
+                <p style="font-size: 1.1rem;">透過教育、輔導與環境改善三者相輔相成,共同致力於減少每一件交通事故的發生,保護每一個寶貴的生命。</p>
+            </div>
+
+            <div class="strategy-grid" style="margin-top: 2rem;">
+                <div class="strategy-card">
+                    <h4>📖 教育面</h4>
+                    <p>系統化交通安全課程、多元宣導活動、教師專業成長、學生實作體驗</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>🤝 輔導面</h4>
+                    <p>導護志工培訓、交通崗學生培育、家長溝通協調、愛心商店網絡</p>
+                </div>
+
+                <div class="strategy-card">
+                    <h4>🏗️ 環境面</h4>
+                    <p>接送區規劃、人車分流設計、停車場管理、路隊動線規劃</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <h3>🎯 願景目標</h3>
+        <p style="font-size: 1.3rem; margin: 1rem 0;">堅定守護每位學子的通學安全</p>
+        <p style="font-size: 1.5rem; font-weight: bold;">朝著零事故的目標穩健邁進</p>
+    </div>
+
+    <!-- 回到頂部按鈕 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <script>
+        // 平滑滾動到指定區塊
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const navHeight = document.querySelector('.nav-bar').offsetHeight;
+                    const targetPosition = targetSection.offsetTop - navHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 監聽滾動事件，更新導覽列active狀態
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navItems = document.querySelectorAll('.nav-item');
+            const navHeight = document.querySelector('.nav-bar').offsetHeight;
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - navHeight - 100;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + currentSection) {
+                    item.classList.add('active');
+                }
+            });
+
+            // 顯示/隱藏回到頂部按鈕
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        // 回到頂部功能
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
