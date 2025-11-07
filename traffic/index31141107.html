@@ -29,98 +29,105 @@
             width: 100%;
             border-collapse: collapse;
         }
+        /* [學生版] 加大表格內距和字體 */
         .likert-table th, .likert-table td {
-            padding: 0.75rem 1rem; /* 增加一點水平 padding */
+            padding: 1rem 1.25rem; /* p-4 p-5 */
             text-align: center;
             border: 1px solid #e5e7eb; /* gray-200 */
             white-space: normal;
+            font-size: 1rem; /* text-base */
+            line-height: 1.5rem;
         }
         .likert-table th:not(:first-child) {
             max-width: 120px;
-            font-weight: 500; /* [美化] 標頭字重
-            */
+            font-weight: 500; 
             background-color: #f9fafb; /* bg-gray-50 */
         }
+         /* [學生版] 加寬問題欄位 */
         .likert-table td:first-child, .likert-table th:first-child {
             text-align: left;
             white-space: normal;
-            min-width: 300px;
-            font-weight: 500; /* [美化] 題目字重 */
+            min-width: 350px;
+            font-weight: 500; 
         }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <!-- [美化] 將 max-w-5xl (1024px) 調整為 max-w-6xl (1152px)，讓問卷更寬裕 -->
-    <!-- [美化] 增加 border-t-8 作為頁面頂部裝飾 -->
-    <div class="container mx-auto max-w-6xl p-4 sm:p-8 bg-white shadow-xl rounded-xl my-10 border-t-8 border-blue-600">
+    <!-- [學生版] 調整 max-w-6xl (1152px) -> max-w-7xl (1280px) -->
+    <!-- [學生版] 增加邊框 border-t-8 -> border-t-[12px] -->
+    <!-- [學生版] 增加圓角/陰影/邊距 rounded-xl -> rounded-2xl, shadow-xl -> shadow-2xl, my-10 -> my-12 -->
+    <!-- [學生版] 增加 padding p-4 sm:p-8 -> p-6 sm:p-12 -->
+    <div class="container mx-auto max-w-7xl p-6 sm:p-12 bg-white shadow-2xl rounded-2xl my-12 border-t-[12px] border-blue-600">
 
-        <header class="text-center mb-10 pb-6 border-b border-gray-200">
+        <!-- [學生版] 增加 mb-10 -> mb-12, pb-6 -> pb-8 -->
+        <header class="text-center mb-12 pb-8 border-b border-gray-200">
             <div class="flex justify-center items-center gap-4">
-                <!-- [美化] 增加一個簡單的 SVG 圖示 -->
-                <svg class="h-12 w-12 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <!-- [學生版] 加大圖示 h-12 w-12 -> h-16 w-16 -->
+                <svg class="h-16 w-16 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
                 </svg>
-                <h1 class="text-4xl font-bold text-blue-700">交通安全教育前後測問卷</h1>
+                <!-- [學生版] 放大標題 text-4xl -> text-5xl -->
+                <h1 class="text-5xl font-bold text-blue-700">交通安全教育前後測問卷</h1>
             </div>
-            <p class="text-xl text-gray-600 mt-3">鷺江國小</p>
+            <!-- [學生版] 放大副標題 text-xl -> text-2xl, mt-3 -> mt-4 -->
+            <p class="text-2xl text-gray-600 mt-4">鷺江國小</p>
         </header>
 
         <!-- 提交表單 -->
-        <form id="surveyForm" class="space-y-12">
+        <!-- [學生版] 增加 space-y-12 -> space-y-16 -->
+        <form id="surveyForm" class="space-y-16">
 
             <!-- 基本資料 -->
-            <!-- [美化] 將 section 樣式統一，增加 padding 和圓角 -->
-            <!-- [更新] 套用專屬色塊 - 藍色 -->
-            <section class="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200">
-                <h2 class="text-2xl font-semibold text-blue-700 mb-6 border-l-4 border-blue-600 pl-4">基本資料</h2>
-                <!-- [更新] 修改 grid layout 為 md:grid-cols-2，並移除 lg:grid-cols-3 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- [學生版] 增加 padding p-6 -> p-8, rounded-lg -> rounded-xl -->
+            <!-- [學生版] 加深顏色 bg-blue-50 -> bg-blue-100, border-blue-200 -> border-blue-300 -->
+            <section class="bg-blue-100 p-8 rounded-xl shadow-md border border-blue-300">
+                <!-- [學生版] 放大標題 text-2xl -> text-3xl, mb-6 -> mb-8 -->
+                <h2 class="text-3xl font-semibold text-blue-700 mb-8 border-l-4 border-blue-600 pl-4">基本資料</h2>
+                <!-- [學生版] 增加 gap-6 -> gap-8 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label for="classYear" class="block text-sm font-medium text-gray-700 question-required">班級 (年)</label>
-                        <!-- [更新] 增加 min="0" 防止負數 -->
-                        <input type="number" name="classYear" id="classYear" placeholder="例如: 5" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" min="0">
+                        <!-- [學生版] 放大標籤 text-sm -> text-base -->
+                        <label for="classYear" class="block text-base font-medium text-gray-700 question-required">班級 (年)</label>
+                        <!-- [學生版] 放大輸入框 p-3 text-base -->
+                        <input type="number" name="classYear" id="classYear" placeholder="例如: 5" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 text-base" min="0">
                     </div>
                     <div>
-                        <label for="classNum" class="block text-sm font-medium text-gray-700 question-required">班級 (班)</label>
-                        <!-- [更新] 增加 min="0" 防止負數 -->
-                        <input type="number" name="classNum" id="classNum" placeholder="例如: 1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" min="0">
+                        <label for="classNum" class="block text-base font-medium text-gray-700 question-required">班級 (班)</label>
+                        <input type="number" name="classNum" id="classNum" placeholder="例如: 1" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 text-base" min="0">
                     </div>
                     <div>
-                        <label for="seatNo" class="block text-sm font-medium text-gray-700 question-required">座號</label>
-                        <!-- [更新] 增加 min="0" 防止負數 -->
-                        <input type="number" name="seatNo" id="seatNo" placeholder="例如: 12" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" min="0">
+                        <label for="seatNo" class="block text-base font-medium text-gray-700 question-required">座號</label>
+                        <input type="number" name="seatNo" id="seatNo" placeholder="例如: 12" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 text-base" min="0">
                     </div>
-                    <!-- [新增] 姓名欄位 -->
                     <div>
-                        <label for="studentName" class="block text-sm font-medium text-gray-700 question-required">姓名</label>
-                        <input type="text" name="studentName" id="studentName" placeholder="例如: 王小明" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <label for="studentName" class="block text-base font-medium text-gray-700 question-required">姓名</label>
+                        <input type="text" name="studentName" id="studentName" placeholder="例如: 王小明" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 text-base">
                     </div>
-                    <!-- [更新] 移除欄位-span (col-span) 樣式 -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 question-required">性別</label>
+                        <label class="block text-base font-medium text-gray-700 question-required">性別</label>
                         <div class="mt-2 space-x-6">
                             <label class="inline-flex items-center">
-                                <input type="radio" name="gender" value="男" required class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
-                                <span class="ml-2 text-gray-700">男</span>
+                                <!-- [學生版] 放大選項 h-4 w-4 -> h-5 w-5, ml-2 -> ml-3, text-base -->
+                                <input type="radio" name="gender" value="男" required class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300">
+                                <span class="ml-3 text-base text-gray-800">男</span>
                             </label>
                             <label class="inline-flex items-center">
-                                <input type="radio" name="gender" value="女" required class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
-                                <span class="ml-2 text-gray-700">女</span>
+                                <input type="radio" name="gender" value="女" required class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300">
+                                <span class="ml-3 text-base text-gray-800">女</span>
                             </label>
                         </div>
                     </div>
-                    <!-- [更新] 移除欄位-span (col-span) 樣式 -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 question-required">這份問卷是：</label>
+                        <label class="block text-base font-medium text-gray-700 question-required">這份問卷是：</label>
                         <div class="mt-2 space-x-6">
                             <label class="inline-flex items-center">
-                                <input type="radio" name="testType" value="前測" required class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
-                                <span class="ml-2 text-gray-700">前測（上課前）</span>
+                                <input type="radio" name="testType" value="前測" required class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300">
+                                <span class="ml-3 text-base text-gray-800">前測（上課前）</span>
                             </label>
                             <label class="inline-flex items-center">
-                                <input type="radio" name="testType" value="後測" required class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
-                                <span class="ml-2 text-gray-700">後測（上課後）</span>
+                                <input type="radio" name="testType" value="後測" required class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300">
+                                <span class="ml-3 text-base text-gray-800">後測（上課後）</span>
                             </label>
                         </div>
                     </div>
@@ -159,18 +166,18 @@
 
                 // 函數：生成單選題 HTML
                 function createMultipleChoice(q) {
-                    // [美化] 增加 hover:bg-blue-50 和 transition
+                    // [學生版] 放大選項 p-3 -> p-4, h-4 w-4 -> h-5 w-5, ml-3 -> ml-4, text-base, hover:bg-blue-100
                     const optionsHtml = q.options.map((option, index) => `
-                        <label class="block ml-2 p-3 rounded-md hover:bg-blue-50 transition-colors duration-150 cursor-pointer">
-                            <input type="radio" name="${q.id}" value="${index + 1}" required class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
-                            <span class="ml-3 text-gray-700">${option}</span>
+                        <label class="block ml-2 p-4 rounded-md hover:bg-blue-100 transition-colors duration-150 cursor-pointer">
+                            <input type="radio" name="${q.id}" value="${index + 1}" required class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300">
+                            <span class="ml-4 text-base text-gray-800">${option}</span>
                         </label>
                     `).join('');
 
-                    // [美化] 增加 shadow-md 和 bg-white
+                    // [學生版] 放大問題 p-5 -> p-6, rounded-lg -> rounded-xl, text-lg -> text-xl
                     return `
-                        <div class="mb-6 p-5 bg-white border border-gray-200 rounded-lg shadow-md">
-                            <p class="font-medium text-lg text-gray-900 question-required">${q.text}</p>
+                        <div class="mb-6 p-6 bg-white border border-gray-200 rounded-xl shadow-md">
+                            <p class="font-medium text-xl text-gray-900 question-required">${q.text}</p>
                             <div class="mt-3 space-y-2">
                                 ${optionsHtml}
                             </div>
@@ -180,10 +187,13 @@
             </script>
 
             <!-- 第一部分：安全知識 (K) -->
-            <!-- [更新] 套用專屬色塊 - 綠色 -->
-            <section class="bg-green-50 p-6 rounded-lg shadow-md border border-green-200">
-                <h2 class="text-2xl font-semibold text-green-700 mb-6 border-l-4 border-green-600 pl-4">第一部分：安全知識 (K)</h2>
-                <p class="text-base text-gray-600 mb-6 -mt-2 ml-1">（請選出一個 <strong>最正確</strong> 的答案）</p>
+            <!-- [學生版] 增加 padding p-6 -> p-8, rounded-lg -> rounded-xl -->
+            <!-- [學生版] 加深顏色 bg-green-50 -> bg-green-100, border-green-200 -> border-green-300 -->
+            <section class="bg-green-100 p-8 rounded-xl shadow-md border border-green-300">
+                <!-- [學生版] 放大標題 text-2xl -> text-3xl, mb-6 -> mb-8 -->
+                <h2 class="text-3xl font-semibold text-green-700 mb-8 border-l-4 border-green-600 pl-4">第一部分：安全知識 (K)</h2>
+                <!-- [學生版] 放大說明 text-base -> text-lg, mb-6 -> mb-8 -->
+                <p class="text-lg text-gray-600 mb-8 -mt-2 ml-1">（請選出一個 <strong>最正確</strong> 的答案）</p>
                 <div id="part1-questions" class="space-y-6"></div>
                 <script>
                     const part1Container = document.getElementById('part1-questions');
@@ -229,32 +239,35 @@
                     const headers = (partNumber === 2) ? part2Headers : part3Headers;
                     const values = [5, 4, 3, 2, 1]; // 分數
 
-                    const headerHtml = headers.map(h => `<th class="font-semibold">${h}</th>`).join('');
+                    // [學生版] 放大表頭 text-base
+                    const headerHtml = headers.map(h => `<th class="font-semibold text-base">${h}</th>`).join('');
                     
                     const rowsHtml = questions.map(q => {
+                        // [學生版] 放大選項 p-2 -> p-3, h-5 -> h-6
                         const optionsHtml = values.map(v => `
                             <td class="text-center">
-                                <label class="cursor-pointer p-2 flex justify-center items-center">
-                                    <input type="radio" name="${q.id}" value="${v}" required class="focus:ring-blue-500 h-5 w-5 text-blue-600 border-gray-300">
+                                <label class="cursor-pointer p-3 flex justify-center items-center">
+                                    <input type="radio" name="${q.id}" value="${v}" required class="focus:ring-blue-500 h-6 w-6 text-blue-600 border-gray-300">
                                 </label>
                             </td>
                         `).join('');
                         
                         return `
                             <tr>
-                                <td class="text-left font-medium question-required">${q.text}</td>
+                                <!-- [學生版] 放大問題 text-base -->
+                                <td class="text-left font-medium question-required text-base">${q.text}</td>
                                 ${optionsHtml}
                             </tr>
                         `;
                     }).join('');
 
-                    // [美化] 增加 shadow-md 和 bg-white
+                    // [學生版] 增加圓角 rounded-lg -> rounded-xl
                     return `
-                        <div class="overflow-x-auto bg-white rounded-lg shadow-md border border-gray-200">
+                        <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
                             <table class="likert-table">
                                 <thead>
                                     <tr>
-                                        <th class="text-left">題目</th>
+                                        <th class="text-left text-base">題目</th>
                                         ${headerHtml}
                                     </tr>
                                 </thead>
@@ -268,34 +281,43 @@
             </script>
 
             <!-- 第二部分：安全態度 (A) -->
-            <!-- [更新] 套用專屬色塊 - 黃色 -->
-            <section class="bg-yellow-50 p-6 rounded-lg shadow-md border border-yellow-200">
-                <h2 class="text-2xl font-semibold text-yellow-700 mb-6 border-l-4 border-yellow-600 pl-4">第二部分：安全態度 (A)</h2>
-                <p class="text-base text-gray-600 mb-6 -mt-2 ml-1">（請勾選你對以下說法的同意程度）</p>
+            <!-- [學生版] 增加 padding p-6 -> p-8, rounded-lg -> rounded-xl -->
+            <!-- [學生版] 加深顏色 bg-yellow-50 -> bg-yellow-100, border-yellow-200 -> border-yellow-300 -->
+            <section class="bg-yellow-100 p-8 rounded-xl shadow-md border border-yellow-300">
+                <!-- [學生版] 放大標題 text-2xl -> text-3xl, mb-6 -> mb-8 -->
+                <h2 class="text-3xl font-semibold text-yellow-700 mb-8 border-l-4 border-yellow-600 pl-4">第二部分：安全態度 (A)</h2>
+                <!-- [學生版] 放大說明 text-base -> text-lg, mb-6 -> mb-8 -->
+                <p class="text-lg text-gray-600 mb-8 -mt-2 ml-1">（請勾選你對以下說法的同意程度）</p>
                 <div id="part2-questions"></div>
                 <script>
                     const part2Container = document.getElementById('part2-questions');
                     part2Container.innerHTML = createLikertTable(likertQuestions.part2, 2);
                 </script>
-            </section> <!-- 修正：補上結尾標籤 -->
+            </section> 
 
             <!-- 第三部分：安全意向與實踐 (B) -->
-            <!-- [更新] 套用專屬色塊 - 紫色 -->
-            <section class="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200">
-                <h2 class="text-2xl font-semibold text-purple-700 mb-6 border-l-4 border-purple-600 pl-4">第三部分：安全意向與實踐 (B)</h2>
-                <p class="text-base text-gray-600 mb-6 -mt-2 ml-1">（請想像你「未來有機會」騎自行車時，你「會這麼做」的同意程度）</p>
+            <!-- [學生版] 增加 padding p-6 -> p-8, rounded-lg -> rounded-xl -->
+            <!-- [學生版] 加深顏色 bg-purple-50 -> bg-purple-100, border-purple-200 -> border-purple-300 -->
+            <section class="bg-purple-100 p-8 rounded-xl shadow-md border border-purple-300">
+                <!-- [學生版] 放大標題 text-2xl -> text-3xl, mb-6 -> mb-8 -->
+                <h2 class="text-3xl font-semibold text-purple-700 mb-8 border-l-4 border-purple-600 pl-4">第三部分：安全意向與實踐 (B)</h2>
+                <!-- [學生版] 放大說明 text-base -> text-lg, mb-6 -> mb-8 -->
+                <p class="text-lg text-gray-600 mb-8 -mt-2 ml-1">（請想像你「未來有機會」騎自行車時，你「會這麼做」的同意程度）</p>
                 <div id="part3-questions"></div>
                 <script>
                     const part3Container = document.getElementById('part3-questions');
                     part3Container.innerHTML = createLikertTable(likertQuestions.part3, 3);
                 </script>
-            </section> <!-- 修正：補上結尾標籤 -->
+            </section> 
 
             <!-- 第四部分：鷺江國小情境應用題 -->
-            <!-- [更新] 套用專屬色塊 - 紅色 -->
-            <section class="bg-red-50 p-6 rounded-lg shadow-md border border-red-200">
-                <h2 class="text-2xl font-semibold text-red-700 mb-6 border-l-4 border-red-600 pl-4">第四部分：鷺江國小情境應用題</h2>
-                <p class="text-base text-gray-600 mb-6 -mt-2 ml-1">（此部分題目將會收集，但您可以提醒學生在「前測」時若不會可先跳過）</p>
+            <!-- [學生版] 增加 padding p-6 -> p-8, rounded-lg -> rounded-xl -->
+            <!-- [學生版] 加深顏色 bg-red-50 -> bg-red-100, border-red-200 -> border-red-300 -->
+            <section class="bg-red-100 p-8 rounded-xl shadow-md border border-red-300">
+                <!-- [學生版] 放大標題 text-2xl -> text-3xl, mb-6 -> mb-8 -->
+                <h2 class="text-3xl font-semibold text-red-700 mb-8 border-l-4 border-red-600 pl-4">第四部分：鷺江國小情境應用題</h2>
+                <!-- [學生版] 放大說明 text-base -> text-lg, mb-6 -> mb-8 -->
+                <p class="text-lg text-gray-600 mb-8 -mt-2 ml-1">（此部分題目將會收集，但您可以提醒學生在「前測」時若不會可先跳過）</p>
                 <div id="part4-questions" class="space-y-6"></div>
                 <script>
                     const part4Container = document.getElementById('part4-questions');
@@ -305,9 +327,9 @@
 
             <!-- 提交按鈕 -->
             <div class="text-center pt-8 border-t border-gray-200">
-                <!-- [美化] 增加按鈕大小、圓角、hover 效果和 SVG 圖示 -->
-                <button type="submit" id="submitButton" class="w-full sm:w-auto inline-flex justify-center items-center gap-3 px-16 py-4 border border-transparent text-lg font-medium rounded-full shadow-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-in-out transform hover:scale-105">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                <!-- [學生版] 放大按鈕 px-16 py-4 -> px-20 py-5, text-lg -> text-xl, w-6 h-6 -> w-7 h-7, shadow-lg -> shadow-xl -->
+                <button type="submit" id="submitButton" class="w-full sm:w-auto inline-flex justify-center items-center gap-3 px-20 py-5 border border-transparent text-xl font-medium rounded-full shadow-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-in-out transform hover:scale-105">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L6 12Z" />
                     </svg>
                     送出問卷
@@ -317,16 +339,19 @@
         </form>
 
         <!-- 訊息提示框 -->
-        <!-- [美化] 增加彈出動畫效果 -->
         <div id="messageBox" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full z-50 transition-opacity duration-300">
-            <div class="relative top-20 mx-auto p-6 border w-full max-w-md shadow-xl rounded-2xl bg-white transition-all duration-300 transform scale-95 opacity-0" id="messageBoxContent">
+            <!-- [學生版] 放大彈窗 max-w-md -> max-w-lg, rounded-2xl -> rounded-3xl -->
+            <div class="relative top-20 mx-auto p-6 border w-full max-w-lg shadow-xl rounded-3xl bg-white transition-all duration-300 transform scale-95 opacity-0" id="messageBoxContent">
                 <div class="mt-3 text-center">
-                    <h3 id="messageTitle" class="text-2xl leading-6 font-bold text-gray-900"></h3>
+                    <!-- [學生版] 放大標題 text-2xl -> text-3xl -->
+                    <h3 id="messageTitle" class="text-3xl leading-6 font-bold text-gray-900"></h3>
                     <div class="mt-4 px-7 py-3">
-                        <p id="messageText" class="text-base text-gray-600"></p>
+                        <!-- [學生版] 放大內文 text-base -> text-lg -->
+                        <p id="messageText" class="text-lg text-gray-600"></p>
                     </div>
                     <div class="items-center px-4 py-3">
-                        <button id="messageCloseButton" class="px-6 py-3 bg-blue-600 text-white text-base font-medium rounded-lg w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                         <!-- [學生版] 放大按鈕 px-6 py-3 -> px-8 py-4, text-base -> text-lg -->
+                        <button id="messageCloseButton" class="px-8 py-4 bg-blue-600 text-white text-lg font-medium rounded-lg w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
                             關閉
                         </button>
                     </div>
@@ -407,7 +432,6 @@
                         firstInvalidInput = input;
                         break;
                     }
-                    // [更新] 檢查 min 屬性
                     if (input.type === 'number' && input.min !== '' && parseFloat(input.value) < parseFloat(input.min)) {
                         firstInvalidInput = input;
                         break;
@@ -416,7 +440,6 @@
             }
 
             if (firstInvalidInput) {
-                // [更新] 根據是否為數字欄位顯示不同錯誤訊息
                 if (firstInvalidInput.type === 'number' && firstInvalidInput.min !== '' && parseFloat(firstInvalidInput.value) < parseFloat(firstInvalidInput.min)) {
                      showMessage("內容錯誤", `欄位 "${firstInvalidInput.previousElementSibling.textContent}" 不能是負數。`);
                 } else {
@@ -438,8 +461,9 @@
 
             // 設定提交中狀態
             submitButton.disabled = true;
+            // [學生版] 放大 loading icon h-5 w-5 -> h-6 w-6
             submitButton.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -463,7 +487,7 @@
                 if (result.result === "success") {
                     showMessage("提交成功！", "感謝您的填答，問卷已成功送出。");
                     form.reset(); // 清空表單
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); // [美化] 滾動到頁面頂部
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); 
                 } else {
                     throw new Error(result.error || '提交失敗，但伺服器有回應。');
                 }
@@ -472,18 +496,14 @@
                 console.error('提交錯誤:', error);
                 
                 // 這是處理 Google Apps Script 常見的 302 重導問題
-                // 即使腳本成功執行，fetch 也可能因為跨域重導而進入 catch
-                // 我們給一個比較模糊但友善的提示
                 if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
-                     // 這種情況通常是 Apps Script 成功執行但 fetch 因 CORS 重導失敗
                      showMessage("提交成功！", "感謝您的填答，問卷已成功送出。 (Type 1)");
                      form.reset();
                      window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else if (!error.message) {
-                    // 如果 error object 沒東西，也可能是重導成功
                     showMessage("提交成功！", "感謝您的填答，問卷已成功送出。 (Type 2)");
                     form.reset();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
                 else {
                     showMessage("提交失敗", `發生錯誤，請稍後再試。(${error.message})`);
@@ -492,7 +512,7 @@
                 // 恢復按鈕狀態
                 submitButton.disabled = false;
                 submitButton.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L6 12Z" />
                     </svg>
                     送出問卷
