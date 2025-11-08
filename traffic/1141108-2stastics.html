@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生上下學方式分析</title>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* 使用 Inter 字體 */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* 確保 canvas 在響應式佈局中正常顯示 */
+        #commuteChart {
+            max-width: 100%;
+            height: auto !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 sm:p-8">
+    <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-8">
+        
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">學生上下學方式互動分析</h1>
+        
+        <!-- 篩選器區域 -->
+        <div class="mb-6 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <label for="gradeFilter" class="text-lg font-medium text-gray-700">選擇年級：</label>
+            <select id="gradeFilter" class="rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 w-full sm:w-64 p-2.5">
+                <!-- 選項將由 JavaScript 動態填入 -->
+            </select>
+        </div>
+
+        <!-- 圖表容器 -->
+        <div class="w-full h-auto p-4 border border-gray-200 rounded-lg bg-white shadow-inner">
+            <canvas id="commuteChart"></canvas>
+        </div>
+
+        <!-- 數據分析摘要 -->
+        <div id="analysisSummary" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
+            <h2 class="text-xl font-semibold text-blue-800 mb-4">圖表分析摘要</h2>
+            <div id="summaryContent" class="text-gray-700 space-y-3">
+                <!-- 分析內容將由 JavaScript 動態填入 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 原始數據 (從圖片中手動提取)
+        const rawData = [
+            // 一年級
+            { grade: '一年級', method: '其它方式', toSchool: 0, fromSchool: 0 },
+            { grade: '一年級', method: '安親班接送', toSchool: 0, fromSchool: 156 },
+            { grade: '一年級', method: '家長開車接送', toSchool: 44, fromSchool: 20 },
+            { grade: '一年級', method: '家長陪同走路', toSchool: 72, fromSchool: 48 },
+            { grade: '一年級', method: '家長騎機車接送', toSchool: 193, fromSchool: 106 },
+            { grade: '一年級', method: '搭乘大眾運輸工具', toSchool: 11, fromSchool: 8 },
+            { grade: '一年級', method: '自行走路', toSchool: 27, fromSchool: 17 },
+            // 二年級
+            { grade: '二年級', method: '其它方式', toSchool: 8, fromSchool: 6 },
+            { grade: '二年級', method: '安親班接送', toSchool: 0, fromSchool: 175 },
+            { grade: '二年級', method: '家長開車接送', toSchool: 53, fromSchool: 19 },
+            { grade: '二年級', method: '家長陪同走路', toSchool: 57, fromSchool: 38 },
+            { grade: '二年級', method: '家長騎機車接送', toSchool: 205, fromSchool: 103 },
+            { grade: '二年級', method: '搭乘大眾運輸工具', toSchool: 2, fromSchool: 5 },
+            { grade: '二年級', method: '自行走路', toSchool: 30, fromSchool: 20 },
+            // 三年級
+            { grade: '三年級', method: '其它方式', toSchool: 2, fromSchool: 1 },
+            { grade: '三年級', method: '安親班接送', toSchool: 0, fromSchool: 216 },
+            { grade: '三年級', method: '家長開車接送', toSchool: 53, fromSchool: 15 },
+            { grade: '三年級', method: '家長陪同走路', toSchool: 52, fromSchool: 30 },
+            { grade: '三年級', method: '家長騎機車接送', toSchool: 267, fromSchool: 95 },
+            { grade: '三年級', method: '搭乘大眾運輸工具', toSchool: 6, fromSchool: 5 },
+            { grade: '三年級', method: '自行走路', toSchool: 43, fromSchool: 68 },
+            // 四年級
+            { grade: '四年級', method: '其它方式', toSchool: 4, fromSchool: 1 },
+            { grade: '四年級', method: '安親班接送', toSchool: 0, fromSchool: 178 },
+            { grade: '四年級', method: '家長開車接送', toSchool: 57, fromSchool: 17 },
+            { grade: '四年級', method: '家長陪同走路', toSchool: 58, fromSchool: 42 },
+            { grade: '四年級', method: '家長騎機車接送', toSchool: 242, fromSchool: 108 },
+            { grade: '四年級', method: '搭乘大眾運輸工具', toSchool: 4, fromSchool: 9 },
+            { grade: '四年級', method: '自行走路', toSchool: 90, fromSchool: 99 },
+            // 五年級
+            { grade: '五年級', method: '其它方式', toSchool: 0, fromSchool: 15 },
+            { grade: '五年級', method: '安親班接送', toSchool: 0, fromSchool: 195 },
+            { grade: '五年級', method: '家長開車接送', toSchool: 45, fromSchool: 13 },
+            { grade: '五年級', method: '家長陪同走路', toSchool: 38, fromSchool: 30 },
+            { grade: '五年級', method: '家長騎機車接送', toSchool: 240, fromSchool: 81 },
+            { grade: '五年級', method: '搭乘大眾運輸工具', toSchool: 7, fromSchool: 10 },
+            { grade: '五年級', method: '自行走路', toSchool: 111, fromSchool: 122 },
+            // 六年級
+            { grade: '六年級', method: '其它方式', toSchool: 3, fromSchool: 0 },
+            { grade: '六年級', method: '安親班接送', toSchool: 0, fromSchool: 176 },
+            { grade: '六年級', method: '家長開車接送', toSchool: 73, fromSchool: 33 },
+            { grade: '六年級', method: '家長陪同走路', toSchool: 33, fromSchool: 28 },
+            { grade: '六年級', method: '家長騎機車接送', toSchool: 234, fromSchool: 117 },
+            { grade: '六年級', method: '搭乘大眾運輸工具', toSchool: 20, fromSchool: 19 },
+            { grade: '六年級', method: '自行走路', toSchool: 154, fromSchool: 155 },
+        ];
+
+        const grades = ['一年級', '二年級', '三年級', '四年級', '五年級', '六年級'];
+        const methods = [
+            '家長騎機車接送',
+            '安親班接送',
+            '家長開車接送',
+            '家長陪同走路',
+            '自行走路',
+            '搭乘大眾運輸工具',
+            '其它方式'
+        ];
+        
+        let commuteChart; // 圖表實例
+        const gradeFilter = document.getElementById('gradeFilter');
+        const summaryContent = document.getElementById('summaryContent');
+        const ctx = document.getElementById('commuteChart').getContext('2d');
+
+        // 2. 填入年級篩選器選項
+        function populateFilter() {
+            gradeFilter.innerHTML = '<option value="all">所有年級 (總和)</option>';
+            grades.forEach(grade => {
+                gradeFilter.innerHTML += `<option value="${grade}">${grade}</option>`;
+            });
+        }
+
+        // 3. 處理數據 (根據篩選)
+        function processData(selectedGrade) {
+            let filteredData = [];
+
+            if (selectedGrade === 'all') {
+                // 匯總所有年級
+                const summary = {};
+                methods.forEach(method => {
+                    summary[method] = { toSchool: 0, fromSchool: 0 };
+                });
+
+                rawData.forEach(item => {
+                    if (summary[item.method]) {
+                        summary[item.method].toSchool += item.toSchool;
+                        summary[item.method].fromSchool += item.fromSchool;
+                    }
+                });
+                
+                methods.forEach(method => {
+                    filteredData.push({
+                        method: method,
+                        toSchool: summary[method].toSchool,
+                        fromSchool: summary[method].fromSchool
+                    });
+                });
+            } else {
+                // 篩選特定年級
+                filteredData = rawData
+                    .filter(item => item.grade === selectedGrade)
+                    // 確保順序與 methods 陣列一致
+                    .sort((a, b) => methods.indexOf(a.method) - methods.indexOf(b.method));
+            }
+            
+            const labels = filteredData.map(item => item.method);
+            const toSchoolData = filteredData.map(item => item.toSchool);
+            const fromSchoolData = filteredData.map(item => item.fromSchool);
+
+            return { labels, toSchoolData, fromSchoolData, filteredData };
+        }
+
+        // 4. 更新分析摘要
+        function updateSummary(selectedGrade, data) {
+            let summaryHtml = '';
+            let totalToSchool = data.toSchoolData.reduce((a, b) => a + b, 0);
+            let totalFromSchool = data.fromSchoolData.reduce((a, b) => a + b, 0);
+
+            // 找到上學和放學的最大值
+            const toSchoolMax = Math.max(...data.toSchoolData);
+            const fromSchoolMax = Math.max(...data.fromSchoolData);
+            
+            const toSchoolMaxMethod = data.labels[data.toSchoolData.indexOf(toSchoolMax)];
+            const fromSchoolMaxMethod = data.labels[data.fromSchoolData.indexOf(fromSchoolMax)];
+            
+            // 特殊洞察：安親班和機車接送
+            const afterSchoolCare = data.filteredData.find(d => d.method === '安親班接送');
+            const scooter = data.filteredData.find(d => d.method === '家長騎機車接送');
+            const walking = data.filteredData.find(d => d.method === '自行走路');
+            const accompaniedWalking = data.filteredData.find(d => d.method === '家長陪同走路'); // <-- 新增此行
+
+            summaryHtml += `<p><strong>篩選範圍：</strong> ${selectedGrade === 'all' ? '所有年級' : selectedGrade}</p>`;
+            summaryHtml += `<p><strong>總上學人數：</strong> ${totalToSchool.toLocaleString()} 人</p>`;
+            summaryHtml += `<p><strong>總放學人數：</strong> ${totalFromSchool.toLocaleString()} 人</p>`;
+            summaryHtml += `<hr class="my-3 border-blue-100">`;
+            
+            summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-motorcycle"></i> 上學最主要方式：</strong> ${toSchoolMaxMethod} (${toSchoolMax.toLocaleString()} 人)</p>`;
+            summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-school"></i> 放學最主要方式：</strong> ${fromSchoolMaxMethod} (${fromSchoolMax.toLocaleString()} 人)</p>`;
+
+            if (afterSchoolCare && scooter && accompaniedWalking && walking) { // <-- 確保所有資料都存在
+                summaryHtml += `<hr class="my-3 border-blue-100">`;
+                summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">重點方式分析：</h3>`; // <-- 標題修改
+                summaryHtml += `<p><strong>安親班接送：</strong> 上學 ${afterSchoolCare.toSchool} 人，放學 <strong class="text-red-600">${afterSchoolCare.fromSchool.toLocaleString()}</strong> 人。</p>`;
+                summaryHtml += `<p><strong>家長騎機車：</strong> 上學 <strong class="text-green-600">${scooter.toSchool.toLocaleString()}</strong> 人，放學 ${scooter.fromSchool.toLocaleString()} 人。</p>`;
+                // <!-- v 新增以下兩行 v -->
+                summaryHtml += `<p><strong>家長陪同走路：</strong> 上學 ${accompaniedWalking.toSchool.toLocaleString()} 人，放學 ${accompaniedWalking.fromSchool.toLocaleString()} 人。</p>`;
+                summaryHtml += `<p><strong>自行走路：</strong> 上學 ${walking.toSchool.toLocaleString()} 人，放學 ${walking.fromSchool.toLocaleString()} 人。</p>`;
+                // <!-- ^ 新增以上兩行 ^ -->
+                summaryHtml += `<p class="mt-2 italic">這顯示了「早上家長送，下午安親班接」的典型模式。</p>`;
+            }
+            
+            // <!-- v 移除原本的 if (walking && selectedGrade !== 'all') ... else if ... 結構的第一部分 v -->
+            if (selectedGrade === 'all') { // <-- 保持年級趨勢分析
+            // <!-- ^ 移除原本的 if (walking && selectedGrade !== 'all') ... else if ... 結構的第一部分 ^ -->
+                const grade1Walking = rawData.find(d => d.grade === '一年級' && d.method === '自行走路');
+                const grade6Walking = rawData.find(d => d.grade === '六年級' && d.method === '自行走路');
+                if (grade1Walking && grade6Walking) {
+                     summaryHtml += `<hr class="my-3 border-blue-100">`;
+                     summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">年級趨勢：</h3>`;
+                     summaryHtml += `<p><strong>自行走路上學：</strong> 從一年級 (${grade1Walking.toSchool}人) 顯著成長至六年級 (${grade6Walking.toSchool}人)，反映學生獨立性提升。</p>`;
+                }
+            }
+
+
+            summaryContent.innerHTML = summaryHtml;
+        }
+
+        // 5. 初始化/更新圖表
+        function updateChart() {
+            const selectedGrade = gradeFilter.value;
+            const data = processData(selectedGrade);
+
+            if (commuteChart) {
+                commuteChart.data.labels = data.labels;
+                commuteChart.data.datasets[0].data = data.toSchoolData;
+                commuteChart.data.datasets[1].data = data.fromSchoolData;
+                commuteChart.update();
+            } else {
+                commuteChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [
+                            {
+                                label: '上學 (人數)',
+                                data: data.toSchoolData,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)', // 藍色
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '放學 (人數)',
+                                data: data.fromSchoolData,
+                                backgroundColor: 'rgba(255, 159, 64, 0.7)', // 橘色
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.8, // 調整長寬比
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: () => `上下學方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`,
+                                font: {
+                                    size: 18
+                                },
+                                padding: {
+                                    bottom: 20
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        return tooltipItems[0].label;
+                                    },
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.parsed.y.toLocaleString()} 人`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: '學生人數'
+                                },
+                                ticks: {
+                                    // 確保Y軸刻度為整數
+                                    precision: 0
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    maxRotation: 45, // 旋轉標籤以避免重疊
+                                    minRotation: 0
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        // 讓長條圖更有點圓角
+                        elements: {
+                            bar: {
+                                borderRadius: 4,
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 更新分析摘要
+            updateSummary(selectedGrade, data);
+        }
+
+        // 6. 啟動
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilter();
+            gradeFilter.addEventListener('change', updateChart);
+            // 初始載入
+            updateChart(); 
+        });
+    </script>
+</body>
+</html>
