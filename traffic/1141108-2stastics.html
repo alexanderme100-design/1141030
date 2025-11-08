@@ -14,7 +14,7 @@
             font-family: 'Inter', sans-serif;
         }
         /* 確保 canvas 在響應式佈局中正常顯示 */
-        #commuteChart {
+        #commuteChart, #walkingTrendChart { /* <-- 套用至新的圖表 */
             max-width: 100%;
             height: auto !important;
         }
@@ -33,10 +33,17 @@
             </select>
         </div>
 
-        <!-- 圖表容器 -->
+        <!-- 圖表容器 (主要長條圖) -->
         <div class="w-full h-auto p-4 border border-gray-200 rounded-lg bg-white shadow-inner">
             <canvas id="commuteChart"></canvas>
         </div>
+
+        <!-- v 新增：步行趨勢折線圖 v -->
+        <div class="mt-8 w-full h-auto p-4 border border-gray-200 rounded-lg bg-white shadow-inner">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">步行趨勢分析 (一到六年級)</h2>
+            <canvas id="walkingTrendChart"></canvas>
+        </div>
+        <!-- ^ 新增：步行趨勢折線圖 ^ -->
 
         <!-- 數據分析摘要 -->
         <div id="analysisSummary" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
@@ -112,9 +119,11 @@
         ];
         
         let commuteChart; // 圖表實例
+        let walkingTrendChart; // <-- 新的折線圖實例
         const gradeFilter = document.getElementById('gradeFilter');
         const summaryContent = document.getElementById('summaryContent');
-        const ctx = document.getElementById('commuteChart').getContext('2d');
+        const commuteCtx = document.getElementById('commuteChart').getContext('2d');
+        const walkingCtx = document.getElementById('walkingTrendChart').getContext('2d'); // <-- 新的 canvas context
 
         // 2. 填入年級篩選器選項
         function populateFilter() {
@@ -177,11 +186,11 @@
             const toSchoolMaxMethod = data.labels[data.toSchoolData.indexOf(toSchoolMax)];
             const fromSchoolMaxMethod = data.labels[data.fromSchoolData.indexOf(fromSchoolMax)];
             
-            // 特殊洞察：安親班和機車接送
+            // 特殊洞察：
             const afterSchoolCare = data.filteredData.find(d => d.method === '安親班接送');
             const scooter = data.filteredData.find(d => d.method === '家長騎機車接送');
             const walking = data.filteredData.find(d => d.method === '自行走路');
-            const accompaniedWalking = data.filteredData.find(d => d.method === '家長陪同走路'); // <-- 新增此行
+            const accompaniedWalking = data.filteredData.find(d => d.method === '家長陪同走路');
 
             summaryHtml += `<p><strong>篩選範圍：</strong> ${selectedGrade === 'all' ? '所有年級' : selectedGrade}</p>`;
             summaryHtml += `<p><strong>總上學人數：</strong> ${totalToSchool.toLocaleString()} 人</p>`;
@@ -191,35 +200,27 @@
             summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-motorcycle"></i> 上學最主要方式：</strong> ${toSchoolMaxMethod} (${toSchoolMax.toLocaleString()} 人)</p>`;
             summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-school"></i> 放學最主要方式：</strong> ${fromSchoolMaxMethod} (${fromSchoolMax.toLocaleString()} 人)</p>`;
 
-            if (afterSchoolCare && scooter && accompaniedWalking && walking) { // <-- 確保所有資料都存在
+            if (afterSchoolCare && scooter && accompaniedWalking && walking) { 
                 summaryHtml += `<hr class="my-3 border-blue-100">`;
-                summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">重點方式分析：</h3>`; // <-- 標題修改
+                summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">重點方式分析 ( ${selectedGrade === 'all' ? '所有年級' : selectedGrade} )：</h3>`; 
                 summaryHtml += `<p><strong>安親班接送：</strong> 上學 ${afterSchoolCare.toSchool} 人，放學 <strong class="text-red-600">${afterSchoolCare.fromSchool.toLocaleString()}</strong> 人。</p>`;
                 summaryHtml += `<p><strong>家長騎機車：</strong> 上學 <strong class="text-green-600">${scooter.toSchool.toLocaleString()}</strong> 人，放學 ${scooter.fromSchool.toLocaleString()} 人。</p>`;
-                // <!-- v 新增以下兩行 v -->
                 summaryHtml += `<p><strong>家長陪同走路：</strong> 上學 ${accompaniedWalking.toSchool.toLocaleString()} 人，放學 ${accompaniedWalking.fromSchool.toLocaleString()} 人。</p>`;
                 summaryHtml += `<p><strong>自行走路：</strong> 上學 ${walking.toSchool.toLocaleString()} 人，放學 ${walking.fromSchool.toLocaleString()} 人。</p>`;
-                // <!-- ^ 新增以上兩行 ^ -->
                 summaryHtml += `<p class="mt-2 italic">這顯示了「早上家長送，下午安親班接」的典型模式。</p>`;
             }
             
-            // <!-- v 移除原本的 if (walking && selectedGrade !== 'all') ... else if ... 結構的第一部分 v -->
-            if (selectedGrade === 'all') { // <-- 保持年級趨勢分析
-            // <!-- ^ 移除原本的 if (walking && selectedGrade !== 'all') ... else if ... 結構的第一部分 ^ -->
-                const grade1Walking = rawData.find(d => d.grade === '一年級' && d.method === '自行走路');
-                const grade6Walking = rawData.find(d => d.grade === '六年級' && d.method === '自行走路');
-                if (grade1Walking && grade6Walking) {
-                     summaryHtml += `<hr class="my-3 border-blue-100">`;
-                     summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">年級趨勢：</h3>`;
-                     summaryHtml += `<p><strong>自行走路上學：</strong> 從一年級 (${grade1Walking.toSchool}人) 顯著成長至六年級 (${grade6Walking.toSchool}人)，反映學生獨立性提升。</p>`;
-                }
-            }
-
+            // <!-- v 修改：步行趨勢分析 v -->
+            summaryHtml += `<hr class="my-3 border-blue-100">`;
+            summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">步行趨勢分析 (參考上方折線圖)：</h3>`;
+            summaryHtml += `<p><strong>自行走路 (獨立性)：</strong> 無論上學或放學，人數皆隨年級顯著上升，反映學生獨立性增強。</p>`;
+            summaryHtml += `<p><strong>家長陪同走路 (依賴性)：</strong> 人數隨年級增加而逐漸下降，特別是上學時段。</p>`;
+            // <!-- ^ 修改：步行趨S勢分析 ^ -->
 
             summaryContent.innerHTML = summaryHtml;
         }
 
-        // 5. 初始化/更新圖表
+        // 5. 初始化/更新圖表 (主要長條圖)
         function updateChart() {
             const selectedGrade = gradeFilter.value;
             const data = processData(selectedGrade);
@@ -228,9 +229,10 @@
                 commuteChart.data.labels = data.labels;
                 commuteChart.data.datasets[0].data = data.toSchoolData;
                 commuteChart.data.datasets[1].data = data.fromSchoolData;
+                commuteChart.options.plugins.title.text = () => `上下學方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`;
                 commuteChart.update();
             } else {
-                commuteChart = new Chart(ctx, {
+                commuteChart = new Chart(commuteCtx, {
                     type: 'bar',
                     data: {
                         labels: data.labels,
@@ -287,13 +289,12 @@
                                     text: '學生人數'
                                 },
                                 ticks: {
-                                    // 確保Y軸刻度為整數
                                     precision: 0
                                 }
                             },
                             x: {
                                 ticks: {
-                                    maxRotation: 45, // 旋轉標籤以避免重疊
+                                    maxRotation: 45, 
                                     minRotation: 0
                                 }
                             }
@@ -302,7 +303,6 @@
                             mode: 'index',
                             intersect: false,
                         },
-                        // 讓長條圖更有點圓角
                         elements: {
                             bar: {
                                 borderRadius: 4,
@@ -316,12 +316,116 @@
             updateSummary(selectedGrade, data);
         }
 
+        // v 新增： 建立步行趨勢折線圖 (此圖表不隨篩選器變動)
+        function createWalkingTrendChart() {
+            const walkingData = {
+                toSchool: [],
+                fromSchool: []
+            };
+            const accompaniedWalkingData = {
+                toSchool: [],
+                fromSchool: []
+            };
+
+            // 遍歷所有年級，提取步行數據
+            grades.forEach(grade => {
+                const gradeWalking = rawData.find(d => d.grade === grade && d.method === '自行走路');
+                const gradeAccompanied = rawData.find(d => d.grade === grade && d.method === '家長陪同走路');
+                
+                walkingData.toSchool.push(gradeWalking.toSchool);
+                walkingData.fromSchool.push(gradeWalking.fromSchool);
+                accompaniedWalkingData.toSchool.push(gradeAccompanied.toSchool);
+                accompaniedWalkingData.fromSchool.push(gradeAccompanied.fromSchool);
+            });
+
+            if (walkingTrendChart) {
+                walkingTrendChart.destroy(); // 如果已存在則先銷毀
+            }
+
+            walkingTrendChart = new Chart(walkingCtx, {
+                type: 'line',
+                data: {
+                    labels: grades,
+                    datasets: [
+                        {
+                            label: '自行走路 (上學)',
+                            data: walkingData.toSchool,
+                            borderColor: 'rgba(239, 68, 68, 1)', // Red
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: '自行走路 (放學)',
+                            data: walkingData.fromSchool,
+                            borderColor: 'rgba(249, 115, 22, 1)', // Orange
+                            backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: '家長陪同走路 (上學)',
+                            data: accompaniedWalkingData.toSchool,
+                            borderColor: 'rgba(16, 185, 129, 1)', // Green
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: '家長陪同走路 (放學)',
+                            data: accompaniedWalkingData.fromSchool,
+                            borderColor: 'rgba(6, 182, 212, 1)', // Cyan
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            fill: false,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2.2, // 調整長寬比
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y.toLocaleString()} 人`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '學生人數'
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '年級'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        // ^ 新增： 建立步行趨勢折線圖 ^
+
         // 6. 啟動
         document.addEventListener('DOMContentLoaded', () => {
             populateFilter();
             gradeFilter.addEventListener('change', updateChart);
             // 初始載入
             updateChart(); 
+            createWalkingTrendChart(); // <-- 呼叫新的圖表建立函式
         });
     </script>
 </body>
