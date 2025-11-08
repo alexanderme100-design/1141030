@@ -14,7 +14,7 @@
             font-family: 'Inter', sans-serif;
         }
         /* 確保 canvas 在響應式佈局中正常顯示 */
-        #commuteChart, #walkingTrendChart { /* <-- 套用至新的圖表 */
+        #commuteChart, #walkingTrendChart, #keyMethodsChart { /* <-- 套用至新的圖表 */
             max-width: 100%;
             height: auto !important;
         }
@@ -35,19 +35,26 @@
 
         <!-- 圖表容器 (主要長條圖) -->
         <div class="w-full h-auto p-4 border border-gray-200 rounded-lg bg-white shadow-inner">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">所有方式 - 上下學比較</h2>
             <canvas id="commuteChart"></canvas>
         </div>
 
-        <!-- v 新增：步行趨勢折線圖 v -->
+        <!-- 步行趨勢折線圖 -->
         <div class="mt-8 w-full h-auto p-4 border border-gray-200 rounded-lg bg-white shadow-inner">
             <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">步行趨勢分析 (一到六年級)</h2>
             <canvas id="walkingTrendChart"></canvas>
         </div>
-        <!-- ^ 新增：步行趨勢折線圖 ^ -->
+        
+        <!-- v 新增：重點方式水平長條圖 v -->
+        <div class="mt-8 w-full h-auto p-4 border border-gray-200 rounded-lg bg-white shadow-inner">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">重點方式分析圖表</h2>
+            <canvas id="keyMethodsChart"></canvas>
+        </div>
+        <!-- ^ 新增：重點方式水平長條圖 ^ -->
 
         <!-- 數據分析摘要 -->
         <div id="analysisSummary" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
-            <h2 class="text-xl font-semibold text-blue-800 mb-4">圖表分析摘要</h2>
+            <h2 class="text-xl font-semibold text-blue-800 mb-4">圖表告訴我們：</h2>
             <div id="summaryContent" class="text-gray-700 space-y-3">
                 <!-- 分析內容將由 JavaScript 動態填入 -->
             </div>
@@ -108,7 +115,9 @@
         ];
 
         const grades = ['一年級', '二年級', '三年級', '四年級', '五年級', '六年級'];
-        const methods = [
+        
+        // 所有方式
+        const allMethods = [
             '家長騎機車接送',
             '安親班接送',
             '家長開車接送',
@@ -118,12 +127,23 @@
             '其它方式'
         ];
         
+        // v 重點方式 v
+        const keyMethods = [
+            '家長騎機車接送',
+            '安親班接送',
+            '家長陪同走路',
+            '自行走路'
+        ];
+        
         let commuteChart; // 圖表實例
-        let walkingTrendChart; // <-- 新的折線圖實例
+        let walkingTrendChart; // 折線圖實例
+        let keyMethodsChart; // <-- 新的重點圖表實例
+        
         const gradeFilter = document.getElementById('gradeFilter');
         const summaryContent = document.getElementById('summaryContent');
         const commuteCtx = document.getElementById('commuteChart').getContext('2d');
-        const walkingCtx = document.getElementById('walkingTrendChart').getContext('2d'); // <-- 新的 canvas context
+        const walkingCtx = document.getElementById('walkingTrendChart').getContext('2d');
+        const keyMethodsCtx = document.getElementById('keyMethodsChart').getContext('2d'); // <-- 新的 canvas context
 
         // 2. 填入年級篩選器選項
         function populateFilter() {
@@ -134,13 +154,14 @@
         }
 
         // 3. 處理數據 (根據篩選)
-        function processData(selectedGrade) {
+        // (此函數保持不變，用於驅動主圖表和摘要)
+        function processData(selectedGrade, methodList) {
             let filteredData = [];
 
             if (selectedGrade === 'all') {
                 // 匯總所有年級
                 const summary = {};
-                methods.forEach(method => {
+                methodList.forEach(method => {
                     summary[method] = { toSchool: 0, fromSchool: 0 };
                 });
 
@@ -151,7 +172,7 @@
                     }
                 });
                 
-                methods.forEach(method => {
+                methodList.forEach(method => {
                     filteredData.push({
                         method: method,
                         toSchool: summary[method].toSchool,
@@ -161,9 +182,9 @@
             } else {
                 // 篩選特定年級
                 filteredData = rawData
-                    .filter(item => item.grade === selectedGrade)
-                    // 確保順序與 methods 陣列一致
-                    .sort((a, b) => methods.indexOf(a.method) - methods.indexOf(b.method));
+                    .filter(item => item.grade === selectedGrade && methodList.includes(item.method))
+                    // 確保順序與 methodList 陣列一致
+                    .sort((a, b) => methodList.indexOf(a.method) - methodList.indexOf(b.method));
             }
             
             const labels = filteredData.map(item => item.method);
@@ -174,7 +195,7 @@
         }
 
         // 4. 更新分析摘要
-        function updateSummary(selectedGrade, data) {
+        function updateSummary(selectedGrade, data) { // data 來自 processData(selectedGrade, allMethods)
             let summaryHtml = '';
             let totalToSchool = data.toSchoolData.reduce((a, b) => a + b, 0);
             let totalFromSchool = data.fromSchoolData.reduce((a, b) => a + b, 0);
@@ -192,44 +213,58 @@
             const walking = data.filteredData.find(d => d.method === '自行走路');
             const accompaniedWalking = data.filteredData.find(d => d.method === '家長陪同走路');
 
-            summaryHtml += `<p><strong>篩選範圍：</strong> ${selectedGrade === 'all' ? '所有年級' : selectedGrade}</p>`;
-            summaryHtml += `<p><strong>總上學人數：</strong> ${totalToSchool.toLocaleString()} 人</p>`;
-            summaryHtml += `<p><strong>總放學人數：</strong> ${totalFromSchool.toLocaleString()} 人</p>`;
+            // <!-- v 簡化版摘要 v -->
+            summaryHtml += `<p><strong>你正在看：</strong> ${selectedGrade === 'all' ? '所有年級' : selectedGrade}</p>`;
+            summaryHtml += `<p><strong>早上上學總人數：</strong> ${totalToSchool.toLocaleString()} 人</p>`;
+            summaryHtml += `<p><strong>下午放學總人數：</strong> ${totalFromSchool.toLocaleString()} 人</p>`;
             summaryHtml += `<hr class="my-3 border-blue-100">`;
             
-            summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-motorcycle"></i> 上學最主要方式：</strong> ${toSchoolMaxMethod} (${toSchoolMax.toLocaleString()} 人)</p>`;
-            summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-school"></i> 放學最主要方式：</strong> ${fromSchoolMaxMethod} (${fromSchoolMax.toLocaleString()} 人)</p>`;
+            summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-motorcycle"></i> 早上上學最多人 (看總表)：</strong> ${toSchoolMaxMethod} (${toSchoolMax.toLocaleString()} 人)</p>`;
+            
+            <!-- v 新增/移動：根據使用者回饋，將導護志工的分析放在早上尖峰時段的統計下方 v -->
+            summaryHtml += `<p class="text-sm text-gray-800 mt-2 p-3 bg-blue-100 rounded-lg">早上上學時段，走路、騎車、開車的人都很多，交通特別擁擠。這也代表導護志工和老師們在路口辛苦值勤，非常令人尊敬。</p>`;
+            <!-- ^ 新增/移動 ^ -->
+
+            summaryHtml += `<p class="text-blue-900"><strong><i class="fas fa-school"></i> 下午放學最多人 (看總表)：</strong> ${fromSchoolMaxMethod} (${fromSchoolMax.toLocaleString()} 人)</p>`;
 
             if (afterSchoolCare && scooter && accompaniedWalking && walking) { 
                 summaryHtml += `<hr class="my-3 border-blue-100">`;
-                summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">重點方式分析 ( ${selectedGrade === 'all' ? '所有年級' : selectedGrade} )：</h3>`; 
-                summaryHtml += `<p><strong>安親班接送：</strong> 上學 ${afterSchoolCare.toSchool} 人，放學 <strong class="text-red-600">${afterSchoolCare.fromSchool.toLocaleString()}</strong> 人。</p>`;
-                summaryHtml += `<p><strong>家長騎機車：</strong> 上學 <strong class="text-green-600">${scooter.toSchool.toLocaleString()}</strong> 人，放學 ${scooter.fromSchool.toLocaleString()} 人。</p>`;
-                summaryHtml += `<p><strong>家長陪同走路：</strong> 上學 ${accompaniedWalking.toSchool.toLocaleString()} 人，放學 ${accompaniedWalking.fromSchool.toLocaleString()} 人。</p>`;
-                summaryHtml += `<p><strong>自行走路：</strong> 上學 ${walking.toSchool.toLocaleString()} 人，放學 ${walking.fromSchool.toLocaleString()} 人。</p>`;
-                summaryHtml += `<p class="mt-2 italic">這顯示了「早上家長送，下午安親班接」的典型模式。</p>`;
+                // <!-- v 修改標題以指向新圖表 v -->
+                summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">重點方式分析 (請參考上方的重點圖表)：</h3>`; 
+                // <!-- ^ 修改標題以指向新圖表 ^ -->
+                
+                // <!-- v 修改：移除安親班早上的數據 v -->
+                summaryHtml += `<p><strong>安親班接送：</strong> 下午 <strong class="text-red-600">${afterSchoolCare.fromSchool.toLocaleString()}</strong> 人</p>`; // <-- 移除 (哇！差別好大！)
+                // <!-- ^ 修改：移除安親班早上的數據 ^ -->
+                
+                <!-- v 修改：移除舊的導護志工文字 v -->
+                summaryHtml += `<p><strong>家長騎機車：</strong> 早上 <strong class="text-green-600">${scooter.toSchool.toLocaleString()}</strong> 人，下午 ${scooter.fromSchool.toLocaleString()} 人。</p>`;
+                <!-- ^ 修改：移除舊的導護志工文字 ^ -->
+                
+                summaryHtml += `<p><strong>家長陪同走路：</strong> 早上 ${accompaniedWalking.toSchool.toLocaleString()} 人，下午 ${accompaniedWalking.fromSchool.toLocaleString()} 人。</p>`;
+                summaryHtml += `<p><strong>自行走路：</strong> 早上 ${walking.toSchool.toLocaleString()} 人，下午 ${walking.fromSchool.toLocaleString()} 人。</p>`;
+                summaryHtml += `<p class="mt-2 italic">看起來，很多同學是「早上爸媽騎機車送，下午安親班接走」。</p>`;
             }
             
-            // <!-- v 修改：步行趨勢分析 v -->
             summaryHtml += `<hr class="my-3 border-blue-100">`;
-            summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">步行趨勢分析 (參考上方折線圖)：</h3>`;
-            summaryHtml += `<p><strong>自行走路 (獨立性)：</strong> 無論上學或放學，人數皆隨年級顯著上升，反映學生獨立性增強。</p>`;
-            summaryHtml += `<p><strong>家長陪同走路 (依賴性)：</strong> 人數隨年級增加而逐漸下降，特別是上學時段。</p>`;
-            // <!-- ^ 修改：步行趨S勢分析 ^ -->
+            summaryHtml += `<h3 class="font-semibold text-lg text-blue-800 mb-2">走路趨勢 (看上面的折線圖)：</h3>`;
+            summaryHtml += `<p><strong>「自行走路」：</strong> 年級越高，自己走的同學越多，大家越來越棒、越獨立了！</p>`;
+            summaryHtml += `<p><strong>「家長陪同走路」：</strong> 年級越高，爸媽陪著走的同學就越少囉。</p>`;
+            // <!-- ^ 簡化版摘要 ^ -->
 
             summaryContent.innerHTML = summaryHtml;
         }
 
         // 5. 初始化/更新圖表 (主要長條圖)
-        function updateChart() {
+        function updateMainChart() {
             const selectedGrade = gradeFilter.value;
-            const data = processData(selectedGrade);
+            const data = processData(selectedGrade, allMethods); // <-- 使用 allMethods
 
             if (commuteChart) {
                 commuteChart.data.labels = data.labels;
                 commuteChart.data.datasets[0].data = data.toSchoolData;
                 commuteChart.data.datasets[1].data = data.fromSchoolData;
-                commuteChart.options.plugins.title.text = () => `上下學方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`;
+                commuteChart.options.plugins.title.text = () => `所有方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`;
                 commuteChart.update();
             } else {
                 commuteChart = new Chart(commuteCtx, {
@@ -260,7 +295,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: () => `上下學方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`,
+                                text: () => `所有方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`,
                                 font: {
                                     size: 18
                                 },
@@ -312,11 +347,11 @@
                 });
             }
 
-            // 更新分析摘要
+            // 更新分析摘要 (主圖表更新時才更新摘要)
             updateSummary(selectedGrade, data);
         }
 
-        // v 新增： 建立步行趨勢折線圖 (此圖表不隨篩選器變動)
+        // 6. 建立步行趨勢折線圖 (此圖表不隨篩選器變動)
         function createWalkingTrendChart() {
             const walkingData = {
                 toSchool: [],
@@ -417,15 +452,107 @@
                 }
             });
         }
-        // ^ 新增： 建立步行趨勢折線圖 ^
+        
+        // v 7. 新增：初始化/更新 "重點方式" 圖表 v
+        function updateKeyMethodsChart() {
+            const selectedGrade = gradeFilter.value;
+            const data = processData(selectedGrade, keyMethods); // <-- 使用 keyMethods
 
-        // 6. 啟動
+            if (keyMethodsChart) {
+                keyMethodsChart.data.labels = data.labels;
+                keyMethodsChart.data.datasets[0].data = data.toSchoolData;
+                keyMethodsChart.data.datasets[1].data = data.fromSchoolData;
+                keyMethodsChart.options.plugins.title.text = () => `重點方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`;
+                keyMethodsChart.update();
+            } else {
+                keyMethodsChart = new Chart(keyMethodsCtx, {
+                    type: 'bar', // 長條圖
+                    data: {
+                        labels: data.labels,
+                        datasets: [
+                            {
+                                label: '上學 (人數)',
+                                data: data.toSchoolData,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)', // 藍色
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '放學 (人數)',
+                                data: data.fromSchoolData,
+                                backgroundColor: 'rgba(255, 159, 64, 0.7)', // 橘色
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y', // <-- 關鍵：設為水平長條圖
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5, // 調整長寬比，因為只有4個項目
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: () => `重點方式 - ${gradeFilter.options[gradeFilter.selectedIndex].text}`,
+                                font: {
+                                    size: 18
+                                },
+                                padding: {
+                                    bottom: 20
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.parsed.y.toLocaleString()} 人`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { // <-- X軸 (因為是水平圖)
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: '學生人數'
+                                },
+                                ticks: {
+                                    precision: 0
+                                }
+                            },
+                            y: { // <-- Y軸
+                                ticks: {
+                                    autoSkip: false // 確保所有標籤都顯示
+                                }
+                            }
+                        },
+                        elements: {
+                            bar: {
+                                borderRadius: 4,
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        // ^ 7. 新增：初始化/更新 "重點方式" 圖表 ^
+
+
+        // 8. 啟動 (原 6. 啟動)
         document.addEventListener('DOMContentLoaded', () => {
             populateFilter();
-            gradeFilter.addEventListener('change', updateChart);
+            
+            // 綁定篩選器事件
+            gradeFilter.addEventListener('change', updateMainChart);
+            gradeFilter.addEventListener('change', updateKeyMethodsChart); // <-- 篩選器也要控制這個新圖表
+            
             // 初始載入
-            updateChart(); 
-            createWalkingTrendChart(); // <-- 呼叫新的圖表建立函式
+            updateMainChart(); // 這會同時更新主圖表和摘要
+            createWalkingTrendChart(); // 建立固定的折線圖
+            updateKeyMethodsChart(); // 建立可篩選的重點圖表
         });
     </script>
 </body>
