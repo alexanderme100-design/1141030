@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鷺江國小 才藝班資料轉換器 (AI 自助版)</title>
+    <title>鷺江國小 才藝班資料轉換器</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 新增：載入 Inter 和 Noto Sans TC 字型 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
+            /* 確保使用載入的字型 */
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
         }
         /* 簡易的載入中 spinner */
@@ -28,7 +33,8 @@
 <body class="bg-gray-100 min-h-screen p-4 sm:p-8">
     <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <header class="bg-blue-600 text-white p-6">
-            <h1 class="text-2xl font-bold text-center">鷺江國小 才藝班資料轉換器 (AI 自助版)</h1>
+            <!-- 優化：移除 (AI 自助版) 讓標題更簡潔 -->
+            <h1 class="text-2xl font-bold text-center">鷺江國小 才藝班資料轉換器</h1>
         </header>
         
         <main class="p-6 sm:p-8">
@@ -55,8 +61,9 @@
                     <!-- 輸入區域 -->
                     <div>
                         <label for="sheet-input" class="text-lg font-medium text-gray-700 block mb-2">1. 貼上 Google Sheet 資料 (A+B 區共用)</label>
+                        <!-- *** 修改：加高 *** -->
                         <textarea id="sheet-input"
-                                  rows="10"
+                                  rows="20"
                                   class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                   placeholder="從 Google Sheet 複製資料並貼在這裡...
 範例：
@@ -66,18 +73,19 @@
 ..."></textarea>
                     </div>
 
-                    <!-- 輸出區域 -->
+                    <!-- *** 修復：還原「傳統格式轉換」的輸出區域 *** -->
                     <div>
                         <label for="output-text" class="text-lg font-medium text-gray-700 block mb-2">3. 產生的 WORD 範本格式</label>
+                        <!-- *** 修改：加高 *** -->
                         <textarea id="output-text"
-                                  rows="10"
+                                  rows="20"
                                   class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                                   readonly
                                   placeholder="轉換後的結果將顯示在這裡..."></textarea>
                     </div>
                 </div>
 
-                <!-- 按鈕區域 -->
+                <!-- *** 修復：還原「傳統格式轉換」的按鈕區域 *** -->
                 <div class="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4">
                     <button id="convert-btn"
                             class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
@@ -93,33 +101,19 @@
             <!-- 分隔線 -->
             <hr class="my-10 border-t-2 border-gray-200">
 
-            <!-- 區塊二：Gemini AI 助理 -->
+            <!-- *** 修復：還原「AI 課程通知小幫手」的完整區塊 *** -->
             <div>
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">B. ✨ AI 課程通知小幫手</h2>
                 <div class="mb-6">
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">使用說明</h3>
                     <ol class="list-decimal list-inside text-gray-700 space-y-1">
                         <li>在上面的「1. 貼上 Google Sheet 資料」框中貼入資料。</li>
-                        <li>
-                            在下方的「Google AI API Key」欄位中，貼上您自己的 API Key。
-                            <a href="https://aistudio.google.com/getting-started" target="_blank" class="text-sm text-blue-600 hover:underline">（點此前往 Google AI Studio 取得金鑰）</a>
-                        </li>
                         <li>點選「✨ 產生課程通知 (AI)」按鈕。</li>
                         <li>AI 會需要幾秒鐘思考，請稍候。</li>
                         <li>AI 將自動為您貼上的「每一筆」資料，產生宣傳短語與家長通知草稿。</li>
+                        <li>點選「複製 AI 結果」按鈕，即可將包含格式的內容貼到 Word 中。</li>
                     </ol>
                 </div>
-
-                <!-- API Key 輸入欄 -->
-                <div class="mb-6 max-w-lg mx-auto">
-                    <label for="api-key-input" class="text-lg font-medium text-gray-700 block mb-2">Google AI API Key</label>
-                    <input type="password"
-                           id="api-key-input"
-                           class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-                           placeholder="貼上您的 AIzaSy... 金鑰">
-                    <p class="text-xs text-gray-500 mt-1">您的金鑰只會在此瀏覽器頁面中使用，關閉即失效，不會被儲存。</p>
-                </div>
-
 
                 <div class="text-center mb-6">
                     <button id="gemini-btn"
@@ -129,16 +123,24 @@
                 </div>
 
                 <div>
-                    <label for="gemini-output" class="text-lg font-medium text-gray-700 block mb-2">AI 產生的通知草稿</label>
+                    <!-- 修改：將 Label 和新按鈕包在一個 flex 容器中 -->
+                    <div class="flex justify-between items-center mb-2">
+                        <label for="gemini-output" class="text-lg font-medium text-gray-700 block">AI 產生的通知草稿</label>
+                        <!-- 新增：複製 AI 結果的按鈕 -->
+                        <button id="copy-ai-btn"
+                                class="px-4 py-2 bg-green-600 text-white text-sm font-bold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200">
+                            複製 AI 結果
+                        </button>
+                    </div>
                     <div class="flex items-center justify-center mb-4 min-h-[24px]">
                         <div id="loading-spinner" class="spinner hidden"></div>
                     </div>
-                    <!-- 使用 div 和 whitespace-pre-wrap 來保留 AI 輸出的換行和格式 -->
+                    <!-- 移除 whitespace-pre-wrap，因為 AI 函式會直接產生 <br> -->
+                    <!-- *** 修改：加高 *** -->
                     <div id="gemini-output"
-                         class="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm min-h-[200px] whitespace-pre-wrap"
+                         class="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm min-h-[400px]"
                          aria-live="polite"></div>
                 </div>
-
             </div>
             
             <!-- 訊息提示框 (共用) -->
@@ -164,7 +166,9 @@
             const geminiBtn = document.getElementById('gemini-btn');
             const geminiOutput = document.getElementById('gemini-output');
             const loadingSpinner = document.getElementById('loading-spinner');
-            const apiKeyInput = document.getElementById('api-key-input'); // 新增：API Key 輸入框
+            const copyAiBtn = document.getElementById('copy-ai-btn'); // 新增：AI 複製按鈕
+            // 優化：移除 apiKeyInput 的宣告
+            // const apiKeyInput = document.getElementById('api-key-input'); 
 
             // --- 顯示提示訊息 (共用) ---
             function showMessage(text, isError = false) {
@@ -233,6 +237,7 @@
                 try {
                     outputText.select();
                     outputText.setSelectionRange(0, 99999); 
+                    // 遵照指示：使用 document.execCommand
                     document.execCommand('copy');
                     showMessage('已複製到剪貼簿！', false);
                 } catch (err) {
@@ -242,7 +247,116 @@
                 window.getSelection().removeAllRanges();
             });
 
-            // --- Gemini AI 助理邏輯 (簡易版) ---
+            // *** 修改：AI 結果複製按鈕 (使用 contenteditable 增加 Word 相容性) ***
+            copyAiBtn.addEventListener('click', () => {
+                const htmlToCopy = geminiOutput.innerHTML;
+
+                if (!htmlToCopy || !htmlToCopy.trim()) {
+                    showMessage('沒有 AI 內容可以複製。', true);
+                    return;
+                }
+
+                try {
+                    // 1. 建立一個臨時的 contenteditable div 元素
+                    const tempEl = document.createElement('div');
+                    tempEl.setAttribute('contenteditable', 'true'); // 設為可編輯
+                    tempEl.style.position = 'absolute';
+                    tempEl.style.left = '-9999px'; // 移出畫面
+                    tempEl.innerHTML = htmlToCopy; // 放入 HTML 內容
+                    document.body.appendChild(tempEl);
+
+                    // 2. 聚焦並選取 div 的內容
+                    tempEl.focus(); // 聚焦
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(tempEl);
+                    
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+
+                    // 3. 執行複製 (遵照指示使用 execCommand)
+                    let success = false;
+                    success = document.execCommand('copy');
+
+                    // 4. 清理
+                    selection.removeAllRanges();
+                    document.body.removeChild(tempEl);
+
+                    if (!success) {
+                        // 如果 execCommand 回傳 false，也視為失敗
+                        throw new Error('document.execCommand("copy") returned false');
+                    }
+
+                    showMessage('AI 結果 (含格式) 已複製！', false);
+
+                } catch (err) {
+                    console.error('Error copying rich text:', err);
+                    // 備用方案：如果 HTML 複製失敗，嘗試複製純文字
+                    try {
+                        const textToCopy = geminiOutput.textContent;
+                        // 建立臨時 textarea 來複製純文字
+                        const tempTextarea = document.createElement('textarea');
+                        tempTextarea.style.position = 'absolute';
+                        tempTextarea.style.left = '-9999px';
+                        tempTextarea.value = textToCopy;
+                        document.body.appendChild(tempTextarea);
+                        
+                        tempTextarea.select();
+                        tempTextarea.setSelectionRange(0, 99999);
+                        document.execCommand('copy');
+                        
+                        document.body.removeChild(tempTextarea);
+                        window.getSelection().removeAllRanges();
+                        
+                        showMessage('AI 結果 (純文字) 已複製！', false);
+                    } catch (plainTextErr) {
+                        console.error('Error copying plain text fallback:', plainTextErr);
+                        showMessage('複製失敗。', true);
+                    }
+                }
+            });
+
+            // --- Gemini AI 助理邏輯 ---
+
+            // *** 修改：將 AI 的簡易 Markdown 轉為 HTML (更強化的版本) ***
+            /**
+             * 將 AI 回傳的簡易 Markdown 轉換為 HTML
+             * (例如 **bold** -> <strong>bold</strong>, \n -> <br>, * item -> • item)
+             * @param {string} text - 來自 AI 的原始文字
+             * @returns {string} - 轉換後的 HTML 字串
+             */
+            function aiTextToHtml(text) {
+                if (!text) return '';
+                
+                // 1. 為了安全，先將 HTML 特殊字元轉義 (避免 XSS)
+                let html = text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;') 
+                    .replace(/'/g, '&#039;');
+
+                // 2. (重要) 將所有換行符 \r\n, \r, \n 轉換為 <br> 標籤
+                html = html.replace(/\r\n|\r|\n/g, '<br>');
+                
+                // 3. 處理粗體：**text** -> <strong>text</strong>
+                // (g 旗標確保替換所有實例)
+                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                
+                // 4. 處理項目符號 ( * item / - item / 1. item )
+                // 我們尋找一個 <br> (或字串開頭)，後面可能跟著空白 ( \s* )
+                // 然後跟著 * 或 - 或 數字. ( \d+\. )
+                // 再跟著一個空格 ( \s+ )
+                // 並將其替換為 HTML 的 • (bullet) 實體 (&bull;)
+                // 這樣更具彈性，能處理 "  * item", "1. item", "- item"
+                html = html.replace(/(<br>|^)\s*(\*|-|\d+\.)\s+(.*?)/g, '$1&bull; $3');
+
+                // 5. 移除先前有風險的斜體規則，因為它會跟項目符號衝突
+                // html = html.replace(/\*(.*?)\*/g, '<em>$1</em>'); 
+
+                return html;
+            }
+
 
             // 具有指數退避重試機制的 fetch
             async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
@@ -254,25 +368,39 @@
                             await new Promise(resolve => setTimeout(resolve, delay));
                             return fetchWithBackoff(url, options, retries - 1, delay * 2);
                         }
-                        throw new Error(`API 請求失敗，狀態碼: ${response.status}`);
+                        // 嘗試解析錯誤訊息
+                        let errorData;
+                        try {
+                            errorData = await response.json();
+                        } catch (e) {
+                            // 如果 response body 不是 JSON
+                            throw new Error(`API 請求失敗，狀態碼: ${response.status} (${response.statusText})`);
+                        }
+                        const errorMessage = errorData?.error?.message || `API 請求失敗，狀態碼: ${response.status}`;
+                        throw new Error(errorMessage);
                     }
                     return response.json();
                 } catch (error) {
+                    // 處理網路錯誤或其他非 HTTP 錯誤
                     if (retries > 0) {
                         // 網路錯誤或其他錯誤，執行退避
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return fetchWithBackoff(url, options, retries - 1, delay * 2);
                     }
                     // 重試次數用盡後，拋出最終錯誤
-                    throw new Error(`API call failed after retries: ${error.message}`);
+                    throw new Error(`API 呼叫失敗 (重試 ${retries} 次後): ${error.message}`);
                 }
             }
 
-            // 呼叫 Gemini API (簡易版：Key 在前端)
-            async function callGeminiAPI(data, apiKey) { // apiKey 作為參數傳入
+            // 呼叫 Gemini API 
+            // 優化：移除 apiKey 參數
+            async function callGeminiAPI(data) {
                 loadingSpinner.classList.remove('hidden');
                 geminiOutput.textContent = '';
                 geminiBtn.disabled = true;
+
+                // 優化：apiKey 設為空字串，以使用 Canvas 環境提供的金鑰
+                const apiKey = ""; 
 
                 // API URL (直接呼叫 Google)
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
@@ -281,11 +409,28 @@
                 const systemPrompt = "您是台灣新北市鷺江國小（Lujiang Elementary School）的一位友善且專業的行政助理。您的任務是根據提供的才藝班資料，草擬適合的通知內容。語氣必須親切、熱情，同時保持專業。請使用繁體中文。";
                 
                 // 在前端組合使用者查詢 (User Query)
-                const userQuery = `請根據以下才藝班課程資料，為「每一門」課程分別草擬：
-1.  **一句吸引人的宣傳短語**（用於學校網站，約30字）
-2.  **一則給家長的開課提醒通知**（內容需包含課程、老師、日期和時間）
+                // *** 修改：改用 * 符號來要求條列，以配合 aiTextToHtml 函式 ***
+                // *** 再次修改：提供一個非常嚴格的模板，並「嚴格禁止」使用數字編號 ***
+                const userQuery = `請根據以下才藝班課程資料，為「每一門」課程分別草擬通知。
 
-請用清晰的格式條列出來。
+**嚴格禁止**使用數字編號 (例如 1., 2.)。
+請**嚴格遵守**以下的輸出格式模板：
+
+---
+**課程：[課程名稱]**
+* **宣傳短語：**[一句吸引人的宣傳短語，約30字]
+* **家長通知：**親愛的家長您好，提醒您孩子報名的「[課程名稱]」即將開課。
+* **授課教師：**[老師姓名]
+* **上課日期：**[上課日期]
+* **上課時間：**[開始時間] - [結束時間]
+---
+**課程：[下一個課程名稱]**
+* **宣傳短語：**[一句吸引人的宣傳短語，約30字]
+* **家長通知：**親愛的家長您好，提醒您孩子報名的「[課程名稱]」即將開課。
+* **授課教師：**[老師姓名]
+* **上課日期：**[上課日期]
+* **上課時間：**[開始時間] - [結束時間]
+---
 
 資料如下 (第一為標題，請忽略)：
 ${data}
@@ -310,17 +455,27 @@ ${data}
                     const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
 
                     if (generatedText) {
-                        geminiOutput.textContent = generatedText;
+                        // *** 修改開始 ***
+                        // 將 AI 文字中的 Markdown 轉為 HTML
+                        const formattedHtml = aiTextToHtml(generatedText);
+                        // 使用 innerHTML 來渲染 <strong>, <br> 等標籤
+                        geminiOutput.innerHTML = formattedHtml; 
+                        // *** 修改結束 ***
+
                         showMessage('AI 通知草稿已產生！', false);
                     } else if (result.error) {
-                        throw new Error(result.error.message);
+                        // 處理 API 回傳的已知錯誤結構
+                        throw new Error(result.error.message || 'AI 傳回了未知的錯誤');
                     }
                     else {
+                        // 處理 API 回應了 200 OK，但內容不符預期
+                        console.warn("AI response was successful but content is missing:", result);
                         throw new Error('從 AI 收到無效的回應格式。');
                     }
                 } catch (error) {
                     console.error('Gemini API call failed:', error);
-                    geminiOutput.textContent = '呼叫 AI 失敗，請檢查網路連線或稍後再試。\n' + error.message;
+                    // 將更詳細的錯誤訊息顯示給使用者
+                    geminiOutput.textContent = `呼叫 AI 失敗：\n${error.message}\n\n請檢查您的網路連線，或確認輸入的資料格式是否正確。`;
                     showMessage('AI 呼叫失敗。', true);
                 } finally {
                     loadingSpinner.classList.add('hidden');
@@ -329,22 +484,22 @@ ${data}
             }
 
             // Gemini 按鈕的點擊事件
+            // 優化：移除 API Key 相關檢查
             geminiBtn.addEventListener('click', () => {
                 const input = sheetInput.value.trim();
-                const apiKey = apiKeyInput.value.trim(); // 從輸入框讀取 Key
 
                 if (!input) {
                     showMessage('請先在「1. 貼上 Google Sheet 資料」框中貼入資料！', true);
                     return;
                 }
                 
-                if (!apiKey) {
-                    showMessage('請先貼上您的 Google AI API Key！', true);
-                    apiKeyInput.focus(); // 幫使用者聚焦到輸入框
-                    return;
-                }
+                // if (!apiKey) {
+                //     showMessage('請先貼上您的 Google AI API Key！', true);
+                //     apiKeyInput.focus(); // 幫使用者聚焦到輸入框
+                //     return;
+                // }
 
-                callGeminiAPI(input, apiKey); // 將 Key 傳入
+                callGeminiAPI(input); // 優化：不再傳入 apiKey
             });
         });
     </script>
