@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鷺江國小 才藝班資料轉換器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <header class="bg-blue-600 text-white p-6">
+            <h1 class="text-2xl font-bold text-center">鷺江國小 才藝班資料轉換器</h1>
+        </header>
+        
+        <main class="p-6 sm:p-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">使用說明</h2>
+                <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                    <li>
+                        從您的 Google Sheet 中，全選並複製您要轉換的資料 (包含標題列)。
+                        <span class="text-sm text-blue-500 block">（請確保您複製的欄位順序是： <strong>A欄: 老師姓名, B欄: 課程名稱, C欄: 上課日期, D欄: 開始時間, E欄: 結束時間</strong>）</span>
+                    </li>
+                    <li>將複製的資料，貼到下方的「Google Sheet 資料」框格中。</li>
+                    <li>點選「轉換資料」按鈕。</li>
+                    <li>轉換後的格式會出現在「WORD 範本格式」框格中。</li>
+                    <li>點選「複製結果」即可將內容貼到 WORD 中。</li>
+                </ol>
+                <p class="text-sm text-red-600 mt-2">
+                    <strong>注意：</strong> 這只是一個範例。如果您的欄位順序或想要的 WORD 格式不同，請告訴我，我會幫您修改程式！
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 輸入區域 -->
+                <div>
+                    <label for="sheet-input" class="text-lg font-medium text-gray-700 block mb-2">1. 貼上 Google Sheet 資料</label>
+                    <textarea id="sheet-input"
+                              rows="10"
+                              class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder="從 Google Sheet 複製資料並貼在這裡...
+範例：
+老師姓名	課程名稱	上課日期	開始時間	結束時間
+陳老師	創意美術班	2025/10/25	09:00	11:00
+林老師	樂高機器人	2025/10/25	09:30	11:30
+..."></textarea>
+                </div>
+
+                <!-- 輸出區域 -->
+                <div>
+                    <label for="output-text" class="text-lg font-medium text-gray-700 block mb-2">3. 產生的 WORD 範本格式</label>
+                    <textarea id="output-text"
+                              rows="10"
+                              class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                              readonly
+                              placeholder="轉換後的結果將顯示在這裡..."></textarea>
+                </div>
+            </div>
+
+            <!-- 按鈕區域 -->
+            <div class="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button id="convert-btn"
+                        class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+                    2. 轉換資料
+                </button>
+                <button id="copy-btn"
+                        class="w-full sm:w-auto px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200">
+                    4. 複製結果
+                </button>
+            </div>
+            
+            <!-- 訊息提示框 -->
+            <div id="message-box" class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden transition-opacity duration-300">
+                <span id="message-text"></span>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sheetInput = document.getElementById('sheet-input');
+            const outputText = document.getElementById('output-text');
+            const convertBtn = document.getElementById('convert-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+
+            // 顯示提示訊息
+            function showMessage(text, isError = false) {
+                messageText.textContent = text;
+                messageBox.classList.remove('hidden', 'bg-green-500', 'bg-red-500');
+                messageBox.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
+                messageBox.classList.remove('opacity-0');
+                messageBox.classList.add('opacity-100');
+
+                setTimeout(() => {
+                    messageBox.classList.remove('opacity-100');
+                    messageBox.classList.add('opacity-0');
+                    setTimeout(() => messageBox.classList.add('hidden'), 300);
+                }, 2000);
+            }
+
+            // 轉換按鈕的點擊事件
+            convertBtn.addEventListener('click', () => {
+                const input = sheetInput.value.trim();
+                if (!input) {
+                    showMessage('請先貼上資料！', true);
+                    return;
+                }
+
+                // 將輸入的資料（通常是 TSV, Tab-Separated Values）
+                // 拆分成一行一行的陣列
+                const lines = input.split('\n');
+                let output = '';
+
+                try {
+                    // 從第二行開始處理 (跳過標題列)
+                    for (let i = 1; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (!line) continue; // 跳過空行
+
+                        // 每一行再用 Tab 符號拆分成欄位
+                        // 這是從 Google Sheet 複製貼上時最常見的分隔符號
+                        const columns = line.split('\t');
+
+                        // --- 這是您可以客製化的地方 ---
+                        // 根據您在說明中假設的欄位順序
+                        const teacherName = columns[0] || 'N/A';
+                        const courseName = columns[1] || 'N/A';
+                        const courseDate = columns[2] || 'N/A';
+                        const startTime = columns[3] || 'N/A';
+                        const endTime = columns[4] || 'N/A';
+                        
+                        // --- 這是您可以客製化的地方 ---
+                        // 根據您想要的 WORD 範本格式來組合字串
+                        output += `課程名稱：${courseName}\n`;
+                        output += `授課教師：${teacherName}\n`;
+                        output += `上課日期：${courseDate}\n`;
+                        output += `上課時間：${startTime} - ${endTime}\n`;
+                        output += `----------------------------------------\n\n`; // 分隔線
+                    }
+
+                    outputText.value = output;
+                    if (output) {
+                        showMessage('轉換成功！', false);
+                    } else {
+                        showMessage('沒有可轉換的資料 (請檢查是否只貼了標題列)', true);
+                    }
+
+                } catch (error) {
+                    showMessage('轉換失敗，請檢查資料格式是否正確。', true);
+                    console.error('Error during conversion:', error);
+                }
+            });
+
+            // 複製按鈕的點擊事件
+            copyBtn.addEventListener('click', () => {
+                const textToCopy = outputText.value;
+                if (!textToCopy) {
+                    showMessage('沒有內容可以複製。', true);
+                    return;
+                }
+
+                // 使用 document.execCommand('copy') 以確保在 iframe 中能運作
+                // navigator.clipboard.writeText 在某些 iframe 環境中可能受限
+                try {
+                    outputText.select(); // 選取文字
+                    outputText.setSelectionRange(0, 99999); // 為了相容手機
+                    document.execCommand('copy');
+                    showMessage('已複製到剪貼簿！', false);
+                } catch (err) {
+                    showMessage('複製失敗。', true);
+                    console.error('Error copying text:', err);
+                }
+                
+                // 取消選取
+                window.getSelection().removeAllRanges();
+            });
+        });
+    </script>
+</body>
+</html>
