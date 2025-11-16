@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生上學交通方式分析圖</title>
+    <!-- 載入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 載入Chart.js Datalabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        /* 使用 'Inter' 字體 */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 md:p-10 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 w-full max-w-2xl mx-auto">
+        
+        <!-- 標題 -->
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">
+            鷺江國小 學生上學交通方式分析
+        </h1>
+
+        <!-- 圖表容器 -->
+        <div class="relative w-full h-64 md:h-96">
+            <canvas id="transportationChart"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        // 註冊Datalabels外掛
+        Chart.register(ChartDataLabels);
+
+        // 獲取Canvas元素
+        const ctx = document.getElementById('transportationChart').getContext('2d');
+
+        // 數據來自您提供的表格
+        const chartData = {
+            labels: [
+                '騎機車接送 (53%)',
+                '走路上學 (31%)',
+                '開車接送 (12%)',
+                '搭捷運或公車 (3%)',
+                '其它 (3%)'
+            ],
+            datasets: [{
+                label: '百分比',
+                data: [53, 31, 12, 3, 3],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',  // 藍色 (機車)
+                    'rgba(75, 192, 192, 0.8)',  // 綠色 (走路)
+                    'rgba(255, 99, 132, 0.8)',  // 紅色 (開車)
+                    'rgba(255, 206, 86, 0.8)',  // 黃色 (捷運/公車)
+                    'rgba(153, 102, 255, 0.8)'  // 紫色 (其它)
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // 創建圓餅圖
+        new Chart(ctx, {
+            type: 'pie', // 圖表類型為圓餅圖
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    // 圖例設定
+                    legend: {
+                        position: 'top', // 圖例顯示在頂部
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: "'Inter', 'Noto Sans TC', sans-serif"
+                            }
+                        }
+                    },
+                    // 提示框設定
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                // 自定義提示框文字
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        },
+                        titleFont: {
+                            family: "'Inter', 'Noto Sans TC', sans-serif"
+                        },
+                        bodyFont: {
+                            family: "'Inter', 'Noto Sans TC', sans-serif"
+                        }
+                    },
+                    // 數據標籤 (Datalabels) 設定
+                    datalabels: {
+                        // 格式化標籤，顯示百分比
+                        formatter: (value, context) => {
+                            // 如果百分比小於 5%，則不在圖上顯示，避免交疊
+                            if (value < 5) {
+                                return null;
+                            }
+                            return value + '%';
+                        },
+                        color: '#ffffff', // 標籤顏色為白色
+                        font: {
+                            weight: 'bold', // 粗體
+                            size: 16, // 字體大小
+                            family: "'Inter', 'Noto Sans TC', sans-serif"
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
