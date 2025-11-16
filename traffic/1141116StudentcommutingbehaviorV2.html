@@ -137,6 +137,17 @@
             '自行走路'
         ];
                 
+        // [新增] 為每個年級定義顏色
+        const gradeColors = {
+            '一年級': 'text-red-600',
+            '二年級': 'text-orange-600',
+            '三年級': 'text-blue-600',
+            '四年級': 'text-green-600',
+            '五年級': 'text-indigo-600',
+            '六年級': 'text-purple-600',
+            'all': 'text-gray-900' // 總和的預設顏色
+        };
+
         let commuteChart; 
         let walkingTrendChart; 
         let keyMethodsChart; 
@@ -192,12 +203,14 @@
             const fromSchoolData = filteredData.map(item => item.fromSchool);
 
             return { labels, toSchoolData, fromSchoolData, filteredData };
-        }
+        } // <-- [修正] 補上缺少的右大括號
 
-        // 4. 更新分析摘要 (*** 已修改為兩欄式 ***)
+        // 4. 更新分析摘要 (*** 已修改為兩欄式 + 動態顏色 ***)
         function updateSummary(selectedGrade, data) { 
             
             const gradeName = selectedGrade === 'all' ? '所有年級 (總和)' : selectedGrade;
+            // [修改] 獲取當前年級的顏色
+            const colorClass = gradeColors[selectedGrade] || 'text-gray-900';
 
             let totalToSchool = data.toSchoolData.reduce((a, b) => a + b, 0);
             let totalFromSchool = data.fromSchoolData.reduce((a, b) => a + b, 0);
@@ -213,30 +226,30 @@
             const walking = data.filteredData.find(d => d.method === '自行走路');
             const accompaniedWalking = data.filteredData.find(d => d.method === '家長陪同走路');
 
-            // --- [修改] 產生左欄 HTML ---
+            // --- [修改] 產生左欄 HTML (套用顏色) ---
             let column1Html = `<div class="space-y-3">`;
-            column1Html += `<p><strong>你正在看：</strong> ${gradeName}</p>`;
-            column1Html += `<p><strong>早上上學總人數：</strong> ${totalToSchool.toLocaleString()} 人</p>`;
-            column1Html += `<p><strong>下午放學總人數：</strong> ${totalFromSchool.toLocaleString()} 人</p>`;
+            column1Html += `<p><strong>你正在看：</strong> <strong class="${colorClass}">${gradeName}</strong></p>`;
+            column1Html += `<p><strong>早上上學總人數：</strong> <strong class="${colorClass}">${totalToSchool.toLocaleString()}</strong> 人</p>`;
+            column1Html += `<p><strong>下午放學總人數：</strong> <strong class="${colorClass}">${totalFromSchool.toLocaleString()}</strong> 人</p>`;
             column1Html += `<hr class="my-3 border-blue-100">`;
-            column1Html += `<p class="text-blue-900"><strong><i class="fas fa-motorcycle"></i> 早上上學最多人 (${gradeName})：</strong> ${toSchoolMaxMethod} (${toSchoolMax.toLocaleString()} 人)</p>`;
-            column1Html += `<p class="text-blue-900"><strong><i class="fas fa-school"></i> 下午放學最多人 (${gradeName})：</strong> ${fromSchoolMaxMethod} (${fromSchoolMax.toLocaleString()} 人)</p>`;
+            column1Html += `<p class="text-blue-900"><strong><i class="fas fa-motorcycle"></i> 早上上學最多人 (${gradeName})：</strong> ${toSchoolMaxMethod} (<strong class="${colorClass}">${toSchoolMax.toLocaleString()}</strong> 人)</p>`;
+            column1Html += `<p class="text-blue-900"><strong><i class="fas fa-school"></i> 下午放學最多人 (${gradeName})：</strong> ${fromSchoolMaxMethod} (<strong class="${colorClass}">${fromSchoolMax.toLocaleString()}</strong> 人)</p>`;
             
             if (selectedGrade === 'all') { 
                 column1Html += `<p class="text-sm text-gray-800 mt-2 p-3 bg-blue-100 rounded-lg">早上上學時段，走路、騎車、開車的人都很多，交通特別擁擠。這也代表導護志工和老師們在路口辛苦值勤，非常令人尊敬。</p>`;
             }
             column1Html += `</div>`; // 結束左欄
 
-            // --- [修改] 產生右欄 HTML ---
+            // --- [修改] 產生右欄 HTML (套用顏色) ---
             let column2Html = `<div class="space-y-3">`;
 
             if (afterSchoolCare && scooter && accompaniedWalking && walking) { 
                 column2Html += `<div>`; // 包裹重點分析
                 column2Html += `<h3 class="font-semibold text-lg text-blue-800 mb-2">重點方式分析 (${gradeName})：</h3>`; 
-                column2Html += `<p><strong>安親班接送：</strong> 早上 ${afterSchoolCare.toSchool.toLocaleString()} 人，下午 <strong class="text-red-600">${afterSchoolCare.fromSchool.toLocaleString()}</strong> 人</p>`;
-                column2Html += `<p><strong>家長騎機車：</strong> 早上 <strong class="text-green-600">${scooter.toSchool.toLocaleString()}</strong> 人，下午 ${scooter.fromSchool.toLocaleString()} 人。</p>`;
-                column2Html += `<p><strong>家長陪同走路：</strong> 早上 ${accompaniedWalking.toSchool.toLocaleString()} 人，下午 ${accompaniedWalking.fromSchool.toLocaleString()} 人。</p>`;
-                column2Html += `<p><strong>自行走路：</strong> 早上 ${walking.toSchool.toLocaleString()} 人，下午 ${walking.fromSchool.toLocaleString()} 人。</p>`;
+                column2Html += `<p><strong>安親班接送：</strong> 早上 <strong class="${colorClass}">${afterSchoolCare.toSchool.toLocaleString()}</strong> 人，下午 <strong class="${colorClass}">${afterSchoolCare.fromSchool.toLocaleString()}</strong> 人</p>`;
+                column2Html += `<p><strong>家長騎機車：</strong> 早上 <strong class="${colorClass}">${scooter.toSchool.toLocaleString()}</strong> 人，下午 <strong class="${colorClass}">${scooter.fromSchool.toLocaleString()}</strong> 人。</p>`;
+                column2Html += `<p><strong>家長陪同走路：</strong> 早上 <strong class="${colorClass}">${accompaniedWalking.toSchool.toLocaleString()}</strong> 人，下午 <strong class="${colorClass}">${accompaniedWalking.fromSchool.toLocaleString()}</strong> 人。</p>`;
+                column2Html += `<p><strong>自行走路：</strong> 早上 <strong class="${colorClass}">${walking.toSchool.toLocaleString()}</strong> 人，下午 <strong class="${colorClass}">${walking.fromSchool.toLocaleString()}</strong> 人。</p>`;
                 
                 if (selectedGrade === 'all') { 
                     column2Html += `<p class="mt-2 italic">看起來，很多同學是「早上爸媽騎機車送，下午安親班接走」。</p>`;
@@ -250,8 +263,9 @@
             // 走路趨勢 (固定)
             column2Html += `<div>`; // 包裹走路趨勢
             column2Html += `<h3 class="font-semibold text-lg text-blue-800 mb-2">走路趨勢 (看上面的折線圖)：</h3>`;
-            column2Html += `<p><strong>「自行走路」：</strong> 年級越高，自己走的同學越多，大家越來越棒、越獨立了！</p>`;
-            column2Html += `<p><strong>「家長陪同走路」：</strong> 年級越高，爸媽陪著走的同學就越少囉。</p>`;
+            // [修改] 更新此處的靜態文字
+            column2Html += `<p><strong>「自行走路」趨勢：</strong> 隨著年級增長，自行走路的上學與放學人數皆穩定上升，顯示學生的獨立性逐漸提高。</p>`;
+            column2Html += `<p><strong>「家長陪同走路」趨勢：</strong> 此方式的人數則隨年級增長而明顯下降，尤其在中高年級更為顯著。</p>`;
             column2Html += `</div>`; // 結束走路趨勢
             column2Html += `</div>`; // 結束右欄
 
