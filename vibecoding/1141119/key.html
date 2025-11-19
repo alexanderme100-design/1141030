@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>鑰匙借用管理平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            -webkit-tap-highlight-color: transparent; 
+        }
+        .key-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            touch-action: manipulation; 
+        }
+        .key-card:active {
+            transform: scale(0.96);
+        }
+        /* Tab animation */
+        .tab-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 1024px) {
+            .tab-button.active {
+                transform: translateY(-4px);
+            }
+        }
+        /* Fade in animation for grid */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-grid-enter {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-gray-700 overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-br from-teal-400 to-emerald-500 text-white p-2 rounded-lg shadow-md">
+                    <i class="fa-solid fa-key text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold tracking-tight text-slate-800">鑰匙管理</h1>
+                </div>
+            </div>
+            <button onclick="showHistoryModal()" class="text-slate-500 hover:text-teal-600 hover:bg-teal-50 px-3 py-2 rounded-full text-sm font-medium transition flex items-center gap-2 active:bg-slate-100">
+                <i class="fa-solid fa-clock-rotate-left text-lg md:text-base"></i>
+                <span class="hidden md:inline">查看紀錄</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-3 md:px-4 py-4 md:py-6 flex flex-col gap-4 md:gap-6">
+        
+        <!-- Building Tabs -->
+        <section>
+            <div class="flex justify-between items-baseline mb-2 md:mb-4 px-1">
+                <h2 class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">選擇大樓</h2>
+                <span class="text-[10px] text-slate-400 md:hidden">左右滑動選擇</span>
+            </div>
+            <div id="building-tabs" class="flex overflow-x-auto pb-2 gap-3 lg:grid lg:grid-cols-5 hide-scrollbar snap-x snap-mandatory"></div>
+        </section>
+
+        <!-- Active Keys Area -->
+        <section id="active-view-container" class="flex-grow flex flex-col">
+             <div class="sticky top-16 z-40 bg-[#f8fafc]/95 backdrop-blur-sm py-2 mb-2 flex justify-between items-center border-b border-slate-200/50 lg:static lg:bg-transparent lg:border-none lg:py-0 lg:mb-4">
+                 <h2 id="current-building-title" class="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2"></h2>
+                 <div class="flex gap-3 text-xs font-medium">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm ring-2 ring-emerald-100"></span>
+                        <span class="text-slate-500">可借</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-sm ring-2 ring-rose-100"></span>
+                        <span class="text-slate-500">已借</span>
+                    </div>
+                 </div>
+             </div>
+             <div id="key-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4 pb-20"></div>
+        </section>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-white/80 hidden items-center justify-center z-[60] backdrop-blur-[2px] transition-all duration-300">
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 border-4 border-emerald-100 border-t-emerald-500 rounded-full animate-spin mb-3"></div>
+            <span class="font-bold text-slate-500 tracking-wider text-sm">資料同步中...</span>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // CONFIGURATION
+        // ==========================================
+        
+        // 【重要】請在這裡填入你的 Google Apps Script 部署網址
+        const GAS_API_URL = "PASTE_YOUR_GAS_URL_HERE";
+
+        // Data Structure
+        const buildingsData = [
+            { 
+                id: '千禧樓', 
+                color: 'blue', 
+                icon: 'fa-regular fa-building',
+                rooms: [
+                    "127 同心圖書館", "128 區務行政中心", "129 資源回收室", 
+                    "131 班級教室", "132 班級教室", "133 班級教室", "135 班級教室", "136 班級教室", "137 班級教室", 
+                    "224 雙語教室", "225 合作社", "227 班級教室", "228 班級教室", "229 班級教室", "230 班級教室", "231 班級教室", "232 班級教室", 
+                    "325 雙語教室", "326 藝文教室", "328 班級教室", "329 班級教室", "330 班級教室", "331 教學研究室", "332 班級教室", "333 班級教室", "334 班級教室", 
+                    "423 藝文教室", "424 廚藝教室", "426 智慧教室", "427 藝文教室", "428 綜合教室", "429 電子琴教室", "430 教學研討室", "431 語言教室", "432 語言教室", 
+                    "524 愛的書庫", "525 鼓藝教室", "527 桌球教室", "528 桌球教室", "529 體適能教室", "530 活動教室", "531 活動教室", "532 活動教室", "533 活動教室"
+                ]
+            },
+            { 
+                id: '雅風樓', 
+                color: 'orange', 
+                icon: 'fa-solid fa-school',
+                rooms: [
+                    "101 班級教室", "102 班級教室", "104 資源班教室", "105 資源班教室", "106 感覺統合遊戲教室", "107 感覺統合遊戲教室", "108 特教班教室", "109 特教班教室", "110 特教生活教室", 
+                    "201 輔導室教室", "202 諮商室", "202-1 諮商室", "203 校史室", "204 研習教室", "205 會議室", "206 藝文展覽教室", "207 藝文展覽教室", "208 志工辦公室", "209 資優班教室", "210 資優班教室", 
+                    "301 教學研討室", "302 班級教室", "303 班級教室", "304 班級教室", "305 班級教室", "306 資源班教室", "307 學齡前辦公室", "308 課輔教室1", "309 課輔教室2", "310 課輔教室3", 
+                    "401 教師會辦公室", "402 班級教室", "403 班級教室", "404 班級教室", "405 班級教室", "406 資源班教室", "407 班級教室", "408 英語教室1", "409 英語教室2", "410 英語教室3", 
+                    "505 圖書館", "506 視聽教室（一）", "507 視聽教室（二）", "508 視聽教室（三）", "510 故事屋"
+                ]
+            },
+            { 
+                id: '迎曦樓', 
+                color: 'cyan', 
+                icon: 'fa-solid fa-sun',
+                rooms: [
+                    "119 倉庫", "120 班級教室", "121 配膳教室", "122 健康中心", "123 廣播室", "124 學務處", "126 儲藏室", 
+                    "218 倉庫", "219 人事室", "220 教務處", "221 校長室", "222 校長室會議室", 
+                    "323 哺乳室", "318 自然教室1", "319 自然教室2", "320 自然教室3", "321 自然教室4", "322 綜合教室", "323 綜合教室", "324 儲藏室", 
+                    "417 活動教室", "418 電腦教室4", "419 電腦教室3", "419-1 電腦機房", "420 電腦教室2", "421 電腦教室1", "422 儲藏室", 
+                    "517 幼童軍教室", "518 共讀書箱陳列室", "519 共讀書箱陳列室", "520 音樂教室1", "521 音樂教室2", "522 音樂教室3", "523 儲藏室"
+                ]
+            },
+            { 
+                id: '輔導樓', 
+                color: 'rose', 
+                icon: 'fa-solid fa-heart',
+                rooms: [
+                    "139 幼稚園", "140 幼稚園", "142 幼稚園", "143 幼稚園", "144 幼稚園廚房", 
+                    "339 檔案室", "340 檔案室", "341 檔案室", 
+                    "434 檔案室", "435 檔案室", "436 檔案室", "437 檔案室", "438 檔案室", "439 檔案室"
+                ]
+            },
+            { 
+                id: '群逸樓', 
+                color: 'purple', 
+                icon: 'fa-solid fa-landmark',
+                rooms: [
+                    "112 體育器材室", "113 課輔教室4", "114 班級教室", "115 班級教室", "116 電信教室", 
+                    "212 退休老師聯誼室", "213 修繕室", "214 主計室", "215 總務處", 
+                    "312 班級教室", "313 班級教室", "314 藝文教室", "315 自然教具室", "316 社會教具室", 
+                    "412 班級教室", "413 班級教室", "414 綜合教室", "415 活動教室2", 
+                    "511 綜合教室", "512 綜合教室", "513 資料室", "514 音樂教具室", "515 國數美教具室"
+                ]
+            }
+        ];
+
+        let activeBuildingId = buildingsData[0].id;
+        let currentData = {}; 
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            if (GAS_API_URL === "PASTE_YOUR_GAS_URL_HERE") {
+                Swal.fire('設定錯誤', '請先在 index.html 中填入 Google Apps Script 網址', 'error');
+                return;
+            }
+            initTabs();
+            fetchData();
+        });
+
+        function initTabs() {
+            const container = document.getElementById('building-tabs');
+            container.innerHTML = buildingsData.map(b => {
+                const colorClasses = {
+                    'blue':   'from-blue-500 to-blue-600 shadow-blue-200',
+                    'orange': 'from-orange-500 to-orange-600 shadow-orange-200',
+                    'cyan':   'from-cyan-500 to-cyan-600 shadow-cyan-200',
+                    'rose':   'from-rose-500 to-rose-600 shadow-rose-200',
+                    'purple': 'from-purple-500 to-purple-600 shadow-purple-200'
+                };
+                const gradient = colorClasses[b.color];
+                return `
+                    <button id="tab-${b.id}" onclick="switchBuilding('${b.id}')" class="tab-button group relative min-w-[130px] md:min-w-[140px] lg:min-w-0 shrink-0 flex-1 p-3 md:p-4 rounded-xl md:rounded-2xl border border-slate-100 bg-white shadow-sm text-left flex flex-col gap-2 md:gap-3 snap-start outline-none transition-all">
+                        <div class="active-bg absolute inset-0 bg-gradient-to-br ${gradient} rounded-xl md:rounded-2xl opacity-0 transition-opacity duration-300"></div>
+                        <div class="relative z-10 flex justify-between items-start w-full">
+                            <div class="icon-box w-8 h-8 md:w-10 md:h-10 rounded-full bg-${b.color}-50 text-${b.color}-500 flex items-center justify-center text-base md:text-lg transition-colors"><i class="${b.icon}"></i></div>
+                            <div id="badge-${b.id}" class="count-badge px-1.5 py-0.5 md:px-2 md:py-1 bg-slate-100 text-slate-500 rounded-md md:rounded-lg text-[10px] md:text-xs font-bold transition-colors">0 借出</div>
+                        </div>
+                        <div class="relative z-10">
+                            <span class="building-name text-slate-600 font-bold text-sm md:text-base block mb-0.5 transition-colors">${b.id}</span>
+                            <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider opacity-80">${b.rooms.length} 支鑰匙</span>
+                        </div>
+                    </button>`;
+            }).join('');
+            updateTabStyles();
+        }
+
+        function switchBuilding(id) {
+            activeBuildingId = id;
+            updateTabStyles();
+            renderCurrentKeys(); 
+            const btn = document.getElementById(`tab-${id}`);
+            if (btn && window.innerWidth < 1024) {
+                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        function updateTabStyles() {
+            buildingsData.forEach(b => {
+                const btn = document.getElementById(`tab-${b.id}`);
+                const isActive = b.id === activeBuildingId;
+                const badge = btn.querySelector('.count-badge');
+                
+                if (isActive) {
+                    btn.classList.add('active', 'ring-2', `ring-${b.color}-400`, 'ring-offset-1');
+                    btn.querySelector('.active-bg').classList.remove('opacity-0');
+                    btn.querySelector('.building-name').classList.replace('text-slate-600', 'text-white');
+                    btn.querySelector('.icon-box').classList.add('bg-white/20', 'text-white');
+                    btn.querySelector('.icon-box').classList.remove(`bg-${b.color}-50`, `text-${b.color}-500`);
+                    badge.classList.add('bg-white/20', 'text-white');
+                    badge.classList.remove('bg-slate-100', 'text-slate-500', 'bg-rose-500', 'text-white'); 
+                } else {
+                    btn.classList.remove('active', 'ring-2', `ring-${b.color}-400`, 'ring-offset-1');
+                    btn.querySelector('.active-bg').classList.add('opacity-0');
+                    btn.querySelector('.building-name').classList.replace('text-white', 'text-slate-600');
+                    btn.querySelector('.icon-box').classList.remove('bg-white/20', 'text-white');
+                    btn.querySelector('.icon-box').classList.add(`bg-${b.color}-50`, `text-${b.color}-500`);
+                    badge.classList.remove('bg-white/20', 'text-white'); 
+                }
+            });
+            updateCounts(currentData);
+        }
+
+        // ==========================================
+        // API HANDLING (REPLACED google.script.run)
+        // ==========================================
+        
+        async function fetchData() {
+            showLoading(true);
+            try {
+                // Fetch GET request
+                const response = await fetch(GAS_API_URL);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                
+                currentData = data;
+                renderCurrentKeys();
+                updateCounts(data);
+                showLoading(false);
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                Swal.fire('錯誤', '無法連線到資料庫，請檢查網路或網址設定', 'error');
+                showLoading(false);
+            }
+        }
+
+        async function handleTransaction(action, building, room, borrowerName) {
+            showLoading(true);
+            
+            const payload = {
+                action: action,
+                building: building,
+                room: room,
+                user: borrowerName
+            };
+
+            try {
+                // Fetch POST request using text/plain to avoid CORS preflight issues with GAS
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    mode: 'cors', // GAS Web App supports CORS redirect
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    await fetchData(); // Refresh data
+                    Swal.fire({
+                        icon: 'success',
+                        title: action === 'borrow' ? '借用成功' : '歸還成功',
+                        text: action === 'borrow' ? `${borrowerName} 借走了 ${room}` : `已歸還 ${room}`,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Transaction Error:', error);
+                Swal.fire('錯誤', error.message || '操作失敗', 'error');
+                showLoading(false);
+            }
+        }
+
+        async function getHistory() {
+            try {
+                const response = await fetch(GAS_API_URL + "?action=history");
+                return await response.json();
+            } catch (error) {
+                console.error('History Error:', error);
+                return [];
+            }
+        }
+
+        // ==========================================
+        // CORE RENDER LOGIC (SAME AS BEFORE)
+        // ==========================================
+        function renderCurrentKeys() {
+            const container = document.getElementById('key-grid');
+            const titleEl = document.getElementById('current-building-title');
+            const building = buildingsData.find(b => b.id === activeBuildingId);
+            
+            titleEl.innerHTML = `<span class="w-1.5 h-6 md:w-2 md:h-8 rounded-full bg-${building.color}-500 mr-2"></span>${building.id}<span class="ml-2 text-sm font-normal text-slate-400">(${building.rooms.length})</span>`;
+
+            container.innerHTML = '';
+            container.classList.remove('animate-grid-enter');
+            void container.offsetWidth; 
+            container.classList.add('animate-grid-enter');
+
+            building.rooms.forEach(room => {
+                const keyId = `${building.id}-${room}`;
+                const info = currentData[keyId];
+                const isBorrowed = !!info;
+                const splitName = room.match(/^(\d+(?:-\d+)?)\s+(.+)$/);
+                let displayName = splitName ? `<span class="font-bold text-lg md:text-xl mr-1 font-mono">${splitName[1]}</span> <span class="text-xs md:text-sm block md:inline text-slate-500">${splitName[2]}</span>` : `<span class="font-bold text-sm md:text-base break-words">${room}</span>`;
+
+                const btn = document.createElement('button');
+                btn.className = `key-card relative p-3 md:p-4 rounded-xl border text-left w-full h-28 md:h-32 flex flex-col justify-between shadow-sm transition-all ${isBorrowed ? 'bg-white border-rose-200 hover:shadow-rose-100' : 'bg-white border-slate-200 hover:border-emerald-300 hover:shadow-emerald-50'}`;
+                
+                if (isBorrowed) {
+                    btn.innerHTML = `
+                        <div class="flex justify-between items-start w-full mb-1">
+                            <div class="text-slate-700 leading-tight pr-2 w-[85%]">${displayName}</div>
+                            <div class="relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span></div>
+                        </div>
+                        <div class="w-full mt-auto">
+                            <div class="flex justify-between items-end">
+                                <div class="w-[70%]">
+                                    <div class="text-[10px] text-slate-400 font-medium mb-0.5">借用人</div>
+                                    <div class="bg-rose-50 text-rose-700 px-2 py-1 rounded-md text-xs md:text-sm font-bold truncate border border-rose-100">${info.user}</div>
+                                </div>
+                                <div class="bg-white border border-rose-200 text-rose-500 rounded-lg p-1.5 shadow-sm group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                                    <div class="text-[10px] font-bold leading-none text-center whitespace-nowrap px-1"><i class="fa-solid fa-rotate-left mb-0.5 block"></i>歸還</div>
+                                </div>
+                            </div>
+                        </div>`;
+                    btn.onclick = () => handleReturnClick(building.id, room, info.user);
+                } else {
+                    btn.innerHTML = `
+                        <div class="flex justify-between items-start w-full"><div class="text-slate-700 leading-tight pr-2 opacity-90 group-hover:opacity-100 w-full">${displayName}</div></div>
+                        <div class="flex items-end justify-between mt-auto w-full">
+                            <div class="inline-flex items-center px-1.5 py-0.5 md:px-2 md:py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] md:text-xs font-bold border border-emerald-100">可借用</div>
+                            <i class="fa-solid fa-key text-emerald-200 text-xl md:text-2xl transform rotate-45 group-hover:text-emerald-400 transition-colors"></i>
+                        </div>`;
+                    btn.onclick = () => handleBorrowClick(building.id, room);
+                }
+                container.appendChild(btn);
+            });
+        }
+
+        function updateCounts(data) {
+            buildingsData.forEach(b => {
+                let borrowedCount = 0;
+                b.rooms.forEach(room => { if (data[`${b.id}-${room}`]) borrowedCount++; });
+                const badge = document.getElementById(`badge-${b.id}`);
+                const isActive = b.id === activeBuildingId;
+                
+                badge.textContent = borrowedCount > 0 ? `${borrowedCount} 借出` : '全部在架';
+                if (!isActive) {
+                    if (borrowedCount > 0) badge.className = 'count-badge px-1.5 py-0.5 md:px-2 md:py-1 rounded-md md:rounded-lg text-[10px] md:text-xs font-bold transition-colors bg-rose-100 text-rose-600';
+                    else badge.className = 'count-badge px-1.5 py-0.5 md:px-2 md:py-1 rounded-md md:rounded-lg text-[10px] md:text-xs font-bold transition-colors bg-slate-100 text-slate-500';
+                }
+            });
+        }
+
+        // ==========================================
+        // UI INTERACTIONS
+        // ==========================================
+        function handleBorrowClick(building, room) {
+            Swal.fire({
+                title: '借用登記',
+                html: `<div class="mb-4 text-left"><div class="text-xs text-slate-400 mb-0.5">借用地點</div><div class="text-base font-bold text-slate-700">${room}</div></div><div class="text-left"><label class="block text-sm font-medium text-slate-600 mb-1">借用人姓名</label><input id="swal-input-name" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition appearance-none" placeholder="請輸入姓名..." inputmode="text" autofocus></div>`,
+                showCancelButton: true,
+                confirmButtonText: '確認',
+                confirmButtonColor: '#10b981',
+                cancelButtonText: '取消',
+                width: '90%',
+                customClass: { popup: 'rounded-2xl max-w-md' },
+                preConfirm: () => {
+                    const name = document.getElementById('swal-input-name').value;
+                    if (!name) Swal.showValidationMessage('請輸入姓名');
+                    return name;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) handleTransaction('borrow', building, room, result.value);
+            });
+        }
+
+        function handleReturnClick(building, room, user) {
+            Swal.fire({
+                title: '確認歸還?',
+                html: `<div class="bg-rose-50 p-4 rounded-xl border border-rose-100 mb-4"><div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold text-rose-400 uppercase">KEY</span><span class="text-[10px] font-bold text-rose-400 uppercase">USER</span></div><div class="flex justify-between items-center"><span class="font-bold text-slate-700 text-base truncate mr-2">${room}</span><span class="font-bold text-rose-600 text-base whitespace-nowrap">${user}</span></div></div><p class="text-sm text-slate-500">確定要歸還這把鑰匙嗎？</p>`,
+                showCancelButton: true,
+                confirmButtonText: '確認',
+                confirmButtonColor: '#3b82f6',
+                cancelButtonText: '取消',
+                width: '90%',
+                customClass: { popup: 'rounded-2xl max-w-md' }
+            }).then((result) => {
+                if (result.isConfirmed) handleTransaction('return', building, room, null);
+            });
+        }
+
+        async function showHistoryModal() {
+            showLoading(true);
+            try {
+                const logs = await getHistory();
+                showLoading(false);
+                const rows = logs.map(log => {
+                    const [building, ...roomParts] = log.key.split('-');
+                    const room = roomParts.join('-');
+                    const isBorrow = log.action === '借出';
+                    return `<div class="flex items-center p-3 hover:bg-slate-50 border-b border-slate-100 transition group"><div class="w-12 text-center mr-3 shrink-0"><div class="text-xs font-bold text-slate-400">${log.time.split(' ')[0].slice(5)}</div><div class="text-[10px] text-slate-300 group-hover:text-slate-500">${log.time.split(' ')[1]?.slice(0,5)}</div></div><div class="flex-1 min-w-0"><div class="flex items-center gap-2 mb-0.5"><span class="text-[10px] px-1.5 py-0.5 rounded ${isBorrow ? 'bg-rose-100 text-rose-600' : 'bg-emerald-100 text-emerald-600'} font-bold shrink-0">${log.action}</span><span class="text-sm font-bold text-slate-700 truncate">${room}</span></div><div class="text-xs text-slate-400 flex items-center gap-1 truncate"><i class="fa-regular fa-user"></i> ${log.user}</div></div></div>`;
+                }).join('');
+
+                Swal.fire({
+                    title: '<span class="text-slate-700 text-lg">歷史紀錄</span>',
+                    html: `<div class="bg-white rounded-xl border border-slate-200 max-h-[60vh] overflow-y-auto text-left">${rows.length ? rows : '<div class="p-8 text-center text-slate-400">尚無紀錄</div>'}</div>`,
+                    width: '90%',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: { popup: 'rounded-2xl max-w-lg' }
+                });
+            } catch (e) {
+                showLoading(false);
+                Swal.fire('錯誤', '讀取失敗', 'error');
+            }
+        }
+
+        function showLoading(show) {
+            const el = document.getElementById('loading-overlay');
+            if (show) el.classList.replace('hidden', 'flex');
+            else el.classList.replace('flex', 'hidden');
+        }
+    </script>
+</body>
+</html>
