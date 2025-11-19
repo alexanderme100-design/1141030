@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>校長師徒制實施成效問卷</title>
     <style>
-        /* --- 基本樣式 --- */
+        /* --- 樣式保持不變，與之前設計相同 --- */
         :root {
             --primary-color: #004a99;
             --secondary-color: #0056b3;
@@ -299,7 +299,8 @@
             #submitBtn { width: 100%; font-size: 1.1rem; }
         }
     </style>
-    <!-- Helper script MOVED HERE so it's defined before use -->
+
+    <!-- Helper script (Defined in Head to avoid ReferenceError) -->
     <script>
         function createLikert(name, questionText) {
             return `
@@ -488,7 +489,6 @@
                     <h4>向度一：校務經營與危機處理</h4>
                     <p class="question-note">定義：本向度聚焦於師傅校長在協助初任校長應對「校務經營」全貌的指導成效。</p>
                     
-                    <!-- 生成A1-A10的問題結構 (簡化重複代碼以利閱讀，實際使用請展開所有問題) -->
                     <script>
                        const qA = [
                          "1. 師傅校長能提供初任校長學校總務行政事務的專業指導。",
@@ -624,6 +624,12 @@
     </div>
 
     <script>
+        // ==========================================
+        // ！！！請將此處替換為您的 GAS Web App URL！！！
+        // ==========================================
+        const GAS_API_URL = '請在此填入您的 GAS Web App URL';
+        // ==========================================
+
         // --- District Map Logic ---
         document.addEventListener('DOMContentLoaded', function() {
             const districtMap = document.getElementById('districtMap');
@@ -672,6 +678,13 @@
                 form.reportValidity();
                 return;
             }
+            
+            if (GAS_API_URL.includes('請在此填入')) {
+                 statusMessage.textContent = '錯誤：尚未設定後端 API 網址，請聯絡管理員。';
+                 statusMessage.className = 'error';
+                 statusMessage.style.display = 'block';
+                 return;
+            }
 
             submitBtn.disabled = true;
             submitBtn.textContent = '處理中...';
@@ -681,10 +694,19 @@
             const dataObject = {};
             formData.forEach((value, key) => { dataObject[key] = value; });
 
-            google.script.run
-                .withSuccessHandler(handleSuccess)
-                .withFailureHandler(handleError)
-                .processForm(dataObject);
+            // 改用 fetch 發送 POST 請求到 Google Apps Script
+            fetch(GAS_API_URL, {
+                method: 'POST',
+                // 這裡使用 text/plain 是為了避免 CORS preflight (OPTIONS) 請求
+                // GAS 對複雜的 CORS 請求支援度有限，使用 text/plain + JSON字串 是最穩定的解法
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(dataObject),
+            })
+            .then(response => response.json())
+            .then(handleSuccess)
+            .catch(handleError);
         });
 
         function handleSuccess(response) {
@@ -701,7 +723,7 @@
                         <p>您的回覆已成功送出。</p>
                     </div>`;
             } else {
-                handleError({ message: '伺服器處理失敗，請檢查 ID 或權限。' });
+                handleError({ message: response.error || '伺服器處理失敗，請稍後再試。' });
             }
         }
 
@@ -714,7 +736,7 @@
             submitBtn.disabled = false;
             submitBtn.textContent = '送出問卷';
 
-            statusMessage.textContent = (error && error.message) ? error.message : '送出失敗，請檢查網路。';
+            statusMessage.textContent = (error && error.message) ? error.message : '送出失敗，請檢查網路連線。';
             statusMessage.className = 'error';
             statusMessage.style.display = 'block';
             console.error('Error:', error);
