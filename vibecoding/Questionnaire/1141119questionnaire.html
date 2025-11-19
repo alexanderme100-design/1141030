@@ -7,21 +7,21 @@
     <style>
         /* --- 全域變數與重置 --- */
         :root {
-            --primary-color: #004a99;
-            --secondary-color: #0056b3;
-            --accent-color: #eef4ff;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #333;
-            --text-sub: #555;
-            --border-color: #e0e0e0;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --radius: 8px;
+            --primary-color: #004a99;     /* 專業深藍 */
+            --secondary-color: #0056b3;   /* 次要藍 */
+            --accent-color: #eef4ff;      /* 淺藍背景 (選中/Hover用) */
+            --bg-color: #f4f7f6;          /* 網頁背景 */
+            --card-bg: #ffffff;           /* 卡片背景 */
+            --text-main: #333;            /* 主要文字 */
+            --text-sub: #555;             /* 次要文字 */
+            --border-color: #e0e0e0;      /* 邊框顏色 */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 陰影 */
+            --radius: 8px;                /* 圓角 */
         }
 
         * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box; /* 確保寬度計算包含 padding */
+            -webkit-tap-highlight-color: transparent; /* 移除手機點擊時的藍色高亮 */
         }
 
         html, body {
@@ -32,9 +32,10 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             scroll-behavior: smooth;
-            font-size: 16px;
+            font-size: 16px; /* 基準字體大小，防止 iOS 縮放 */
         }
 
+        /* --- 頂部標題列 --- */
         header {
             width: 100%;
             background-color: var(--primary-color);
@@ -49,6 +50,7 @@
             z-index: 100;
         }
 
+        /* --- 主要容器 --- */
         .container {
             max-width: 800px;
             margin: 2rem auto;
@@ -58,6 +60,7 @@
             box-shadow: var(--shadow);
         }
 
+        /* --- 說明區塊 --- */
         .description {
             background-color: #fff;
             border-left: 6px solid var(--primary-color);
@@ -68,13 +71,14 @@
         }
         .description p { margin: 0.5rem 0; }
 
+        /* --- 表單區塊 (Fieldset) --- */
         fieldset {
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             padding: 2rem;
             margin-bottom: 2.5rem;
             background-color: #fff;
-            min-width: 0;
+            min-width: 0; /* 修正 Flex 子元素溢出問題 */
             transition: border-color 0.3s;
         }
 
@@ -86,16 +90,20 @@
             margin-left: 0.5rem;
         }
 
+        /* 不同區塊的配色 */
         .fieldset-basic-info { border-top: 4px solid #0056b3; }
         .fieldset-basic-info legend { color: #0056b3; }
+        
         .fieldset-open-questions { border-top: 4px solid #006437; }
         .fieldset-open-questions legend { color: #006437; }
 
+        /* --- 問題群組 --- */
         .form-group { 
             margin-bottom: 2rem; 
-            padding: 10px;
+            padding: 15px; /* 增加內距，讓錯誤紅框不貼字 */
             border-radius: 8px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent; /* 預留邊框位置避免跳動 */
         }
 
         .form-group label, .question-text {
@@ -119,6 +127,7 @@
 
         .required { color: #d32f2f; font-weight: bold; margin-left: 4px; }
 
+        /* --- 選項按鈕群組 (Radio Buttons) --- */
         .options-group {
             display: flex;
             flex-wrap: wrap;
@@ -126,8 +135,8 @@
         }
 
         .options-group label {
-            flex: 1 1 auto;
-            min-width: 140px;
+            flex: 1 1 auto; /* 自動伸縮 */
+            min-width: 140px; /* 最小寬度確保文字不折行 */
             text-align: center;
             padding: 0.8rem 1.2rem;
             border: 1px solid var(--border-color);
@@ -139,7 +148,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 48px;
+            min-height: 48px; /* 觸控友善高度 */
             font-size: 1rem;
         }
 
@@ -148,7 +157,7 @@
             border-color: var(--primary-color);
         }
 
-        /* 修改處：使用絕對定位隱藏 input，而不是 display:none，確保瀏覽器驗證機制能抓到它 */
+        /* 重要修正：使用絕對定位隱藏 input，確保瀏覽器驗證機制能抓到它 */
         .options-group input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -165,12 +174,13 @@
             box-shadow: 0 2px 4px rgba(0,74,153,0.3);
         }
 
+        /* --- 輸入框 --- */
         input[type="text"], select, textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 16px;
+            font-size: 16px; /* 防止 iOS 縮放 */
             background-color: #fff;
             transition: border-color 0.2s;
         }
@@ -183,12 +193,13 @@
 
         textarea { resize: vertical; min-height: 120px; }
 
+        /* --- 行政區地圖 (Grid System) --- */
         #districtMap {
             background-color: #fcfcfc;
             padding: 1.5rem;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         
         .district-group { margin-bottom: 1.5rem; }
@@ -205,7 +216,7 @@
 
         .district-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* 自動排版 */
             gap: 0.8rem;
         }
 
@@ -217,7 +228,7 @@
             cursor: pointer;
             text-align: center;
             font-size: 0.95rem;
-            min-height: 44px;
+            min-height: 44px; /* 觸控高度 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -236,6 +247,7 @@
             font-weight: 600;
         }
 
+        /* --- Likert 量表 (RWD 核心) --- */
         .dimension {
             margin-top: 3rem;
             padding: 1.5rem;
@@ -244,25 +256,32 @@
             border-left-width: 6px;
         }
 
+        /* 向度顏色定義 */
         .dimension-1 { background: #f4f9ff; border-left-color: #004a99; }
         .dimension-1 h4 { color: #004a99; }
+        
         .dimension-2 { background: #f2fffa; border-left-color: #00794a; }
         .dimension-2 h4 { color: #00794a; }
+        
         .dimension-3 { background: #fffbf2; border-left-color: #b87400; }
         .dimension-3 h4 { color: #b87400; }
+        
         .dimension-4 { background: #fbf5ff; border-left-color: #5a0099; }
         .dimension-4 h4 { color: #5a0099; }
+        
         .dimension-5 { background: #f2fdfe; border-left-color: #007a7c; }
         .dimension-5 h4 { color: #007a7c; }
 
         .likert-question {
-            padding: 1.5rem 0.5rem;
+            padding: 1.5rem 15px; /* 增加左右內距 */
             border-bottom: 1px dashed #ccc;
             border-radius: 8px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent; /* 預留邊框 */
         }
         .likert-question:last-child { border-bottom: none; }
 
+        /* 選項容器 - 預設為橫向 (Desktop) */
         .likert-options {
             display: flex;
             justify-content: space-between;
@@ -283,18 +302,20 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 60px;
+            min-height: 60px; /* 確保高度一致 */
             font-size: 0.9rem;
         }
 
+        /* EMOJI 樣式優化 */
         .likert-options label .emoji {
             font-size: 1.5rem;
-            display: block;
+            display: block; /* 電腦版：表情在上方 */
             margin-bottom: 4px;
-            filter: grayscale(0.2);
+            filter: grayscale(0.2); /* 未選中時稍微灰階 */
             transition: all 0.2s;
         }
 
+        /* Hover 效果 */
         .likert-options label:hover {
             transform: translateY(-2px);
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
@@ -307,6 +328,7 @@
             transform: scale(1.1);
         }
 
+        /* 選中狀態 (依據各向度顏色) */
         .likert-options label:has(input[type="radio"]:checked) {
             color: white;
             font-weight: bold;
@@ -326,7 +348,7 @@
         .dimension-4 .likert-options label:has(input[type="radio"]:checked) { background: #5a0099; }
         .dimension-5 .likert-options label:has(input[type="radio"]:checked) { background: #007a7c; }
 
-        /* 修改處：使用絕對定位隱藏 input，確保瀏覽器驗證機制能抓到它 */
+        /* 重要修正：使用絕對定位隱藏 input */
         .likert-options input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -335,6 +357,7 @@
             pointer-events: none;
         }
 
+        /* --- 送出按鈕 --- */
         .submit-container { text-align: center; margin-top: 3rem; padding-bottom: 2rem; }
         
         #submitBtn {
@@ -367,6 +390,7 @@
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
+        /* --- 錯誤提示動畫 (Shake) --- */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
@@ -374,13 +398,13 @@
         }
 
         .highlight-error {
-            animation: shake 0.4s ease-in-out;
+            animation: shake 0.5s ease-in-out;
             border: 2px solid #d32f2f !important; /* 強制紅框 */
             background-color: #fff5f5 !important; /* 淺紅背景 */
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 0 15px rgba(211, 47, 47, 0.4) !important;
         }
 
+        /* --- RWD 斷點優化 (平板直向與手機) --- */
         @media (max-width: 768px) {
             .container { margin: 0; padding: 1.5rem 1rem; border-radius: 0; box-shadow: none; width: 100%; max-width: 100%; }
             header { padding: 1rem; font-size: 1.2rem; }
@@ -399,6 +423,7 @@
         }
     </style>
 
+    <!-- Helper script -->
     <script>
         function createLikert(name, questionText) {
             return `
@@ -724,7 +749,7 @@
         // ==========================================
         // ！！！請將此處替換為您的 GAS Web App URL！！！
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwngjKhlkdwwPXx6wZHBNey8TdDNGWpcsWtJIhkWZ84kpfW8ZrSScEjm-N-3CA2Dqxz/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwmKozl2rx41I0d9VNKPt4r2atpAJ7Zuf-Ow64MAk3-lgJtxa5fkO4-jS1ZkdMdPMnh/exec';
         // ==========================================
 
         // --- District Map Logic ---
@@ -781,45 +806,59 @@
             if (!hiddenInput.value) {
                 districtError.style.display = 'block';
                 const mapContainer = document.getElementById('districtMap');
-                mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                mapContainer.classList.add('highlight-error'); // 加上紅框震動
+                
+                // 手動捲動 + 避開 Header
+                const headerOffset = 100;
+                const elementPosition = mapContainer.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                
+                mapContainer.classList.add('highlight-error'); 
                 
                 statusMessage.textContent = '請選擇「學校所屬行政區」！';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
-                // 修改處：延遲 Alert 確保滾動生效
+                
                 setTimeout(() => {
                     alert('請填寫所有必填欄位！(請檢查行政區是否已點選)');
-                }, 300);
+                }, 600);
                 return;
             }
 
-            // 3. 檢查其他必填欄位 (HTML5 原生驗證 + 自動跳轉)
+            // 3. 檢查其他必填欄位 (手動抓取 + 捲動)
             if (!form.checkValidity()) {
                 // 顯示錯誤訊息
-                statusMessage.textContent = '您有必填欄位尚未完成，請檢查紅色提示的欄位。';
+                statusMessage.textContent = '您有部分題目尚未填答，已自動捲動至該題，請檢查紅色標示處。';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
 
                 // 找到第一個無效的欄位
-                const firstInvalid = form.querySelector(':invalid');
-                if (firstInvalid) {
-                    // 嘗試找到該欄位的「容器」 (為了視覺效果更好)
-                    const container = firstInvalid.closest('.form-group, .likert-question');
+                const invalidElements = form.querySelectorAll(':invalid');
+                if (invalidElements.length > 0) {
+                    const firstInvalid = invalidElements[0];
                     
-                    if (container) {
-                         container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                         container.classList.add('highlight-error'); // 加上紅框震動
-                    } else {
-                        // 如果找不到容器，就直接滾動到元素本身
-                         firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
+                    // 嘗試找到該欄位的「容器」
+                    let container = firstInvalid.closest('.likert-question, .form-group');
+                    if (!container) container = firstInvalid.parentElement; // 防呆 fallback
+                    
+                    // 1. 加上錯誤樣式
+                    container.classList.add('highlight-error');
+                    
+                    // 2. 計算捲動位置 (避開 sticky header)
+                    const headerOffset = 100; // 預留 header 高度 + 緩衝
+                    const elementPosition = container.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
                 }
                 
-                // 修改處：延遲 Alert 確保滾動生效
+                // 延遲 Alert
                 setTimeout(() => {
-                    alert('您還有題目尚未填答，請檢查紅色標示的欄位！');
-                }, 300);
+                    alert('您有題目尚未填答，請檢查紅色標示的欄位！');
+                }, 600);
                 return;
             }
             
@@ -898,6 +937,7 @@
             statusMessage.className = 'error';
             statusMessage.style.display = 'block';
             
+            // 捲動到最底部錯誤訊息
             statusMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             alert('送出失敗：' + errorMsg);
             console.error('Detailed Error:', error);
