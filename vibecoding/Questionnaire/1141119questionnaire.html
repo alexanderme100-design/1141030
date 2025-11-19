@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中小學階段校長師徒制實施成效問卷</title>
+    <!-- 內嵌 CSS 樣式 (保持不變) -->
+    <style>
+        /* --- 基本樣式 --- */
+        :root {
+            --primary-color: #004a99; /* 專業的藍色 */
+            --secondary-color: #0056b3;
+            --light-gray: #f4f7f6;
+            --text-color: #333;
+            --border-color: #ccc;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "LiHei Pro", "Microsoft JhengHei", sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+
+        /* --- 頂部標題列 --- */
+        header {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        /* --- 主要內容容器 (RWD) --- */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- 問卷說明 --- */
+        .description {
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        /* --- 表單區塊 --- */
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            background-color: #fff;
+        }
+
+        legend {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding: 0 0.5rem;
+            margin-left: 1rem;
+        }
+
+        /* --- 表單群組 (問題) --- */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label,
+        .question-text {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .question-note {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: -0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* --- 必填標記 --- */
+        .required {
+            color: red;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        /* --- 選項群組 (Radio / Checkbox) --- */
+        .options-group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .options-group label {
+            margin-bottom: 0;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            font-size: 0.95rem;
+            user-select: none;
+        }
+
+        .options-group label:hover {
+            background-color: #f0f5ff;
+            border-color: var(--primary-color);
+        }
+
+        .options-group input[type="radio"] {
+            display: none;
+        }
+        
+        .options-group label:has(input[type="radio"]:checked) {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* --- 文字輸入框 / 下拉選單 --- */
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* --- District Map Styles --- */
+        #districtMap {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            background-color: #fcfcfc;
+        }
+
+        .district-group {
+            margin-bottom: 1rem;
+        }
+        .district-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .district-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .district-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .district-btn {
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            user-select: none;
+        }
+
+        .district-btn:hover {
+            background-color: #f0f5ff;
+            border-color: var(--primary-color);
+        }
+
+        .district-btn.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            font-weight: 500;
+        }
+
+
+        /* --- Likert 量表樣式 --- */
+        .likert-scale {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            display: block;
+            overflow-x: auto;
+        }
+        
+        .likert-scale th {
+             display: none;
+        }
+        
+        .likert-scale td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .likert-question {
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .likert-question:last-child {
+            border-bottom: none;
+        }
+
+        /* --- New Dimension Colors --- */
+        .dimension {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2.5rem;
+            border-left-width: 5px;
+            background-color: #fcfcfc;
+        }
+        
+        .dimension-1 {
+            background-color: #f0f7ff;
+            border-left-color: #004a99;
+        }
+        .dimension-2 {
+            background-color: #f0fff5;
+            border-left-color: #00794a;
+        }
+        .dimension-3 {
+            background-color: #fffaf0;
+            border-left-color: #b87400;
+        }
+        .dimension-4 {
+            background-color: #f5f0ff;
+            border-left-color: #5a0099;
+        }
+        .dimension-5 {
+            background-color: #f0fdfd;
+            border-left-color: #007a7c;
+        }
+
+        /* --- New Fieldset Colors --- */
+        .fieldset-basic-info {
+            background-color: #f4f8ff;
+            border-left-width: 5px;
+            border-left-color: #0056b3;
+        }
+        
+        .fieldset-open-questions {
+            background-color: #f5fcf5;
+            border-left-width: 5px;
+            border-left-color: #006437;
+        }
+        
+        .fieldset-basic-info legend { color: #0056b3; }
+        .fieldset-open-questions legend { color: #006437; }
+
+        .dimension h4 {
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        .dimension-1 h4 { color: #004a99; }
+        .dimension-2 h4 { color: #00794a; }
+        .dimension-3 h4 { color: #b87400; }
+        .dimension-4 h4 { color: #5a0099; }
+        .dimension-5 h4 { color: #007a7c; }
+
+        .dimension .question-note {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 0.75rem;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        
+        .likert-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 0.75rem;
+        }
+
+        .likert-options label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            min-width: 50px;
+            cursor: pointer;
+        }
+        
+        .likert-options label:hover {
+             background-color: #f0f0f0;
+        }
+
+        .likert-options input[type="radio"] {
+            margin-bottom: 0.5rem;
+            transform: scale(1.3);
+        }
+
+        /* --- 送出按鈕與狀態 --- */
+        .submit-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        #submitBtn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        #submitBtn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        #submitBtn:active {
+             transform: scale(0.98);
+        }
+
+        #submitBtn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        #loadingSpinner {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        #statusMessage {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+
+        /* --- RWD 響應式設計 (手機) --- */
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                padding: 1rem;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            header {
+                font-size: 1.25rem;
+                padding: 1rem;
+            }
+            
+            legend {
+                font-size: 1.2rem;
+            }
+
+            .form-group label,
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .likert-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .likert-options label {
+                flex-direction: row;
+                text-align: left;
+                width: 100%;
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .likert-options input[type="radio"] {
+                margin-bottom: 0;
+                margin-right: 1rem;
+            }
+
+            #submitBtn {
+                width: 100%;
+                font-size: 1.1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 頂部標題列 -->
+    <header>
+        中小學階段校長師徒制實施成效問卷V2
+    </header>
+
+    <!-- 主要內容容器 -->
+    <div class="container">
+        
+        <div class="description">
+            <p><strong>敬愛的校長您好：</strong></p>
+            <p>這是一份有關校長師徒制實施成效的問卷，希望借重您的智慧與經驗，就您實際的經驗依符合程度來檢視這些題目，在 實際中實施的情形 或 您的認知 中勾選合適的欄位。</p>
+            <p>本問卷旨在深入了解 中小學階段 校長對於「校長師徒制」的看法與感受程度。您的寶貴意見將是未來相關政策研擬與實務推動的重要參考。</p>
+            <p>中華民國中小學校長協會專案研究小組敬啟</p>
+        </div>
+
+        <!-- 表單開始 -->
+        <form id="surveyForm">
+
+            <!-- 壹、基本資料 -->
+            <fieldset class="fieldset-basic-info">
+                <legend>壹、基本資料</legend>
+                <p class="question-note">說明：請依據您的資料狀況，勾選最符合的答案。(<span class="required">*</span> 為必填)</p>
+
+                <div class="form-group">
+                    <label>性別 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="gender" value="男" required> 男</label>
+                        <label><input type="radio" name="gender" value="女" required> 女</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>年齡 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="age" value="30歲（含）以下" required> 30歲（含）以下</label>
+                        <label><input type="radio" name="age" value="31-40歲" required> 31-40歲</label>
+                        <label><input type="radio" name="age" value="41-50歲" required> 41-50歲</label>
+                        <label><input type="radio" name="age" value="51歲-60歲" required> 51歲-60歲</label>
+                        <label><input type="radio" name="age" value="61歲以上" required> 61歲以上</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>最高學歷 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="education" value="學士" required> 學士</label>
+                        <label><input type="radio" name="education" value="碩士（含40學分班）" required> 碩士（含40學分班）</label>
+                        <label><input type="radio" name="education" value="博士" required> 博士</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>擔任校長總年資 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="seniority" value="4年（含）以下" required> 4年（含）以下</label>
+                        <label><input type="radio" name="seniority" value="5-8年" required> 5-8年</label>
+                        <label><input type="radio" name="seniority" value="9-12年" required> 9-12年</label>
+                        <label><input type="radio" name="seniority" value="13年（含）以上" required> 13年（含）以上</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>服務學校階段別 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="schoolLevel" value="國小" required> 國小</label>
+                        <label><input type="radio" name="schoolLevel" value="國中" required> 國中</label>
+                        <label><input type="radio" name="schoolLevel" value="高中職" required> 高中職</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>學校規模 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="schoolSize" value="12班（含）以下" required> 12班（含）以下</label>
+                        <label><input type="radio" name="schoolSize" value="13-24班" required> 13-24班</label>
+                        <label><input type="radio" name="schoolSize" value="25-47班" required> 25-47班</label>
+                        <label><input type="radio" name="schoolSize" value="48班以上" required> 48班以上</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>學校所在地區 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="schoolRegion" value="都市型" required> 都市型</label>
+                        <label><input type="radio" name="schoolRegion" value="鄉鎮型" required> 鄉鎮型</label>
+                        <label><input type="radio" name="schoolRegion" value="偏遠或離島型" required> 偏遠或離島型</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="schoolDistrict">學校所屬行政區 <span class="required">*</span></label>
+                    <input type="hidden" id="schoolDistrict" name="schoolDistrict" value="" required>
+                    <div id="districtMap">
+                        <!-- 6 直轄市 -->
+                        <div class="district-group">
+                            <div class="district-label">直轄市</div>
+                            <div class="district-grid">
+                                <div class="district-btn" data-value="臺北市">臺北市</div>
+                                <div class="district-btn" data-value="新北市">新北市</div>
+                                <div class="district-btn" data-value="桃園市">桃園市</div>
+                                <div class="district-btn" data-value="臺中市">臺中市</div>
+                                <div class="district-btn" data-value="臺南市">臺南市</div>
+                                <div class="district-btn" data-value="高雄市">高雄市</div>
+                            </div>
+                        </div>
+                        <!-- 13 縣 -->
+                        <div class="district-group">
+                            <div class="district-label">縣</div>
+                            <div class="district-grid">
+                                <div class="district-btn" data-value="新竹縣">新竹縣</div>
+                                <div class="district-btn" data-value="苗栗縣">苗栗縣</div>
+                                <div class="district-btn" data-value="彰化縣">彰化縣</div>
+                                <div class="district-btn" data-value="南投縣">南投縣</div>
+                                <div class="district-btn" data-value="雲林縣">雲林縣</div>
+                                <div class="district-btn" data-value="嘉義縣">嘉義縣</div>
+                                <div class="district-btn" data-value="屏東縣">屏東縣</div>
+                                <div class="district-btn" data-value="宜蘭縣">宜蘭縣</div>
+                                <div class="district-btn" data-value="花蓮縣">花蓮縣</div>
+                                <div class="district-btn" data-value="臺東縣">臺東縣</div>
+                                <div class="district-btn" data-value="澎湖縣">澎湖縣</div>
+                                <div class="district-btn" data-value="金門縣">金門縣</div>
+                                <div class="district-btn" data-value="連江縣">連江縣</div>
+                            </div>
+                        </div>
+                        <!-- 3 市 -->
+                        <div class="district-group">
+                            <div class="district-label">市 (省轄市)</div>
+                            <div class="district-grid">
+                                <div class="district-btn" data-value="基隆市">基隆市</div>
+                                <div class="district-btn" data-value="新竹市">新竹市</div>
+                                <div class="district-btn" data-value="嘉義市">嘉義市</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="districtError" style="color: red; font-size: 0.9rem; display: none; margin-top: 5px;">請選擇一個行政區。</div>
+                </div>
+
+                <div class="form-group">
+                    <label>您是否曾參與師徒制度 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="hasMentorship" value="是" required> 是</label>
+                        <label><input type="radio" name="hasMentorship" value="否" required> 否</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>您曾參與師徒制度配對方式為何 <span class="required">*</span></label>
+                    <div class="options-group">
+                        <label><input type="radio" name="mentorshipType" value="正式官方師徒制" required> 正式官方師徒制</label>
+                        <label><input type="radio" name="mentorshipType" value="非正式固定師徒關係" required> 非正式固定師徒關係</label>
+                        <label><input type="radio" name="mentorshipType" value="同儕教練/學習社群" required> 同儕教練/學習社群</label>
+                        <label><input type="radio" name="mentorshipType" value="尚未參與" required> 尚未參與</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- 貳、量表 -->
+            <fieldset>
+                <legend>貳、校長師徒制實施成效量表</legend>
+                <div class="description">
+                    <p><strong>說明：</strong>請您對【 中小學階段 校長師徒制實施成效】問卷，共五個向度的同意程度，依個人認同程度在□內打「」。(<span class="required">*</span> 為必填)</p>
+                </div>
+                
+                <!-- 選項標籤 -->
+                <div class="likert-options" style="padding: 0.5rem 1rem; background: #f9f9f9; border-radius: 4px; margin-bottom: 1.5rem; justify-content: space-around; flex-wrap: wrap;">
+                    <span style="font-size: 0.9rem;">(7) 極為同意</span>
+                    <span style="font-size: 0.9rem;">(6) 很同意</span>
+                    <span style="font-size: 0.9rem;">(5) 同意</span>
+                    <span style="font-size: 0.9rem;">(4) 普通</span>
+                    <span style="font-size: 0.9rem;">(3) 不同意</span>
+                    <span style="font-size: 0.9rem;">(2) 很不同意</span>
+                    <span style="font-size: 0.9rem;">(1) 極不同意</span>
+                </div>
+
+                <!-- 向度一 -->
+                <div class="dimension dimension-1">
+                    <h4>向度一：校務經營與危機處理</h4>
+                    <p class="question-note"><strong>定義：本向度聚焦於師傅校長在協助初任校長應對「校務經營」全貌的指導成效。它涵蓋了常態性的行政管理（如財務、總務、法規）、日常實務問題的解決，以及非常態的危機事件預防、應變與善後處理能力。</strong></p>
+
+                    <!-- A1 -->
+                    <div class="likert-question">
+                        <p class="question-text">1. 師傅校長能提供初任校長學校總務行政事務的專業指導。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A1" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A1" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A1" value="5" required> 同意</label>
+                            <label><input type="radio" name="A1" value="4" required> 普通</label>
+                            <label><input type="radio" name="A1" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A1" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A1" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">2. 師傅校長能引導初任校長做有效的時間管理，提升行政處理效能。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A2" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A2" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A2" value="5" required> 同意</label>
+                            <label><input type="radio" name="A2" value="4" required> 普通</label>
+                            <label><input type="radio" name="A2" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A2" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A2" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">3. 師傅校長能引導初任校長建立全方位的校園安全管理系統。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A3" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A3" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A3" value="5" required> 同意</label>
+                            <label><input type="radio" name="A3" value="4" required> 普通</label>
+                            <label><input type="radio" name="A3" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A3" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A3" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">4. 師傅校長能提升初任校長在重大壓力情境中的策略性決策能力。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A4" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A4" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A4" value="5" required> 同意</label>
+                            <label><input type="radio" name="A4" value="4" required> 普通</label>
+                            <label><input type="radio" name="A4" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A4" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A4" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">5. 師傅校長能提升初任校長在危機事件中的整合性處理能力。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A5" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A5" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A5" value="5" required> 同意</label>
+                            <label><input type="radio" name="A5" value="4" required> 普通</label>
+                            <label><input type="radio" name="A5" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A5" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A5" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">6. 師傅校長能引導初任校長在校園安全事件中，熟稔標準作業處理流程。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A6" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A6" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A6" value="5" required> 同意</label>
+                            <label><input type="radio" name="A6" value="4" required> 普通</label>
+                            <label><input type="radio" name="A6" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A6" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A6" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">7. 師傅校長能引導初任校長進行校內有限資源的策略性分配及運用。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A7" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A7" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A7" value="5" required> 同意</label>
+                            <label><input type="radio" name="A7" value="4" required> 普通</label>
+                            <label><input type="radio" name="A7" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A7" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A7" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">8. 師傅校長能引導初任校長從錯誤決策中進行事後檢討汲取經驗。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A8" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A8" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A8" value="5" required> 同意</label>
+                            <label><input type="radio" name="A8" value="4" required> 普通</label>
+                            <label><input type="radio" name="A8" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A8" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A8" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">9. 師傅校長能引導初任校長運用有效的授權策略，以促進學校行政順暢運作。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A9" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A9" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A9" value="5" required> 同意</label>
+                            <label><input type="radio" name="A9" value="4" required> 普通</label>
+                            <label><input type="radio" name="A9" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A9" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A9" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">10. 師傅校長能引導初任校長在危機後，妥適安撫師生情緒的輔導。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="A10" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="A10" value="6" required> 很同意</label>
+                            <label><input type="radio" name="A10" value="5" required> 同意</label>
+                            <label><input type="radio" name="A10" value="4" required> 普通</label>
+                            <label><input type="radio" name="A10" value="3" required> 不同意</label>
+                            <label><input type="radio" name="A10" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="A10" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 向度二 -->
+                <div class="dimension dimension-2">
+                    <h4>向度二：師徒關係與關懷支持</h4>
+                    <p class="question-note"><strong>定義：本向度聚焦於師徒互動的品質與情感功能。它涵蓋了建立一個安全、保密、真誠、互惠的信任關係，並在此基礎上，由師傅校長提供同理心，協助初任校長緩解工作壓力、孤立感與焦慮，從而提升其心理韌性與工作滿意度。</strong></p>
+                    
+                    <div class="likert-question">
+                        <p class="question-text">1. 師傅校長與初任校長有良好的信任關係。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B1" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B1" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B1" value="5" required> 同意</label>
+                            <label><input type="radio" name="B1" value="4" required> 普通</label>
+                            <label><input type="radio" name="B1" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B1" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B1" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">2. 師傅校長與初任校長有安全信賴的互動氛圍，可以坦誠交流。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B2" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B2" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B2" value="5" required> 同意</label>
+                            <label><input type="radio" name="B2" value="4" required> 普通</label>
+                            <label><input type="radio" name="B2" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B2" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B2" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">3. 師傅校長與初任校長在互動過程中，能彼此相互傾聽與尊重。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B3" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B3" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B3" value="5" required> 同意</label>
+                            <label><input type="radio" name="B3" value="4" required> 普通</label>
+                            <label><input type="radio" name="B3" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B3" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B3" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">4. 師傅校長有同理心，提供初任校長溫暖且有效的情感支持。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B4" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B4" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B4" value="5" required> 同意</label>
+                            <label><input type="radio" name="B4" value="4" required> 普通</label>
+                            <label><input type="radio" name="B4" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B4" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B4" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">5. 師傅校長能有效緩解初任校長的孤立感與工作焦慮。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B5" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B5" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B5" value="5" required> 同意</label>
+                            <label><input type="radio" name="B5" value="4" required> 普通</label>
+                            <label><input type="radio" name="B5" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B5" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B5" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">6. 師傅校長能提升初任校長的工作滿意度。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B6" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B6" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B6" value="5" required> 同意</label>
+                            <label><input type="radio" name="B6" value="4" required> 普通</label>
+                            <label><input type="radio" name="B6" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B6" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B6" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">7. 師傅校長能主動關懷初任校長的身心健康，展現出公事外的支持。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B7" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B7" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B7" value="5" required> 同意</label>
+                            <label><input type="radio" name="B7" value="4" required> 普通</label>
+                            <label><input type="radio" name="B7" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B7" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B7" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">8. 師傅校長能幫助初任校長應對最具挑戰性的工作壓力。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B8" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B8" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B8" value="5" required> 同意</label>
+                            <label><input type="radio" name="B8" value="4" required> 普通</label>
+                            <label><input type="radio" name="B8" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B8" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B8" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">9. 師傅校長所營造的關係氛圍，讓初任校長無後顧之憂尋求協助與指導。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B9" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B9" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B9" value="5" required> 同意</label>
+                            <label><input type="radio" name="B9" value="4" required> 普通</label>
+                            <label><input type="radio" name="B9" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B9" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B9" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">10. 師傅校長能給予積極肯定與賦能，強化初任校長辦學自信心。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="B10" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="B10" value="6" required> 很同意</label>
+                            <label><input type="radio" name="B10" value="5" required> 同意</label>
+                            <label><input type="radio" name="B10" value="4" required> 普通</label>
+                            <label><input type="radio" name="B10" value="3" required> 不同意</label>
+                            <label><input type="radio" name="B10" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="B10" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 向度三 -->
+                <div class="dimension dimension-3">
+                    <h4>向度三：教學領導與文化塑造</h4>
+                    <p class="question-note"><strong>定義：本向度旨在檢視師傅校長在協助初任校長發展教學領導、設定教學方向、課程發展與教學改進、塑造積極學校文化及建立學校願景等核心教育工作的成效。</strong></p>
+                    
+                    <div class="likert-question">
+                        <p class="question-text">1. 師傅校長能引導初任校長發展課程與教學領導的專業能力。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C1" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C1" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C1" value="5" required> 同意</label>
+                            <label><input type="radio" name="C1" value="4" required> 普通</label>
+                            <label><input type="radio" name="C1" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C1" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C1" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">2. 師傅校長能引導初任校長釐定學校教學發展方向。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C2" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C2" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C2" value="5" required> 同意</label>
+                            <label><input type="radio" name="C2" value="4" required> 普通</label>
+                            <label><input type="radio" name="C2" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C2" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C2" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">3. 師傅校長能引導初任校長發展實踐學校願景與特色。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C3" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C3" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C3" value="5" required> 同意</label>
+                            <label><input type="radio" name="C3" value="4" required> 普通</label>
+                            <label><input type="radio" name="C3" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C3" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C3" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">4. 師傅校長能提供初任校長形塑或轉化學校組織文化的有效策略。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C4" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C4" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C4" value="5" required> 同意</label>
+                            <label><input type="radio" name="C4" value="4" required> 普通</label>
+                            <label><input type="radio" name="C4" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C4" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C4" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">5. 師傅校長能 引導 初任校長擬定有效推動學校教學品質改進計畫。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C5" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C5" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C5" value="5" required> 同意</label>
+                            <label><input type="radio" name="C5" value="4" required> 普通</label>
+                            <label><input type="radio" name="C5" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C5" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C5" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">6. 師傅校長能 引導 初任校長透過系統性的教師專業發展，營造校園的學習型組織文化。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C6" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C6" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C6" value="5" required> 同意</label>
+                            <label><input type="radio" name="C6" value="4" required> 普通</label>
+                            <label><input type="radio" name="C6" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C6" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C6" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">7. 師傅校長能提供有效的激勵策略，以提升教師的專業投入與動機。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C7" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C7" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C7" value="5" required> 同意</label>
+                            <label><input type="radio" name="C7" value="4" required> 普通</label>
+                            <label><input type="radio" name="C7" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C7" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C7" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">8. 師傅校長能 引導 初任校長營造一個正向積極的學校文化。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C8" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C8" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C8" value="5" required> 同意</label>
+                            <label><input type="radio" name="C8" value="4" required> 普通</label>
+                            <label><input type="radio" name="C8" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C8" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C8" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">9. 師傅校長能 引導 初任校長調整學校組織架構，以有效支持核心教學任務。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C9" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C9" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C9" value="5" required> 同意</label>
+                            <label><input type="radio" name="C9" value="4" required> 普通</label>
+                            <label><input type="radio" name="C9" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C9" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C9" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">10. 師傅校長能 引導 初任校長善用影響力，循序漸進地推動教學變革。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="C10" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="C10" value="6" required> 很同意</label>
+                            <label><input type="radio" name="C10" value="5" required> 同意</label>
+                            <label><input type="radio" name="C10" value="4" required> 普通</label>
+                            <label><input type="radio" name="C10" value="3" required> 不同意</label>
+                            <label><input type="radio" name="C10" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="C10" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 向度四 -->
+                <div class="dimension dimension-4">
+                    <h4>向度四：人際溝通與關係建立</h4>
+                    <p class="question-note"><strong>定義：本向度旨在評估師傅校長在指導初任校長如何與教師、家長、社區等利害關係人建立良好關係、有效溝通、處理人際衝突及建立團隊方面的成效。</strong></p>
+                    
+                    <div class="likert-question">
+                        <p class="question-text">1. 師傅校長能 引導 初任校長與校內外關鍵利害關係人，建立正向的信任關係。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D1" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D1" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D1" value="5" required> 同意</label>
+                            <label><input type="radio" name="D1" value="4" required> 普通</label>
+                            <label><input type="radio" name="D1" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D1" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D1" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">2. 師傅校長能 引導 初任校長運用有效的溝通策略，以促進同仁間的專業對話與合作。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D2" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D2" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D2" value="5" required> 同意</label>
+                            <label><input type="radio" name="D2" value="4" required> 普通</label>
+                            <label><input type="radio" name="D2" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D2" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D2" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">3. 師傅校長能引導初任校長展現有效的團隊領導力，以凝聚共識並提振士氣。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D3" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D3" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D3" value="5" required> 同意</label>
+                            <label><input type="radio" name="D3" value="4" required> 普通</label>
+                            <label><input type="radio" name="D3" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D3" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D3" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">4. 師傅校長能 引導 初任校長建立校內正向的溝通機制，營造組織內的互信氛圍。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D4" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D4" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D4" value="5" required> 同意</label>
+                            <label><input type="radio" name="D4" value="4" required> 普通</label>
+                            <label><input type="radio" name="D4" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D4" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D4" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">5. 師傅校長能引導初任校長有效處理親師生之間的互動議題，以建立穩固的教育夥伴關係。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D5" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D5" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D5" value="5" required> 同意</label>
+                            <label><input type="radio" name="D5" value="4" required> 普通</label>
+                            <label><input type="radio" name="D5" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D5" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D5" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">6. 師傅校長能引導初任校長透過賦權增能，來提升行政團隊的整體合作效能。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D6" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D6" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D6" value="5" required> 同意</label>
+                            <label><input type="radio" name="D6" value="4" required> 普通</label>
+                            <label><input type="radio" name="D6" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D6" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D6" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">7. 師傅校長能引導初任校長有效經營與校內外社群的和諧關係。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D7" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D7" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D7" value="5" required> 同意</label>
+                            <label><input type="radio" name="D7" value="4" required> 普通</label>
+                            <label><input type="radio" name="D7" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D7" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D7" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">8. 師傅校長能提供建立穩固親師合作夥伴關係的有效策略。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D8" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D8" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D8" value="5" required> 同意</label>
+                            <label><input type="radio" name="D8" value="4" required> 普通</label>
+                            <label><input type="radio" name="D8" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D8" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D8" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">9. 師傅校長能 引導 初任校長以公平、審慎的原則，處理教職員的人事議題。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D9" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D9" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D9" value="5" required> 同意</label>
+                            <label><input type="radio" name="D9" value="4" required> 普通</label>
+                            <label><input type="radio" name="D9" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D9" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D9" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">10. 師傅校長能 引導 初任校長與主管機關及昔日 colleagues 建立有效的工作關係。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="D10" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="D10" value="6" required> 很同意</label>
+                            <label><input type="radio" name="D10" value="5" required> 同意</label>
+                            <label><input type="radio" name="D10" value="4" required> 普通</label>
+                            <label><input type="radio" name="D10" value="3" required> 不同意</label>
+                            <label><input type="radio" name="D10" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="D10" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 向度五 -->
+                <div class="dimension dimension-5">
+                    <h4>向度五：專業反思與自主成長</h4>
+                    <p class="question-note"><strong>定義：本向度旨在探討師徒制是否能超越單純的經驗傳承，進而引導初任校長進行深層問題診斷、反思性思考、促進專業技能的實質成長，並培養其獨立解決問題的能力。</strong></p>
+                    
+                    <div class="likert-question">
+                        <p class="question-text">1. 師傅校長能引導初任校長運用反思性提問，深入診斷問題根源。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E1" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E1" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E1" value="5" required> 同意</label>
+                            <label><input type="radio" name="E1" value="4" required> 普通</label>
+                            <label><input type="radio" name="E1" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E1" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E1" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">2. 師傅校長能提升初任校長在複雜情境的反思與洞察能力。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E2" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E2" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E2" value="5" required> 同意</label>
+                            <label><input type="radio" name="E2" value="4" required> 普通</label>
+                            <label><input type="radio" name="E2" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E2" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E2" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">3. 師傅校長能提升初任校長的專業自主性、獨立學習及解決問題的能力。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E3" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E3" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E3" value="5" required> 同意</label>
+                            <label><input type="radio" name="E3" value="4" required> 普通</label>
+                            <label><input type="radio" name="E3" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E3" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E3" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">4. 師傅校長能 引導 初任校長在領導專業技能上的實質成長。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E4" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E4" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E4" value="5" required> 同意</label>
+                            <label><input type="radio" name="E4" value="4" required> 普通</label>
+                            <label><input type="radio" name="E4" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E4" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E4" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">5. 師傅校長能 引導 初任校長從多元視角分析方案利弊。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E5" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E5" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E5" value="5" required> 同意</label>
+                            <label><input type="radio" name="E5" value="4" required> 普通</label>
+                            <label><input type="radio" name="E5" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E5" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E5" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">6. 師傅校長能協助初任校長從實務經驗中彰顯個人的領導哲學。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E6" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E6" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E6" value="5" required> 同意</label>
+                            <label><input type="radio" name="E6" value="4" required> 普通</label>
+                            <label><input type="radio" name="E6" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E6" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E6" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">7. 師傅校長能 引導 初任校長運用系統性思考來分析與解決問題。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E7" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E7" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E7" value="5" required> 同意</label>
+                            <label><input type="radio" name="E7" value="4" required> 普通</label>
+                            <label><input type="radio" name="E7" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E7" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E7" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">8. 師傅校長能 引導 初任校長，將個人專業發展與學校永續發展的目標相結合。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E8" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E8" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E8" value="5" required> 同意</label>
+                            <label><input type="radio" name="E8" value="4" required> 普通</label>
+                            <label><input type="radio" name="E8" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E8" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E8" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">9. 師傅校長能 引導 初任校長在行政實務中，有效地連結與應用教育理論。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E9" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E9" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E9" value="5" required> 同意</label>
+                            <label><input type="radio" name="E9" value="4" required> 普通</label>
+                            <label><input type="radio" name="E9" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E9" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E9" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                    <div class="likert-question">
+                        <p class="question-text">10. 師傅校長能 引導 初任校長建立清晰的專業自我認同。<span class="required">*</span></p>
+                        <div class="likert-options">
+                            <label><input type="radio" name="E10" value="7" required> 極為同意</label>
+                            <label><input type="radio" name="E10" value="6" required> 很同意</label>
+                            <label><input type="radio" name="E10" value="5" required> 同意</label>
+                            <label><input type="radio" name="E10" value="4" required> 普通</label>
+                            <label><input type="radio" name="E10" value="3" required> 不同意</label>
+                            <label><input type="radio" name="E10" value="2" required> 很不同意</label>
+                            <label><input type="radio" name="E10" value="1" required> 極不同意</label>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <!-- 開放式問題 -->
+            <fieldset class="fieldset-open-questions">
+                <legend>參、開放式問題</legend>
+
+                <div class="form-group">
+                    <label for="openQ1">1. 您對目前國民中小學校長師徒制度有何具體建議或改進方向？</label>
+                    <textarea id="openQ1" name="openQ1" rows="5" placeholder="請在此輸入您的寶貴意見..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="openQ2">2. 您認為師徒制對校長專業發展的幫助為何？請簡述您的看法或經驗。</label>
+                    <textarea id="openQ2" name="openQ2" rows="5" placeholder="請在此輸入您的寶貴意見..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="openQ3">3. 您認為影響您參與師徒制的其他因素有哪些？（例如工作負荷、學校資源、 個人意願與態度 等）</label>
+                    <textarea id="openQ3" name="openQ3" rows="5" placeholder="請在此輸入您的寶貴意見..."></textarea>
+                </div>
+
+            </fieldset>
+
+            <!-- 送出按鈕與狀態訊息 -->
+            <div class="submit-container">
+                <button type="submit" id="submitBtn">送出問卷</button>
+                <div id="loadingSpinner" style="display: none;">
+                    <p>資料送出中，請稍候...</p>
+                </div>
+                <div id="statusMessage" style="display: none;"></div>
+            </div>
+
+            <p style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: #777;">
+                感謝您的參與！您的寶貴意見將有助於提升校長專業發展的品質。
+            </p>
+
+        </form>
+    </div> <!-- /container -->
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // ！！！！！！！！請在此填入您的 GAS 網頁應用程式網址！！！！！！！！
+        const GAS_API_URL = '請在此填入您的 GAS 網頁應用程式網址'; 
+
+        // --- District Map Logic (保持不變) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const districtMap = document.getElementById('districtMap');
+            const hiddenInput = document.getElementById('schoolDistrict');
+            const districtError = document.getElementById('districtError');
+
+            if (districtMap) {
+                districtMap.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('district-btn')) {
+                        const selectedValue = e.target.dataset.value;
+                        hiddenInput.value = selectedValue;
+                        
+                        const allBtns = districtMap.querySelectorAll('.district-btn');
+                        allBtns.forEach(btn => btn.classList.remove('selected'));
+
+                        e.target.classList.add('selected');
+                        districtError.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // --- 表單提交邏輯 (改用 fetch) ---
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = this;
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const statusMessage = document.getElementById('statusMessage');
+            const hiddenInput = document.getElementById('schoolDistrict');
+            const districtError = document.getElementById('districtError');
+            
+            // 1. 驗證
+            districtError.style.display = 'none';
+            if (!form.checkValidity()) {
+                if (!hiddenInput.value) {
+                    districtError.style.display = 'block';
+                    districtError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    const firstInvalid = form.querySelector(':invalid');
+                    if(firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                form.reportValidity(); 
+                return;
+            }
+
+            // 2. 檢查 API URL 是否已設定
+            if (GAS_API_URL.includes('請在此填入')) {
+                alert('請先設定 GAS_API_URL！(請參考程式碼說明)');
+                return;
+            }
+
+            // 3. 準備資料
+            submitBtn.disabled = true;
+            submitBtn.textContent = '處理中...';
+            loadingSpinner.style.display = 'block';
+            statusMessage.style.display = 'none';
+
+            // 取得 FormData
+            const formData = new FormData(form);
+            // 轉為單純的 Object (因為 GAS 接收 JSON 比較容易)
+            const dataObject = Object.fromEntries(formData.entries());
+
+            // 4. 發送 POST 請求
+            // 使用 text/plain 是為了避免跨域 (CORS) 複雜的預檢請求 (OPTIONS)
+            // GAS 雖然會回傳 302 Redirect，但 fetch 會自動跟隨，最終拿到 JSON
+            fetch(GAS_API_URL, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8",
+                },
+                body: JSON.stringify(dataObject)
+            })
+            .then(response => response.json())
+            .then(result => {
+                loadingSpinner.style.display = 'none';
+                
+                if (result.success) {
+                    // --- 成功 ---
+                    statusMessage.textContent = '感謝填寫，您的回覆已成功送出！';
+                    statusMessage.className = 'success';
+                    statusMessage.style.display = 'block';
+                    
+                    form.style.display = 'none';
+                    window.scrollTo(0, 0);
+
+                    const container = document.querySelector('.container');
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 3rem;">
+                            <h2 style="color: #155724;">✔ 感謝填寫！</h2>
+                            <p>您的回覆已成功送出。</p>
+                            <p style="color: #666; font-size: 0.9rem;">您可以關閉此頁面。</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(result.error || '未知錯誤');
+                }
+            })
+            .catch(error => {
+                // --- 失敗 ---
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.textContent = '送出問卷';
+                
+                statusMessage.textContent = '送出失敗，請稍後再試。(' + error.message + ')';
+                statusMessage.className = 'error';
+                statusMessage.style.display = 'block';
+                console.error('Fetch Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
