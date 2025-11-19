@@ -75,7 +75,7 @@
             margin-bottom: 2.5rem;
             background-color: #fff;
             min-width: 0;
-            transition: border-color 0.3s; /* 增加過渡效果 */
+            transition: border-color 0.3s;
         }
 
         legend {
@@ -93,7 +93,7 @@
 
         .form-group { 
             margin-bottom: 2rem; 
-            padding: 10px; /* 增加內距，讓錯誤紅框好看一點 */
+            padding: 10px;
             border-radius: 8px;
             transition: background-color 0.3s;
         }
@@ -148,7 +148,14 @@
             border-color: var(--primary-color);
         }
 
-        .options-group input[type="radio"] { display: none; }
+        /* 修改處：使用絕對定位隱藏 input，而不是 display:none，確保瀏覽器驗證機制能抓到它 */
+        .options-group input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
         
         .options-group label:has(input[type="radio"]:checked) {
             background-color: var(--primary-color);
@@ -249,7 +256,7 @@
         .dimension-5 h4 { color: #007a7c; }
 
         .likert-question {
-            padding: 1.5rem 0.5rem; /* 增加左右內距，讓紅框不貼邊 */
+            padding: 1.5rem 0.5rem;
             border-bottom: 1px dashed #ccc;
             border-radius: 8px;
             transition: background-color 0.3s;
@@ -319,7 +326,14 @@
         .dimension-4 .likert-options label:has(input[type="radio"]:checked) { background: #5a0099; }
         .dimension-5 .likert-options label:has(input[type="radio"]:checked) { background: #007a7c; }
 
-        .likert-options input[type="radio"] { display: none; }
+        /* 修改處：使用絕對定位隱藏 input，確保瀏覽器驗證機制能抓到它 */
+        .likert-options input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
 
         .submit-container { text-align: center; margin-top: 3rem; padding-bottom: 2rem; }
         
@@ -353,7 +367,6 @@
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
-        /* --- 新增：錯誤提示動畫樣式 --- */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
@@ -711,7 +724,7 @@
         // ==========================================
         // ！！！請將此處替換為您的 GAS Web App URL！！！
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzB_vrRDDgYck-x0OdlihQFUfPZV6-GnVKholacJhb3CeYc3cIP98ba8wMlyV1PLCU/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwngjKhlkdwwPXx6wZHBNey8TdDNGWpcsWtJIhkWZ84kpfW8ZrSScEjm-N-3CA2Dqxz/exec';
         // ==========================================
 
         // --- District Map Logic ---
@@ -774,12 +787,20 @@
                 statusMessage.textContent = '請選擇「學校所屬行政區」！';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
-                alert('請填寫所有必填欄位！(請檢查行政區是否已點選)');
+                // 修改處：延遲 Alert 確保滾動生效
+                setTimeout(() => {
+                    alert('請填寫所有必填欄位！(請檢查行政區是否已點選)');
+                }, 300);
                 return;
             }
 
             // 3. 檢查其他必填欄位 (HTML5 原生驗證 + 自動跳轉)
             if (!form.checkValidity()) {
+                // 顯示錯誤訊息
+                statusMessage.textContent = '您有必填欄位尚未完成，請檢查紅色提示的欄位。';
+                statusMessage.className = 'error';
+                statusMessage.style.display = 'block';
+
                 // 找到第一個無效的欄位
                 const firstInvalid = form.querySelector(':invalid');
                 if (firstInvalid) {
@@ -794,8 +815,11 @@
                          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }
-
-                alert('您還有題目尚未填答，請檢查紅色標示的欄位！');
+                
+                // 修改處：延遲 Alert 確保滾動生效
+                setTimeout(() => {
+                    alert('您還有題目尚未填答，請檢查紅色標示的欄位！');
+                }, 300);
                 return;
             }
             
