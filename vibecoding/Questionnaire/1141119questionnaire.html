@@ -7,21 +7,21 @@
     <style>
         /* --- 全域變數與重置 --- */
         :root {
-            --primary-color: #004a99;     /* 專業深藍 */
-            --secondary-color: #0056b3;   /* 次要藍 */
-            --accent-color: #eef4ff;      /* 淺藍背景 (選中/Hover用) */
-            --bg-color: #f4f7f6;          /* 網頁背景 */
-            --card-bg: #ffffff;           /* 卡片背景 */
-            --text-main: #333;            /* 主要文字 */
-            --text-sub: #555;             /* 次要文字 */
-            --border-color: #e0e0e0;      /* 邊框顏色 */
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 陰影 */
-            --radius: 8px;                /* 圓角 */
+            --primary-color: #004a99;
+            --secondary-color: #0056b3;
+            --accent-color: #eef4ff;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333;
+            --text-sub: #555;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
         }
 
         * {
-            box-sizing: border-box; /* 確保寬度計算包含 padding */
-            -webkit-tap-highlight-color: transparent; /* 移除手機點擊時的藍色高亮 */
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
@@ -32,10 +32,9 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             scroll-behavior: smooth;
-            font-size: 16px; /* 基準字體大小，防止 iOS 縮放 */
+            font-size: 16px;
         }
 
-        /* --- 頂部標題列 --- */
         header {
             width: 100%;
             background-color: var(--primary-color);
@@ -50,7 +49,6 @@
             z-index: 100;
         }
 
-        /* --- 主要容器 --- */
         .container {
             max-width: 800px;
             margin: 2rem auto;
@@ -60,7 +58,6 @@
             box-shadow: var(--shadow);
         }
 
-        /* --- 說明區塊 --- */
         .description {
             background-color: #fff;
             border-left: 6px solid var(--primary-color);
@@ -71,14 +68,13 @@
         }
         .description p { margin: 0.5rem 0; }
 
-        /* --- 表單區塊 (Fieldset) --- */
         fieldset {
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             padding: 2rem;
             margin-bottom: 2.5rem;
             background-color: #fff;
-            min-width: 0; /* 修正 Flex 子元素溢出問題 */
+            min-width: 0;
         }
 
         legend {
@@ -89,14 +85,11 @@
             margin-left: 0.5rem;
         }
 
-        /* 不同區塊的配色 */
         .fieldset-basic-info { border-top: 4px solid #0056b3; }
         .fieldset-basic-info legend { color: #0056b3; }
-        
         .fieldset-open-questions { border-top: 4px solid #006437; }
         .fieldset-open-questions legend { color: #006437; }
 
-        /* --- 問題群組 --- */
         .form-group { margin-bottom: 2rem; }
 
         .form-group label, .question-text {
@@ -120,7 +113,6 @@
 
         .required { color: #d32f2f; font-weight: bold; margin-left: 4px; }
 
-        /* --- 選項按鈕群組 (Radio Buttons) --- */
         .options-group {
             display: flex;
             flex-wrap: wrap;
@@ -128,8 +120,8 @@
         }
 
         .options-group label {
-            flex: 1 1 auto; /* 自動伸縮 */
-            min-width: 140px; /* 最小寬度確保文字不折行 */
+            flex: 1 1 auto;
+            min-width: 140px;
             text-align: center;
             padding: 0.8rem 1.2rem;
             border: 1px solid var(--border-color);
@@ -141,7 +133,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 48px; /* 觸控友善高度 */
+            min-height: 48px;
             font-size: 1rem;
         }
 
@@ -160,13 +152,12 @@
             box-shadow: 0 2px 4px rgba(0,74,153,0.3);
         }
 
-        /* --- 輸入框 --- */
         input[type="text"], select, textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 16px; /* 防止 iOS 縮放 */
+            font-size: 16px;
             background-color: #fff;
             transition: border-color 0.2s;
         }
@@ -179,7 +170,6 @@
 
         textarea { resize: vertical; min-height: 120px; }
 
-        /* --- 行政區地圖 (Grid System) --- */
         #districtMap {
             background-color: #fcfcfc;
             padding: 1.5rem;
@@ -201,7 +191,7 @@
 
         .district-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* 自動排版 */
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             gap: 0.8rem;
         }
 
@@ -213,7 +203,7 @@
             cursor: pointer;
             text-align: center;
             font-size: 0.95rem;
-            min-height: 44px; /* 觸控高度 */
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -232,7 +222,6 @@
             font-weight: 600;
         }
 
-        /* --- Likert 量表 (RWD 核心) --- */
         .dimension {
             margin-top: 3rem;
             padding: 1.5rem;
@@ -241,19 +230,14 @@
             border-left-width: 6px;
         }
 
-        /* 向度顏色定義 */
         .dimension-1 { background: #f4f9ff; border-left-color: #004a99; }
         .dimension-1 h4 { color: #004a99; }
-        
         .dimension-2 { background: #f2fffa; border-left-color: #00794a; }
         .dimension-2 h4 { color: #00794a; }
-        
         .dimension-3 { background: #fffbf2; border-left-color: #b87400; }
         .dimension-3 h4 { color: #b87400; }
-        
         .dimension-4 { background: #fbf5ff; border-left-color: #5a0099; }
         .dimension-4 h4 { color: #5a0099; }
-        
         .dimension-5 { background: #f2fdfe; border-left-color: #007a7c; }
         .dimension-5 h4 { color: #007a7c; }
 
@@ -263,7 +247,6 @@
         }
         .likert-question:last-child { border-bottom: none; }
 
-        /* 選項容器 - 預設為橫向 (Desktop) */
         .likert-options {
             display: flex;
             justify-content: space-between;
@@ -284,20 +267,18 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 60px; /* 確保高度一致 */
+            min-height: 60px;
             font-size: 0.9rem;
         }
 
-        /* EMOJI 樣式優化 */
         .likert-options label .emoji {
             font-size: 1.5rem;
-            display: block; /* 電腦版：表情在上方 */
+            display: block;
             margin-bottom: 4px;
-            filter: grayscale(0.2); /* 未選中時稍微灰階 */
+            filter: grayscale(0.2);
             transition: all 0.2s;
         }
 
-        /* Hover 效果 */
         .likert-options label:hover {
             transform: translateY(-2px);
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
@@ -310,7 +291,6 @@
             transform: scale(1.1);
         }
 
-        /* 選中狀態 (依據各向度顏色) */
         .likert-options label:has(input[type="radio"]:checked) {
             color: white;
             font-weight: bold;
@@ -332,8 +312,6 @@
 
         .likert-options input[type="radio"] { display: none; }
 
-
-        /* --- 送出按鈕 --- */
         .submit-container { text-align: center; margin-top: 3rem; padding-bottom: 2rem; }
         
         #submitBtn {
@@ -360,95 +338,30 @@
         #submitBtn:active { transform: scale(0.98); }
         #submitBtn:disabled { background-color: #bbb; cursor: not-allowed; box-shadow: none; }
 
+        #loadingSpinner { margin-top: 1rem; font-weight: bold; color: var(--primary-color); }
+
         #statusMessage { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; font-weight: bold; }
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
-        /* --- RWD 斷點優化 (平板直向與手機) --- */
         @media (max-width: 768px) {
-            .container {
-                margin: 0;
-                padding: 1.5rem 1rem;
-                border-radius: 0;
-                box-shadow: none;
-                width: 100%;
-                max-width: 100%;
-            }
-
+            .container { margin: 0; padding: 1.5rem 1rem; border-radius: 0; box-shadow: none; width: 100%; max-width: 100%; }
             header { padding: 1rem; font-size: 1.2rem; }
-
             fieldset { padding: 1.2rem; margin-bottom: 1.5rem; }
             legend { font-size: 1.2rem; }
-            
             .form-group label { font-size: 1.1rem; }
-
-            /* 基本資料按鈕：手機上每行放兩個或一個 */
-            .options-group label {
-                flex: 1 1 45%; /* 接近一半寬度 */
-                padding: 0.7rem 0.5rem;
-                font-size: 0.95rem;
-            }
-            
-            /* 行政區按鈕加大 */
-            .district-grid {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            }
-
-            /* Likert 量表：手機/平板轉直向 */
-            .likert-options {
-                flex-direction: column;
-                gap: 0.6rem;
-            }
-            
-            .likert-options label {
-                flex-direction: row; /* 文字與按鈕改為橫向排列 */
-                justify-content: flex-start; /* 靠左對齊 */
-                padding: 1rem 1.2rem;
-                text-align: left;
-                border-radius: 6px;
-                background-color: #fff;
-                border: 1px solid #e0e0e0;
-            }
-
-            /* 手機版 EMOJI 樣式調整 */
-            .likert-options label .emoji {
-                display: inline; /* 改為行內顯示 */
-                margin-bottom: 0;
-                margin-right: 10px;
-                font-size: 1.3rem;
-                vertical-align: middle;
-            }
-            
-            /* 在直向模式下，增加選項前的圓圈模擬 Radio 樣式 */
-            .likert-options label::before {
-                content: "";
-                display: inline-block;
-                width: 18px;
-                height: 18px;
-                border-radius: 50%;
-                border: 2px solid #bbb;
-                margin-right: 12px;
-                transition: all 0.2s;
-                flex-shrink: 0;
-            }
-            
-            .likert-options label:has(input[type="radio"]:checked)::before {
-                border-color: #fff;
-                background-color: #fff;
-                box-shadow: inset 0 0 0 4px var(--primary-color);
-            }
-            
-            /* 修正直向選中樣式 */
-            .likert-options label:has(input[type="radio"]:checked) {
-                transform: none; /* 手機上不要放大，避免排版跑掉 */
-                border: 1px solid transparent; /* 保持邊框寬度避免跳動 */
-            }
-
+            .options-group label { flex: 1 1 45%; padding: 0.7rem 0.5rem; font-size: 0.95rem; }
+            .district-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+            .likert-options { flex-direction: column; gap: 0.6rem; }
+            .likert-options label { flex-direction: row; justify-content: flex-start; padding: 1rem 1.2rem; text-align: left; border-radius: 6px; background-color: #fff; border: 1px solid #e0e0e0; }
+            .likert-options label .emoji { display: inline; margin-bottom: 0; margin-right: 10px; font-size: 1.3rem; vertical-align: middle; }
+            .likert-options label::before { content: ""; display: inline-block; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #bbb; margin-right: 12px; transition: all 0.2s; flex-shrink: 0; }
+            .likert-options label:has(input[type="radio"]:checked)::before { border-color: #fff; background-color: #fff; box-shadow: inset 0 0 0 4px var(--primary-color); }
+            .likert-options label:has(input[type="radio"]:checked) { transform: none; border: 1px solid transparent; }
             #submitBtn { width: 100%; border-radius: 8px; padding: 1rem; }
         }
     </style>
 
-    <!-- Helper script -->
     <script>
         function createLikert(name, questionText) {
             return `
@@ -469,7 +382,7 @@
 </head>
 <body>
 
-    <header>中小學階段校長師徒制實施成效問卷V1</header>
+    <header>中小學階段校長師徒制實施成效問卷V3</header>
 
     <div class="container">
         <div class="description">
@@ -479,7 +392,7 @@
         </div>
 
         <form id="surveyForm">
-
+            <!-- (內容保持不變，為節省篇幅僅顯示結構，請保留原有的表單內容) -->
             <!-- 壹、基本資料 -->
             <fieldset class="fieldset-basic-info">
                 <legend>壹、基本資料</legend>
@@ -775,7 +688,7 @@
         // ==========================================
         // ！！！請將此處替換為您的 GAS Web App URL！！！
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwEMPuMfbLI_XDStirHKYLBaJlyJy01dr_vChF-041ek_DvpcnypXhgsh-aAb4g2yjS/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbw2sLXbUXpFTGnM8cGNvNAT2jL1icAyMDQleypQWs-CC9_EBel7LHkAYLpPhzObIVnS/exec';
         // ==========================================
 
         // --- District Map Logic ---
@@ -816,14 +729,21 @@
             if (!hiddenInput.value) {
                 districtError.style.display = 'block';
                 districtError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // 顯示錯誤訊息
                 statusMessage.textContent = '您有必填欄位尚未完成，請檢查紅色提示的欄位。';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
+                
+                // 增加 Alert 確保使用者知道發生錯誤
+                alert('請填寫所有必填欄位！(請檢查行政區是否已點選)');
                 return;
             }
 
             if (!form.checkValidity()) {
                 form.reportValidity();
+                // 增加 Alert 
+                alert('請填寫所有必填欄位！');
                 return;
             }
             
@@ -831,6 +751,7 @@
                  statusMessage.textContent = '錯誤：尚未設定後端 API 網址，請聯絡管理員。';
                  statusMessage.className = 'error';
                  statusMessage.style.display = 'block';
+                 alert('系統錯誤：尚未設定後端網址');
                  return;
             }
 
@@ -842,6 +763,8 @@
             const dataObject = {};
             formData.forEach((value, key) => { dataObject[key] = value; });
 
+            console.log("Sending data to:", GAS_API_URL);
+
             // 改用 fetch 發送 POST 請求到 Google Apps Script
             fetch(GAS_API_URL, {
                 method: 'POST',
@@ -852,7 +775,20 @@
                 },
                 body: JSON.stringify(dataObject),
             })
-            .then(response => response.json())
+            .then(response => {
+                 if (!response.ok) {
+                     throw new Error(`HTTP error! status: ${response.status}`);
+                 }
+                 return response.text(); // 先讀取為文字，以便除錯
+            })
+            .then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error("JSON Parse Error. Raw text:", text);
+                    throw new Error('伺服器回傳格式錯誤 (可能權限不足或程式錯誤)');
+                }
+            })
             .then(handleSuccess)
             .catch(handleError);
         });
@@ -884,10 +820,18 @@
             submitBtn.disabled = false;
             submitBtn.textContent = '送出問卷';
 
-            statusMessage.textContent = (error && error.message) ? error.message : '送出失敗，請檢查網路連線。';
+            let errorMsg = (error && error.message) ? error.message : '送出失敗，請檢查網路連線。';
+            statusMessage.textContent = errorMsg;
             statusMessage.className = 'error';
             statusMessage.style.display = 'block';
-            console.error('Error:', error);
+            
+            // 滾動到錯誤訊息
+            statusMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // 增加 Alert 確保使用者看見
+            alert('送出失敗：' + errorMsg);
+            
+            console.error('Detailed Error:', error);
         }
     </script>
 </body>
