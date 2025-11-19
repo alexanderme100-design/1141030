@@ -288,12 +288,26 @@
             font-size: 0.9rem;
         }
 
+        /* EMOJI 樣式優化 */
+        .likert-options label .emoji {
+            font-size: 1.5rem;
+            display: block; /* 電腦版：表情在上方 */
+            margin-bottom: 4px;
+            filter: grayscale(0.2); /* 未選中時稍微灰階 */
+            transition: all 0.2s;
+        }
+
         /* Hover 效果 */
         .likert-options label:hover {
             transform: translateY(-2px);
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             background-color: #fff;
             border-color: var(--primary-color);
+        }
+        
+        .likert-options label:hover .emoji {
+            filter: grayscale(0);
+            transform: scale(1.1);
         }
 
         /* 選中狀態 (依據各向度顏色) */
@@ -303,6 +317,11 @@
             transform: scale(1.02);
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             border: none;
+        }
+        
+        .likert-options label:has(input[type="radio"]:checked) .emoji {
+            filter: grayscale(0);
+            transform: scale(1.1);
         }
 
         .dimension-1 .likert-options label:has(input[type="radio"]:checked) { background: #004a99; }
@@ -390,8 +409,17 @@
                 background-color: #fff;
                 border: 1px solid #e0e0e0;
             }
+
+            /* 手機版 EMOJI 樣式調整 */
+            .likert-options label .emoji {
+                display: inline; /* 改為行內顯示 */
+                margin-bottom: 0;
+                margin-right: 10px;
+                font-size: 1.3rem;
+                vertical-align: middle;
+            }
             
-            /* 在直向模式下，增加選項前的圓圈模擬 Radio 樣式 (純 CSS 裝飾) */
+            /* 在直向模式下，增加選項前的圓圈模擬 Radio 樣式 */
             .likert-options label::before {
                 content: "";
                 display: inline-block;
@@ -423,19 +451,17 @@
     <!-- Helper script -->
     <script>
         function createLikert(name, questionText) {
-            // 注意：這裡的 label 順序保持 7->1 或 1->7 皆可，配合 CSS 顯示
-            // 若手機版希望 7 在最上面，HTML 順序即顯示順序
             return `
             <div class="likert-question">
                 <p class="question-text">${questionText} <span class="required">*</span></p>
                 <div class="likert-options">
-                    <label><input type="radio" name="${name}" value="7" required> (7) 極為同意</label>
-                    <label><input type="radio" name="${name}" value="6" required> (6) 很同意</label>
-                    <label><input type="radio" name="${name}" value="5" required> (5) 同意</label>
-                    <label><input type="radio" name="${name}" value="4" required> (4) 普通</label>
-                    <label><input type="radio" name="${name}" value="3" required> (3) 不同意</label>
-                    <label><input type="radio" name="${name}" value="2" required> (2) 很不同意</label>
-                    <label><input type="radio" name="${name}" value="1" required> (1) 極不同意</label>
+                    <label><input type="radio" name="${name}" value="7" required> <span class="emoji">🤩</span>(7) 極為同意</label>
+                    <label><input type="radio" name="${name}" value="6" required> <span class="emoji">😊</span>(6) 很同意</label>
+                    <label><input type="radio" name="${name}" value="5" required> <span class="emoji">🙂</span>(5) 同意</label>
+                    <label><input type="radio" name="${name}" value="4" required> <span class="emoji">😐</span>(4) 普通</label>
+                    <label><input type="radio" name="${name}" value="3" required> <span class="emoji">🙁</span>(3) 不同意</label>
+                    <label><input type="radio" name="${name}" value="2" required> <span class="emoji">😠</span>(2) 很不同意</label>
+                    <label><input type="radio" name="${name}" value="1" required> <span class="emoji">😡</span>(1) 極不同意</label>
                 </div>
             </div>`;
         }
@@ -594,6 +620,16 @@
                 <legend>貳、校長師徒制實施成效量表</legend>
                 <div class="description">
                     <p><strong>說明：</strong>請您對【 中小學階段 校長師徒制實施成效】問卷，共五個向度的同意程度，依個人認同程度在□內打「」。(<span class="required">*</span> 為必填)</p>
+                </div>
+                
+                <div class="likert-options" style="padding: 0.5rem 1rem; background: #f9f9f9; border-radius: 4px; margin-bottom: 1.5rem; justify-content: space-around; flex-wrap: wrap;">
+                    <span style="font-size: 0.9rem;"><span class="emoji">🤩</span>(7) 極為同意</span>
+                    <span style="font-size: 0.9rem;"><span class="emoji">😊</span>(6) 很同意</span>
+                    <span style="font-size: 0.9rem;"><span class="emoji">🙂</span>(5) 同意</span>
+                    <span style="font-size: 0.9rem;"><span class="emoji">😐</span>(4) 普通</span>
+                    <span style="font-size: 0.9rem;"><span class="emoji">🙁</span>(3) 不同意</span>
+                    <span style="font-size: 0.9rem;"><span class="emoji">😠</span>(2) 很不同意</span>
+                    <span style="font-size: 0.9rem;"><span class="emoji">😡</span>(1) 極不同意</span>
                 </div>
 
                 <!-- 向度一 -->
@@ -856,4 +892,3 @@
     </script>
 </body>
 </html>
-
