@@ -2,162 +2,171 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
+    <!-- 優化 viewport 設定，禁止縮放以提升點擊反應速度 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- [極重要] 預先建立與 Google 的連線，加速送出時的反應時間 -->
+    <link rel="preconnect" href="https://script.google.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
     <title>校長師徒制實施成效問卷</title>
     <style>
-        /* --- 全域變數與重置 --- */
+        /* --- 全域變數 --- */
         :root {
-            --primary-color: #004a99;     /* 專業深藍 */
-            --secondary-color: #0056b3;   /* 次要藍 */
-            --accent-color: #eef4ff;      /* 淺藍背景 (選中/Hover用) */
-            --bg-color: #f4f7f6;          /* 網頁背景 */
-            --card-bg: #ffffff;           /* 卡片背景 */
-            --text-main: #333;            /* 主要文字 */
-            --text-sub: #555;             /* 次要文字 */
-            --border-color: #e0e0e0;      /* 邊框顏色 */
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 陰影 */
-            --radius: 8px;                /* 圓角 */
+            --primary-color: #004a99;
+            --secondary-color: #0056b3;
+            --accent-color: #eef4ff;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333;
+            --text-sub: #555;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
         }
 
         * {
-            box-sizing: border-box; /* 確保寬度計算包含 padding */
-            -webkit-tap-highlight-color: transparent; /* 移除手機點擊時的藍色高亮 */
+            box-sizing: border-box;
+            /* 移除手機點擊的高亮色塊，改用自定義 CSS，視覺更流暢 */
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
             background-color: var(--bg-color);
             color: var(--text-main);
             scroll-behavior: smooth;
-            font-size: 16px; /* 基準字體大小，防止 iOS 縮放 */
+            font-size: 16px;
+            /* 開啟字體平滑渲染 */
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- 頂部標題列 --- */
         header {
             width: 100%;
             background-color: var(--primary-color);
             color: white;
-            padding: 1.2rem 1rem;
+            padding: 1rem;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            /* 硬體加速，防止滾動時閃爍 */
+            transform: translateZ(0); 
         }
 
-        /* --- 主要容器 --- */
         .container {
             max-width: 800px;
             margin: 2rem auto;
-            padding: 2.5rem;
+            padding: 2rem;
             background-color: var(--card-bg);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            /* 內容變更優化 */
+            will-change: transform;
         }
 
-        /* --- 說明區塊 --- */
         .description {
-            background-color: #fff;
-            border-left: 6px solid var(--primary-color);
-            padding: 1.5rem;
-            margin-bottom: 2.5rem;
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--primary-color);
+            padding: 1.2rem;
+            margin-bottom: 2rem;
             border-radius: 4px;
-            background: #f8f9fa;
         }
-        .description p { margin: 0.5rem 0; }
 
-        /* --- 表單區塊 (Fieldset) --- */
+        /* --- Fieldset 渲染優化 --- */
         fieldset {
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            padding: 2rem;
-            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             background-color: #fff;
-            min-width: 0; /* 修正 Flex 子元素溢出問題 */
-            transition: border-color 0.3s;
+            min-width: 0;
+            transition: border-color 0.2s;
+            /* 讓瀏覽器可以跳過螢幕外內容的渲染計算，大幅提升長頁面效能 */
+            content-visibility: auto; 
+            contain-intrinsic-size: 1000px; /* 預估高度防止滾動條跳動 */
         }
 
         legend {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary-color);
-            padding: 0 0.8rem;
+            padding: 0 0.5rem;
             margin-left: 0.5rem;
         }
 
-        /* 不同區塊的配色 */
         .fieldset-basic-info { border-top: 4px solid #0056b3; }
         .fieldset-basic-info legend { color: #0056b3; }
-        
         .fieldset-open-questions { border-top: 4px solid #006437; }
         .fieldset-open-questions legend { color: #006437; }
 
-        /* --- 問題群組 --- */
         .form-group { 
-            margin-bottom: 2rem; 
-            padding: 15px; /* 增加內距，讓錯誤紅框不貼字 */
+            margin-bottom: 1.8rem; 
+            padding: 10px;
             border-radius: 8px;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent; /* 預留邊框位置避免跳動 */
+            transition: background-color 0.2s;
+            border: 2px solid transparent;
+            scroll-margin-top: 100px;
         }
 
         .form-group label, .question-text {
             display: block;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             font-weight: 600;
-            font-size: 1.15rem;
-            color: #222;
-            line-height: 1.5;
-        }
-        
-        .question-note {
-            font-size: 0.95rem;
-            color: var(--text-sub);
-            margin-top: -0.5rem;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            background-color: #f1f1f1;
-            border-radius: 4px;
+            font-size: 1.1rem;
         }
 
         .required { color: #d32f2f; font-weight: bold; margin-left: 4px; }
 
-        /* --- 選項按鈕群組 (Radio Buttons) --- */
+        /* --- 按鈕優化：極速響應 --- */
         .options-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 0.6rem;
         }
 
         .options-group label {
-            flex: 1 1 auto; /* 自動伸縮 */
-            min-width: 140px; /* 最小寬度確保文字不折行 */
+            flex: 1 1 auto;
+            min-width: 130px;
             text-align: center;
-            padding: 0.8rem 1.2rem;
+            padding: 0.7rem 1rem;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             background-color: #fff;
             cursor: pointer;
-            transition: all 0.2s ease;
+            /* 加快動畫速度到 0.1s，感覺更靈敏 */
+            transition: all 0.1s ease-out; 
             user-select: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 48px; /* 觸控友善高度 */
+            min-height: 48px;
             font-size: 1rem;
+            /* 解決 iOS 點擊延遲 */
+            touch-action: manipulation; 
         }
 
-        .options-group label:hover {
-            background-color: var(--accent-color);
-            border-color: var(--primary-color);
+        /* 只有在支援 hover 的裝置（電腦）才顯示 hover 效果，避免手機點擊殘留 */
+        @media (hover: hover) {
+            .options-group label:hover {
+                background-color: var(--accent-color);
+                border-color: var(--primary-color);
+            }
         }
 
-        /* 重要修正：使用絕對定位隱藏 input，確保瀏覽器驗證機制能抓到它 */
+        /* Active 狀態：按下去瞬間變色 */
+        .options-group label:active {
+            transform: scale(0.98);
+            background-color: #e0eaff;
+        }
+
         .options-group input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -171,53 +180,55 @@
             color: white;
             border-color: var(--primary-color);
             font-weight: 600;
-            box-shadow: 0 2px 4px rgba(0,74,153,0.3);
+            box-shadow: 0 2px 4px rgba(0,74,153,0.25);
+            transform: translateY(-1px); /* 輕微浮起 */
         }
 
-        /* --- 輸入框 --- */
+        /* --- 輸入框優化 --- */
         input[type="text"], select, textarea {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 16px; /* 防止 iOS 縮放 */
+            font-size: 16px;
             background-color: #fff;
-            transition: border-color 0.2s;
+            transition: box-shadow 0.2s;
+            appearance: none; /* 移除原生樣式，統一是覺 */
         }
         
         input[type="text"]:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.15);
         }
 
         textarea { resize: vertical; min-height: 120px; }
 
-        /* --- 行政區地圖 (Grid System) --- */
+        /* --- 行政區地圖 --- */
         #districtMap {
             background-color: #fcfcfc;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            scroll-margin-top: 100px;
         }
         
-        .district-group { margin-bottom: 1.5rem; }
+        .district-group { margin-bottom: 1.2rem; }
         .district-group:last-child { margin-bottom: 0; }
         
         .district-label {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #555;
-            margin-bottom: 0.8rem;
-            border-bottom: 2px solid #eee;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid #eee;
             padding-bottom: 0.3rem;
         }
 
         .district-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* 自動排版 */
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.5rem;
         }
 
         .district-btn {
@@ -228,18 +239,23 @@
             cursor: pointer;
             text-align: center;
             font-size: 0.95rem;
-            min-height: 44px; /* 觸控高度 */
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.1s ease-out;
+            touch-action: manipulation;
         }
         
-        .district-btn:hover {
-            background-color: var(--accent-color);
-            border-color: var(--primary-color);
+        @media (hover: hover) {
+            .district-btn:hover {
+                background-color: var(--accent-color);
+                border-color: var(--primary-color);
+            }
         }
         
+        .district-btn:active { transform: scale(0.96); }
+
         .district-btn.selected {
             background-color: var(--primary-color);
             color: white;
@@ -247,46 +263,44 @@
             font-weight: 600;
         }
 
-        /* --- Likert 量表 (RWD 核心) --- */
+        /* --- Likert 量表 --- */
         .dimension {
             margin-top: 3rem;
             padding: 1.5rem;
             border-radius: 8px;
             border: 1px solid #eee;
-            border-left-width: 6px;
+            border-left-width: 5px;
+            /* 同樣應用內容可見性優化 */
+            content-visibility: auto;
+            contain-intrinsic-size: 1200px;
         }
 
-        /* 向度顏色定義 */
         .dimension-1 { background: #f4f9ff; border-left-color: #004a99; }
         .dimension-1 h4 { color: #004a99; }
-        
         .dimension-2 { background: #f2fffa; border-left-color: #00794a; }
         .dimension-2 h4 { color: #00794a; }
-        
         .dimension-3 { background: #fffbf2; border-left-color: #b87400; }
         .dimension-3 h4 { color: #b87400; }
-        
         .dimension-4 { background: #fbf5ff; border-left-color: #5a0099; }
         .dimension-4 h4 { color: #5a0099; }
-        
         .dimension-5 { background: #f2fdfe; border-left-color: #007a7c; }
         .dimension-5 h4 { color: #007a7c; }
 
         .likert-question {
-            padding: 1.5rem 15px; /* 增加左右內距 */
+            padding: 1.2rem 10px;
             border-bottom: 1px dashed #ccc;
             border-radius: 8px;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent; /* 預留邊框 */
+            transition: background-color 0.2s;
+            border: 2px solid transparent;
+            scroll-margin-top: 100px;
         }
         .likert-question:last-child { border-bottom: none; }
 
-        /* 選項容器 - 預設為橫向 (Desktop) */
         .likert-options {
             display: flex;
             justify-content: space-between;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.4rem;
+            margin-top: 0.8rem;
         }
 
         .likert-options label {
@@ -296,50 +310,51 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0.8rem 0.2rem;
+            padding: 0.6rem 0.2rem;
             border: 1px solid #ddd;
             background-color: rgba(255,255,255,0.8);
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
-            min-height: 60px; /* 確保高度一致 */
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 60px;
             font-size: 0.9rem;
+            touch-action: manipulation;
         }
 
-        /* EMOJI 樣式優化 */
         .likert-options label .emoji {
             font-size: 1.5rem;
-            display: block; /* 電腦版：表情在上方 */
+            display: block;
             margin-bottom: 4px;
-            filter: grayscale(0.2); /* 未選中時稍微灰階 */
-            transition: all 0.2s;
+            filter: grayscale(0.2);
+            transition: transform 0.2s, filter 0.2s;
         }
 
-        /* Hover 效果 */
-        .likert-options label:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            background-color: #fff;
-            border-color: var(--primary-color);
-        }
-        
-        .likert-options label:hover .emoji {
-            filter: grayscale(0);
-            transform: scale(1.1);
+        @media (hover: hover) {
+            .likert-options label:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+                background-color: #fff;
+                border-color: var(--primary-color);
+            }
+            .likert-options label:hover .emoji {
+                filter: grayscale(0);
+                transform: scale(1.15);
+            }
         }
 
-        /* 選中狀態 (依據各向度顏色) */
+        .likert-options label:active { transform: scale(0.96); }
+
         .likert-options label:has(input[type="radio"]:checked) {
             color: white;
             font-weight: bold;
             transform: scale(1.02);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            border-color: transparent;
         }
         
         .likert-options label:has(input[type="radio"]:checked) .emoji {
             filter: grayscale(0);
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .dimension-1 .likert-options label:has(input[type="radio"]:checked) { background: #004a99; }
@@ -348,7 +363,6 @@
         .dimension-4 .likert-options label:has(input[type="radio"]:checked) { background: #5a0099; }
         .dimension-5 .likert-options label:has(input[type="radio"]:checked) { background: #007a7c; }
 
-        /* 重要修正：使用絕對定位隱藏 input */
         .likert-options input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -357,74 +371,105 @@
             pointer-events: none;
         }
 
-        /* --- 送出按鈕 --- */
+        /* --- 送出區塊 --- */
         .submit-container { text-align: center; margin-top: 3rem; padding-bottom: 2rem; }
         
         #submitBtn {
             background-color: var(--secondary-color);
             color: white;
-            padding: 1rem 4rem;
+            padding: 1rem 5rem;
             border: none;
             border-radius: 50px;
             font-size: 1.3rem;
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
-            transition: all 0.3s ease;
-            width: auto;
-            min-width: 200px;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            will-change: transform, box-shadow; /* 硬體加速 */
         }
         
-        #submitBtn:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 74, 153, 0.4);
+        @media (hover: hover) {
+            #submitBtn:hover {
+                background-color: var(--primary-color);
+                transform: translateY(-3px);
+                box-shadow: 0 6px 16px rgba(0, 74, 153, 0.4);
+            }
         }
         
-        #submitBtn:active { transform: scale(0.98); }
-        #submitBtn:disabled { background-color: #bbb; cursor: not-allowed; box-shadow: none; }
+        #submitBtn:active { transform: scale(0.96); box-shadow: 0 2px 4px rgba(0, 74, 153, 0.3); }
+        #submitBtn:disabled { background-color: #bbb; cursor: wait; box-shadow: none; transform: none; }
 
         #loadingSpinner { margin-top: 1rem; font-weight: bold; color: var(--primary-color); }
 
-        #statusMessage { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; font-weight: bold; }
+        #statusMessage { 
+            display: none;
+            margin-top: 1.5rem; 
+            padding: 1rem; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .error { background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
 
-        /* --- 錯誤提示動畫 (Shake) --- */
+        /* --- 錯誤提示動畫 --- */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
         }
 
         .highlight-error {
-            animation: shake 0.5s ease-in-out;
-            border: 2px solid #d32f2f !important; /* 強制紅框 */
-            background-color: #fff5f5 !important; /* 淺紅背景 */
-            box-shadow: 0 0 15px rgba(211, 47, 47, 0.4) !important;
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            border: 2px solid #d32f2f !important;
+            background-color: #fff5f5 !important;
+            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1) !important;
         }
 
-        /* --- RWD 斷點優化 (平板直向與手機) --- */
+        /* --- RWD 手機版 --- */
         @media (max-width: 768px) {
-            .container { margin: 0; padding: 1.5rem 1rem; border-radius: 0; box-shadow: none; width: 100%; max-width: 100%; }
+            .container { margin: 0; padding: 1rem; border-radius: 0; box-shadow: none; }
             header { padding: 1rem; font-size: 1.2rem; }
             fieldset { padding: 1.2rem; margin-bottom: 1.5rem; }
             legend { font-size: 1.2rem; }
             .form-group label { font-size: 1.1rem; }
-            .options-group label { flex: 1 1 45%; padding: 0.7rem 0.5rem; font-size: 0.95rem; }
-            .district-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+            /* 手機版按鈕改為充滿整行或半行，增加點擊面積 */
+            .options-group label { flex: 1 1 45%; padding: 0.8rem 0.5rem; font-size: 0.95rem; }
+            
+            .district-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); }
+            
+            /* Likert 手機直排 */
             .likert-options { flex-direction: column; gap: 0.6rem; }
-            .likert-options label { flex-direction: row; justify-content: flex-start; padding: 1rem 1.2rem; text-align: left; border-radius: 6px; background-color: #fff; border: 1px solid #e0e0e0; }
-            .likert-options label .emoji { display: inline; margin-bottom: 0; margin-right: 10px; font-size: 1.3rem; vertical-align: middle; }
-            .likert-options label::before { content: ""; display: inline-block; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #bbb; margin-right: 12px; transition: all 0.2s; flex-shrink: 0; }
-            .likert-options label:has(input[type="radio"]:checked)::before { border-color: #fff; background-color: #fff; box-shadow: inset 0 0 0 4px var(--primary-color); }
-            .likert-options label:has(input[type="radio"]:checked) { transform: none; border: 1px solid transparent; }
-            #submitBtn { width: 100%; border-radius: 8px; padding: 1rem; }
+            .likert-options label { 
+                flex-direction: row; 
+                justify-content: flex-start; 
+                padding: 1rem 1.2rem; 
+                text-align: left; 
+                border-radius: 8px; 
+                background-color: #fff; 
+                border: 1px solid #e0e0e0; 
+            }
+            .likert-options label .emoji { display: inline; margin-bottom: 0; margin-right: 12px; font-size: 1.4rem; vertical-align: middle; }
+            
+            /* 模擬 Radio 圓點 */
+            .likert-options label::before { content: ""; display: inline-block; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #ccc; margin-right: 12px; transition: all 0.2s; flex-shrink: 0; }
+            .likert-options label:has(input[type="radio"]:checked)::before { border-color: #fff; background-color: #fff; box-shadow: inset 0 0 0 5px var(--primary-color); }
+            
+            .likert-options label:has(input[type="radio"]:checked) { transform: none; border-color: transparent; }
+            
+            #submitBtn { width: 100%; border-radius: 12px; padding: 1.1rem; font-size: 1.2rem; }
         }
     </style>
 
-    <!-- Helper script -->
     <script>
+        // 預先載入生成 HTML，比 JS 動態生成稍微快一點點
         function createLikert(name, questionText) {
             return `
             <div class="likert-question">
@@ -567,7 +612,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="districtError" style="color: red; font-size: 0.9rem; display: none; margin-top: 5px;">請選擇一個行政區。</div>
+                    <div id="districtError" style="color: #d32f2f; font-size: 0.95rem; display: none; margin-top: 8px; font-weight: 600;">請選擇一個行政區。</div>
                 </div>
 
                 <div class="form-group">
@@ -749,7 +794,7 @@
         // ==========================================
         // ！！！請將此處替換為您的 GAS Web App URL！！！
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwmKozl2rx41I0d9VNKPt4r2atpAJ7Zuf-Ow64MAk3-lgJtxa5fkO4-jS1ZkdMdPMnh/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwqA9qBigYRK-2YmGeCZeaxJk4SzpWALOc6KABg9mtHJKgeJEZCMEuysWrV4arjPBXH/exec';
         // ==========================================
 
         // --- District Map Logic ---
@@ -760,12 +805,14 @@
 
             if (districtMap) {
                 districtMap.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('district-btn')) {
-                        const selectedValue = e.target.dataset.value;
+                    // 使用 closest 確保點到按鈕內部的文字也能觸發
+                    const btn = e.target.closest('.district-btn');
+                    if (btn) {
+                        const selectedValue = btn.dataset.value;
                         hiddenInput.value = selectedValue;
                         const allBtns = districtMap.querySelectorAll('.district-btn');
-                        allBtns.forEach(btn => btn.classList.remove('selected'));
-                        e.target.classList.add('selected');
+                        allBtns.forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
                         districtError.style.display = 'none';
                         
                         // 移除錯誤樣式
@@ -807,27 +854,20 @@
                 districtError.style.display = 'block';
                 const mapContainer = document.getElementById('districtMap');
                 
-                // 手動捲動 + 避開 Header
-                const headerOffset = 100;
-                const elementPosition = mapContainer.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                // 強制捲動 (CSS scroll-margin-top 會處理偏移)
+                mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                mapContainer.classList.add('highlight-error');
                 
-                mapContainer.classList.add('highlight-error'); 
-                
-                statusMessage.textContent = '請選擇「學校所屬行政區」！';
+                statusMessage.textContent = '請選擇「學校所屬行政區」！(請查看上方紅框處)';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
                 
-                setTimeout(() => {
-                    alert('請填寫所有必填欄位！(請檢查行政區是否已點選)');
-                }, 600);
                 return;
             }
 
-            // 3. 檢查其他必填欄位 (手動抓取 + 捲動)
+            // 3. 檢查其他必填欄位
             if (!form.checkValidity()) {
-                // 顯示錯誤訊息
+                // 顯示底部錯誤訊息
                 statusMessage.textContent = '您有部分題目尚未填答，已自動捲動至該題，請檢查紅色標示處。';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
@@ -839,26 +879,14 @@
                     
                     // 嘗試找到該欄位的「容器」
                     let container = firstInvalid.closest('.likert-question, .form-group');
-                    if (!container) container = firstInvalid.parentElement; // 防呆 fallback
+                    if (!container) container = firstInvalid.parentElement; 
                     
                     // 1. 加上錯誤樣式
                     container.classList.add('highlight-error');
                     
-                    // 2. 計算捲動位置 (避開 sticky header)
-                    const headerOffset = 100; // 預留 header 高度 + 緩衝
-                    const elementPosition = container.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
+                    // 2. 捲動 (利用 CSS 的 scroll-margin-top 處理偏移)
+                    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-                
-                // 延遲 Alert
-                setTimeout(() => {
-                    alert('您有題目尚未填答，請檢查紅色標示的欄位！');
-                }, 600);
                 return;
             }
             
@@ -914,9 +942,11 @@
                 window.scrollTo(0, 0);
                 const container = document.querySelector('.container');
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 2rem;">
-                        <h2 style="color: #155724;">✔ 感謝填寫！</h2>
-                        <p>您的回覆已成功送出。</p>
+                    <div style="text-align: center; padding: 3rem 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                        <h2 style="color: #004a99; margin-bottom: 1rem;">感謝您的填寫！</h2>
+                        <p style="font-size: 1.1rem; color: #555;">您的回覆已成功送出，這份資料對我們的研究非常有幫助。</p>
+                        <button onclick="window.location.reload()" style="margin-top: 2rem; padding: 0.8rem 2rem; background: #f4f7f6; border: 1px solid #ccc; border-radius: 50px; cursor: pointer; color: #555;">重新整理頁面</button>
                     </div>`;
             } else {
                 handleError({ message: response.error || '伺服器處理失敗，請稍後再試。' });
@@ -939,10 +969,8 @@
             
             // 捲動到最底部錯誤訊息
             statusMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            alert('送出失敗：' + errorMsg);
             console.error('Detailed Error:', error);
         }
     </script>
 </body>
 </html>
-
