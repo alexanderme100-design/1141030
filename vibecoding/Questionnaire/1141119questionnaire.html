@@ -75,6 +75,7 @@
             margin-bottom: 2.5rem;
             background-color: #fff;
             min-width: 0;
+            transition: border-color 0.3s; /* 增加過渡效果 */
         }
 
         legend {
@@ -90,7 +91,12 @@
         .fieldset-open-questions { border-top: 4px solid #006437; }
         .fieldset-open-questions legend { color: #006437; }
 
-        .form-group { margin-bottom: 2rem; }
+        .form-group { 
+            margin-bottom: 2rem; 
+            padding: 10px; /* 增加內距，讓錯誤紅框好看一點 */
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
 
         .form-group label, .question-text {
             display: block;
@@ -175,6 +181,7 @@
             padding: 1.5rem;
             border: 1px solid var(--border-color);
             border-radius: 8px;
+            transition: border-color 0.3s;
         }
         
         .district-group { margin-bottom: 1.5rem; }
@@ -242,8 +249,10 @@
         .dimension-5 h4 { color: #007a7c; }
 
         .likert-question {
-            padding: 1.5rem 0;
+            padding: 1.5rem 0.5rem; /* 增加左右內距，讓紅框不貼邊 */
             border-bottom: 1px dashed #ccc;
+            border-radius: 8px;
+            transition: background-color 0.3s;
         }
         .likert-question:last-child { border-bottom: none; }
 
@@ -344,6 +353,21 @@
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
+        /* --- 新增：錯誤提示動畫樣式 --- */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .highlight-error {
+            animation: shake 0.4s ease-in-out;
+            border: 2px solid #d32f2f !important; /* 強制紅框 */
+            background-color: #fff5f5 !important; /* 淺紅背景 */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(211, 47, 47, 0.3);
+        }
+
         @media (max-width: 768px) {
             .container { margin: 0; padding: 1.5rem 1rem; border-radius: 0; box-shadow: none; width: 100%; max-width: 100%; }
             header { padding: 1rem; font-size: 1.2rem; }
@@ -382,7 +406,7 @@
 </head>
 <body>
 
-    <header>中小學階段校長師徒制實施成效問卷V3</header>
+    <header>中小學階段校長師徒制實施成效問卷V1</header>
 
     <div class="container">
         <div class="description">
@@ -392,7 +416,6 @@
         </div>
 
         <form id="surveyForm">
-            <!-- (內容保持不變，為節省篇幅僅顯示結構，請保留原有的表單內容) -->
             <!-- 壹、基本資料 -->
             <fieldset class="fieldset-basic-info">
                 <legend>壹、基本資料</legend>
@@ -688,7 +711,7 @@
         // ==========================================
         // ！！！請將此處替換為您的 GAS Web App URL！！！
         // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbw2sLXbUXpFTGnM8cGNvNAT2jL1icAyMDQleypQWs-CC9_EBel7LHkAYLpPhzObIVnS/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbzB_vrRDDgYck-x0OdlihQFUfPZV6-GnVKholacJhb3CeYc3cIP98ba8wMlyV1PLCU/exec';
         // ==========================================
 
         // --- District Map Logic ---
@@ -706,9 +729,23 @@
                         allBtns.forEach(btn => btn.classList.remove('selected'));
                         e.target.classList.add('selected');
                         districtError.style.display = 'none';
+                        
+                        // 移除錯誤樣式
+                         document.getElementById('districtMap').classList.remove('highlight-error');
                     }
                 });
             }
+            
+            // 移除 Radio Button 上的錯誤樣式
+             const allRadios = document.querySelectorAll('input[type="radio"]');
+             allRadios.forEach(radio => {
+                 radio.addEventListener('change', function() {
+                      const container = this.closest('.form-group, .likert-question');
+                      if(container) {
+                          container.classList.remove('highlight-error');
+                      }
+                 });
+             });
         });
 
         // --- Form Submission ---
@@ -721,32 +758,48 @@
             const hiddenInput = document.getElementById('schoolDistrict');
             const districtError = document.getElementById('districtError');
             
+            // 1. 重置所有錯誤提示與樣式
             statusMessage.style.display = 'none';
             statusMessage.className = '';
             districtError.style.display = 'none';
+            document.querySelectorAll('.highlight-error').forEach(el => el.classList.remove('highlight-error'));
 
-            // Custom validation for hidden input
+            // 2. 檢查行政區 (隱藏欄位)
             if (!hiddenInput.value) {
                 districtError.style.display = 'block';
-                districtError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const mapContainer = document.getElementById('districtMap');
+                mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                mapContainer.classList.add('highlight-error'); // 加上紅框震動
                 
-                // 顯示錯誤訊息
-                statusMessage.textContent = '您有必填欄位尚未完成，請檢查紅色提示的欄位。';
+                statusMessage.textContent = '請選擇「學校所屬行政區」！';
                 statusMessage.className = 'error';
                 statusMessage.style.display = 'block';
-                
-                // 增加 Alert 確保使用者知道發生錯誤
                 alert('請填寫所有必填欄位！(請檢查行政區是否已點選)');
                 return;
             }
 
+            // 3. 檢查其他必填欄位 (HTML5 原生驗證 + 自動跳轉)
             if (!form.checkValidity()) {
-                form.reportValidity();
-                // 增加 Alert 
-                alert('請填寫所有必填欄位！');
+                // 找到第一個無效的欄位
+                const firstInvalid = form.querySelector(':invalid');
+                if (firstInvalid) {
+                    // 嘗試找到該欄位的「容器」 (為了視覺效果更好)
+                    const container = firstInvalid.closest('.form-group, .likert-question');
+                    
+                    if (container) {
+                         container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                         container.classList.add('highlight-error'); // 加上紅框震動
+                    } else {
+                        // 如果找不到容器，就直接滾動到元素本身
+                         firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+
+                alert('您還有題目尚未填答，請檢查紅色標示的欄位！');
                 return;
             }
             
+            // 4. 檢查後端 URL
             if (GAS_API_URL.includes('請在此填入')) {
                  statusMessage.textContent = '錯誤：尚未設定後端 API 網址，請聯絡管理員。';
                  statusMessage.className = 'error';
@@ -755,6 +808,7 @@
                  return;
             }
 
+            // 5. 送出資料
             submitBtn.disabled = true;
             submitBtn.textContent = '處理中...';
             loadingSpinner.style.display = 'block';
@@ -763,13 +817,8 @@
             const dataObject = {};
             formData.forEach((value, key) => { dataObject[key] = value; });
 
-            console.log("Sending data to:", GAS_API_URL);
-
-            // 改用 fetch 發送 POST 請求到 Google Apps Script
             fetch(GAS_API_URL, {
                 method: 'POST',
-                // 這裡使用 text/plain 是為了避免 CORS preflight (OPTIONS) 請求
-                // GAS 對複雜的 CORS 請求支援度有限，使用 text/plain + JSON字串 是最穩定的解法
                 headers: {
                     'Content-Type': 'text/plain;charset=utf-8',
                 },
@@ -779,14 +828,14 @@
                  if (!response.ok) {
                      throw new Error(`HTTP error! status: ${response.status}`);
                  }
-                 return response.text(); // 先讀取為文字，以便除錯
+                 return response.text();
             })
             .then(text => {
                 try {
                     return JSON.parse(text);
                 } catch (e) {
                     console.error("JSON Parse Error. Raw text:", text);
-                    throw new Error('伺服器回傳格式錯誤 (可能權限不足或程式錯誤)');
+                    throw new Error('伺服器回傳格式錯誤');
                 }
             })
             .then(handleSuccess)
@@ -825,12 +874,8 @@
             statusMessage.className = 'error';
             statusMessage.style.display = 'block';
             
-            // 滾動到錯誤訊息
             statusMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // 增加 Alert 確保使用者看見
             alert('送出失敗：' + errorMsg);
-            
             console.error('Detailed Error:', error);
         }
     </script>
